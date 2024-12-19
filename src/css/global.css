@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --p: rgba(83, 53, 39, 1);
+  --p-005: rgba(83, 53, 39, 0.05);
+  --p-2: rgba(247, 213, 197, 1);
+  --p-2-005: rgba(247, 213, 197, 0.05);
+  --logo-2: rgba(164, 120, 100, 1);
+  --w: rgba(255, 255, 255, 1);
+  --w-05: rgba(255, 255, 255, 0.5);
+  --bg-2: rgba(242, 240, 236, 1);
+  --bg-3: rgba(214, 207, 196, 1);
+  -c-1: rgba(241, 255, 145, 1);
+  -d-1: rgba(255, 85, 0, 1);
+  -b-1: rgba(57, 16, 237, 1);
+}
+
+/* roboto-flex-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Roboto Flex';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/roboto-flex-v26-latin/roboto-flex-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+body {
+  font-family: 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+}
+
+.md\:_text-lg {
+  font-size: 1rem;
+}
+
+a {
+  color: var(--p);
+}
+
+a.nextra-focus {
+  color: var(--p);
+}
+
+.hover\:_text-gray-800:hover {
+  color: var(--p);
+}
+
+.logo .c1 {
+  fill: var(--p);
+}
+
+.logo .c2_a {
+  fill: var(--logo-2);
+}
+
+.logo .w {
+  fill: var(--w);
+}
+
+.logo .c2 {
+  stroke: var(--logo-2);
+}
+
+.dark .logo .c1 {
+  fill: var(--p-2);
+}
+
+.dark .logo .c2_a {
+  fill: var(--logo-2);
+}
+
+.dark .logo .w {
+  fill: var(--p-2);
+}
+
+.dark .logo .c2 {
+  stroke: var(--logo-2);
+}
+
+.nextra-banner-container,
+.nextra-banner-container a {
+  background-color: var(--p);
+  color: var(--w);
+}
+
+.dark\:_bg-\[linear-gradient\(1deg\,\#383838\,\#212121\)\]:is(html[class~=dark] *) {
+  background-image: linear-gradient(1deg, var(--p), var(--p));
+}
+
+.dark .nextra-banner-container a {
+  background: none;
+}
+
+.light footer{
+  background-color: var(--w) !important;
+}
+
+._text-primary-800 {
+  color: var(--p);
+}
+
+.dark\:_text-primary-600:is(html[class~=dark] *) {
+  color: var(--p-2);
+}
+
+._bg-primary-100 {
+  background-color: var(--p-005);
+}
+
+.dark\:_text-primary-600:is(html[class~=dark] *) {
+  background-color: var(--p-2-005);
+}
+
+._text-gray-500 {
+  color: var(--p);
+}
+
+._text-gray-700 {
+  color: var(--p);
+}

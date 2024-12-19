@@ -1,0 +1,37 @@
+{
+  "name": "webnn-docs",
+  "description": "WebNN Developer Documentation",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibelem/webnn-docs.git"
+  },
+  "keywords": [
+    "WebNN"
+  ],
+  "author": "Belem Zhang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ibelem/webnn-docs/issues"
+  },
+  "homepage": "https://github.com/ibelem/webnn-docs#readme",
+  "dependencies": {
+    "next": "^15.1.1",
+    "next-sitemap": "^4.2.3",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  }
+}
