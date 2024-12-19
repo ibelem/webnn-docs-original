@@ -218,6 +218,14 @@ export default {
   i18n: [
     { locale: 'en', name: 'English' },
     { locale: 'zh', name: '简体中文' },
-  ]
+  ],
+  color: {
+    hue: 183,
+    saturation: 100,
+    lightness: {
+      dark: 100,
+      light: 36
+    }
+  }
   // ... other theme options
 };

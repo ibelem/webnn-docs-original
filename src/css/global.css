@@ -3,11 +3,20 @@
 @tailwind utilities;
 
 :root {
+  --a: hsl(194, 100%, 33%);
+  --b: hsl(183, 100%, 36%);
+  --c: hsl(58, 89%, 93%);
+  --d: hsl(29, 97%, 86%);
+  --e: hsl(4, 82%, 67%);
+  --white: rgba(255, 255, 255, 1);
+}
+
+/* :root {
   --p: rgba(83, 53, 39, 1);
   --p-005: rgba(83, 53, 39, 0.05);
   --p-2: rgba(247, 213, 197, 1);
   --p-2-005: rgba(247, 213, 197, 0.05);
-  --logo-2: rgba(164, 120, 100, 1);
+  ----b: rgba(164, 120, 100, 1);
   --w: rgba(255, 255, 255, 1);
   --w-05: rgba(255, 255, 255, 0.5);
   --bg-2: rgba(242, 240, 236, 1);
@@ -15,7 +24,7 @@
   -c-1: rgba(241, 255, 145, 1);
   -d-1: rgba(255, 85, 0, 1);
   -b-1: rgba(57, 16, 237, 1);
-}
+} */
 
 /* roboto-flex-regular - latin */
 @font-face {
@@ -28,40 +37,23 @@
 
 body {
   font-family: 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-smooth: always;
   -webkit-font-smoothing: antialiased;
 }
 
-.md\:_text-lg {
-  font-size: 1rem;
-}
-
-a {
-  color: var(--p);
-}
-
-a.nextra-focus {
-  color: var(--p);
-}
-
-.hover\:_text-gray-800:hover {
-  color: var(--p);
-}
-
 .logo .c1 {
-  fill: var(--p);
+  fill: var(--a);
 }
 
 .logo .c2_a {
-  fill: var(--logo-2);
+  fill: var(--b);
 }
 
 .logo .w {
-  fill: var(--w);
+  fill: var(--white);
 }
 
 .logo .c2 {
-  stroke: var(--logo-2);
+  stroke: var(--b);
 }
 
 .dark .logo .c1 {
@@ -69,7 +61,7 @@ a.nextra-focus {
 }
 
 .dark .logo .c2_a {
-  fill: var(--logo-2);
+  fill: var(----b);
 }
 
 .dark .logo .w {
@@ -77,10 +69,10 @@ a.nextra-focus {
 }
 
 .dark .logo .c2 {
-  stroke: var(--logo-2);
+  stroke: var(----b);
 }
 
-.nextra-banner-container,
+/* .nextra-banner-container,
 .nextra-banner-container a {
   background-color: var(--p);
   color: var(--w);
@@ -120,4 +112,4 @@ a.nextra-focus {
 
 ._text-gray-700 {
   color: var(--p);
-}
+} */
