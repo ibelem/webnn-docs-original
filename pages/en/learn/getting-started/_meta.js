@@ -1,6 +1,8 @@
 export default {
-  index: {
-    'title': 'WebNN',
-    display: 'hidden',
+  'getting-started': {
+    title: "Getting Started"
   },
-}
+  'installation': {
+    title: "Installation"
+  }
+};

@@ -4,7 +4,7 @@
 
 :root {
   --a: hsl(194, 100%, 33%);
-  --a-09: hsl(194, 100%, 50%);
+  --a-09: hsl(194, 100%, 98%);
   --b: hsl(183, 100%, 36%);
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
@@ -86,15 +86,34 @@ body {
 
 .hover\:_text-gray-800:hover,
 .hover\:_text-gray-900:hover {
-  color: var(--e);
+  color: var(--a);
 }
 
 .hover\:_bg-gray-100:hover {
-  background-color: var(--e-09);
+  background-color: var(--a-09);
 }
 
 @media (min-width: 768px) {
   .md\:_text-lg {
-      font-size: 1rem;
+      font-size: 0.875rem;
   }
+}
+
+.nextra-banner-container {
+  background-color: var(--a);
+  color: var(--white);
+}
+
+.nextra-banner-container:hover {
+  background-color: var(--b);
+}
+
+.dark .nextra-banner-container {
+  background-color: var(--a);
+  color: var(--white);
+}
+
+.dark .nextra-banner-container:hover {
+  background-color: var(--a);
+  color: var(--a-09);
 }

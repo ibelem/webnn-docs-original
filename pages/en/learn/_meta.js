@@ -1,10 +1,6 @@
 export default {
-  index: {
-    'title': 'WebNN',
-    display: 'hidden',
-  },
   quickstart: {
-    title: "Quickstart"
+    title: "🚀 Quickstart"
   },
   'getting-started': { title: 'Getting Started', },
   tutorials: { title: 'Tutorials', },

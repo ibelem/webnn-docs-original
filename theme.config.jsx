@@ -208,9 +208,9 @@ export default {
     content: Footer,
   },
   banner: {
-    key: 'webnn-public-preview',
+    key: 'webnn-public-preview-announcement',
     content: (
-      <a href="https://webnn.dev" target="_blank">
+      <a href="https://webnn.io" target="_blank">
         🎉 WebNN Public Preview is released. Read more →
       </a>
     )
