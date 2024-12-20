@@ -220,11 +220,11 @@ export default {
     { locale: 'zh', name: '简体中文' },
   ],
   color: {
-    hue: 183,
+    hue: 194,
     saturation: 100,
     lightness: {
       dark: 100,
-      light: 36
+      light: 33
     }
   }
   // ... other theme options

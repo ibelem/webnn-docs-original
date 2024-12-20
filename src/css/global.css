@@ -4,29 +4,15 @@
 
 :root {
   --a: hsl(194, 100%, 33%);
+  --a-09: hsl(194, 100%, 50%);
   --b: hsl(183, 100%, 36%);
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
   --e: hsl(4, 82%, 67%);
+  --e-09: hsl(4, 82%, 98%);
   --white: rgba(255, 255, 255, 1);
 }
 
-/* :root {
-  --p: rgba(83, 53, 39, 1);
-  --p-005: rgba(83, 53, 39, 0.05);
-  --p-2: rgba(247, 213, 197, 1);
-  --p-2-005: rgba(247, 213, 197, 0.05);
-  ----b: rgba(164, 120, 100, 1);
-  --w: rgba(255, 255, 255, 1);
-  --w-05: rgba(255, 255, 255, 0.5);
-  --bg-2: rgba(242, 240, 236, 1);
-  --bg-3: rgba(214, 207, 196, 1);
-  -c-1: rgba(241, 255, 145, 1);
-  -d-1: rgba(255, 85, 0, 1);
-  -b-1: rgba(57, 16, 237, 1);
-} */
-
-/* roboto-flex-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Roboto Flex';
@@ -45,7 +31,7 @@ body {
 }
 
 .logo .c2_a {
-  fill: var(--b);
+  fill: var(--a);
 }
 
 .logo .w {
@@ -53,26 +39,38 @@ body {
 }
 
 .logo .c2 {
-  stroke: var(--b);
+  stroke: var(--a);
 }
 
 .dark .logo .c1 {
-  fill: var(--p-2);
+  fill: var(--e);
 }
 
 .dark .logo .c2_a {
-  fill: var(----b);
+  fill: var(--e);
 }
 
 .dark .logo .w {
-  fill: var(--p-2);
+  fill: var(--white);
 }
 
 .dark .logo .c2 {
-  stroke: var(----b);
+  stroke: var(--e);
 }
 
-/* .nextra-banner-container,
+._bg-primary-100 {
+  background-color: hsl(194, 100%, 97%);
+}
+
+._text-primary-800 {
+  color: var(--a);
+}
+
+._font-semibold {
+  font-weight: 500;
+}
+
+.nextra-banner-container,
 .nextra-banner-container a {
   background-color: var(--p);
   color: var(--w);
@@ -86,30 +84,17 @@ body {
   background: none;
 }
 
-.light footer{
-  background-color: var(--w) !important;
+.hover\:_text-gray-800:hover,
+.hover\:_text-gray-900:hover {
+  color: var(--e);
 }
 
-._text-primary-800 {
-  color: var(--p);
+.hover\:_bg-gray-100:hover {
+  background-color: var(--e-09);
 }
 
-.dark\:_text-primary-600:is(html[class~=dark] *) {
-  color: var(--p-2);
+@media (min-width: 768px) {
+  .md\:_text-lg {
+      font-size: 1rem;
+  }
 }
-
-._bg-primary-100 {
-  background-color: var(--p-005);
-}
-
-.dark\:_text-primary-600:is(html[class~=dark] *) {
-  background-color: var(--p-2-005);
-}
-
-._text-gray-500 {
-  color: var(--p);
-}
-
-._text-gray-700 {
-  color: var(--p);
-} */
