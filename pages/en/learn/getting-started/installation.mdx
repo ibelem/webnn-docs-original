@@ -1,1 +1,39 @@
-Hello, Installation!
+To get started with WebNN on Intel AI PCs you will need:
+
+- Window 11, version 21H2 or newer
+- It's recommended to install the latest [Intel® Arc™ & Iris® Xe Graphics on Windows](https://www.intel.com/content/www/us/en/download/785597/intel-arc-iris-xe-graphics-windows.html) for improved WebNN compatibility and performance
+
+1. Download and install the latest [Chrome Canary](https://google.com/chrome/canary) or [Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+2. Navigate to `about://flags` in browser address bar
+3. Search for `Enables WebNN API` and change it to `Enabled`
+4. Exit browser
+
+### Running WebNN on CPU or GPU
+
+1. Launch Chrome Canary or Edge Canary
+
+### Running WebNN on NPU
+
+- Window 11, version 24H2 or newer
+- It's recommended to install the latest [Intel® Core™ Ultra NPU Driver on Windows](https://www.intel.com/content/www/us/en/download/794734/intel-npu-driver-windows.html) for improved WebNN compatibility and performance
+
+#### Chrome Canary
+
+1. Download the latest redistributable [Microsoft.AI.DirectML](https://www.nuget.org/packages/Microsoft.AI.DirectML/1.15.2), rename `microsoft.ai.directml.[version].nupkg` to `microsoft.ai.directml.[version].nupkg.zip` and extract it
+2. Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Google\Chrome SxS\Application\[version]\`
+    - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
+    - Note that Chrome Canary frequently updates automatically. When this occurs, recopy the `DirectML.dll` to the new version's directory.
+3. Launch Chrome Canary in Windows Command Line: `"%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --use-redist-dml --disable_webnn_for_npu=0`
+
+#### Edge Canary
+
+1. Ensure the `DirectML.dll` was downloaded automatically (may take several minutes)
+    - Launch Edge Canary
+    - Go to `%LOCALAPPDATA%\Microsoft\Edge SxS\User Data`, check the `EdgeOnnxRuntimeDirectML\[version]\DirectML.dll` exists
+    - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
+    - Exit Edge Canary
+2. Launch Edge Canary in Windows Command Line: `"%LOCALAPPDATA%\Microsoft\Edge SxS\Application\msedge.exe" --disable_webnn_for_npu=0`
+3. If `EdgeOnnxRuntimeDirectML\[version]\DirectML.dll` does not exist under `%LOCALAPPDATA%\Microsoft\Edge SxS\User Data`:
+    - Go to `edge://components/`
+    - Click Check for update button of Edge Video Super Resolution
+    - Repeat step 2
