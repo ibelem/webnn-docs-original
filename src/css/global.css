@@ -3,14 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --a: hsl(194, 100%, 33%);
-  --a-09: hsl(194, 100%, 98%);
-  --b: hsl(183, 100%, 36%);
+  --light: hsl(239, 94%, 19%);
+  --light-09: hsla(239, 94%, 19%, 0.03);
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
-  --e: hsl(4, 82%, 67%);
-  --e-09: hsl(4, 82%, 98%);
+  --dark: hsl(334, 85%, 57%);
+  --dark-09: hsla(334, 85%, 57%, 0.03);
   --white: rgba(255, 255, 255, 1);
+}
+
+.a {
+  color: var(--light);
+}
+
+.dark .a {
+  color: var(--dark)
 }
 
 @font-face {
@@ -27,11 +34,11 @@ body {
 }
 
 .logo .c1 {
-  fill: var(--a);
+  fill: var(--light);
 }
 
 .logo .c2_a {
-  fill: var(--a);
+  fill: var(--light);
 }
 
 .logo .w {
@@ -39,15 +46,15 @@ body {
 }
 
 .logo .c2 {
-  stroke: var(--a);
+  stroke: var(--light);
 }
 
 .dark .logo .c1 {
-  fill: var(--e);
+  fill: var(--dark);
 }
 
 .dark .logo .c2_a {
-  fill: var(--e);
+  fill: var(--dark);
 }
 
 .dark .logo .w {
@@ -55,42 +62,72 @@ body {
 }
 
 .dark .logo .c2 {
-  stroke: var(--e);
+  stroke: var(--dark);
 }
 
 ._bg-primary-100 {
-  background-color: hsl(194, 100%, 97%);
+  background-color: var(--light-09);
 }
 
 ._text-primary-800 {
-  color: var(--a);
+  color: var(--light);
 }
 
 ._font-semibold {
   font-weight: 500;
 }
 
-.nextra-banner-container,
-.nextra-banner-container a {
-  background-color: var(--p);
-  color: var(--w);
+.dark\:_bg-\[linear-gradient\(1deg\,\#383838\,\#212121\)\]:is(html[class~=dark] *) {
+  background-image: none;
 }
 
-.dark\:_bg-\[linear-gradient\(1deg\,\#383838\,\#212121\)\]:is(html[class~=dark] *) {
-  background-image: linear-gradient(1deg, var(--p), var(--p));
+.nextra-banner-container {
+  background-color: var(--light);
+  color: var(--white);
+}
+
+.nextra-banner-container a {
+  background: none;
+  color: var(--white);
+}
+
+.nextra-banner-container:hover {
+  background-color: var(--light-09);
+  color: var(--light);
+}
+
+.nextra-banner-container:hover a {
+  background: none;
+  color: var(--light);
+}
+
+.dark .nextra-banner-container {
+  background-color: var(--dark);
+  color: var(--white);
 }
 
 .dark .nextra-banner-container a {
+  color: var(--white);
   background: none;
+}
+
+.dark .nextra-banner-container:hover {
+  background-color: var(--dark-09);
+  color: var(--dark);
+}
+
+.dark .nextra-banner-container:hover a {
+  background: none;
+  color: var(--dark);
 }
 
 .hover\:_text-gray-800:hover,
 .hover\:_text-gray-900:hover {
-  color: var(--a);
+  color: var(--light);
 }
 
 .hover\:_bg-gray-100:hover {
-  background-color: var(--a-09);
+  background-color: var(--light-09);
 }
 
 @media (min-width: 768px) {
@@ -99,21 +136,70 @@ body {
   }
 }
 
-.nextra-banner-container {
-  background-color: var(--a);
+.quickstart-svg path {
+  fill: var(--white);
+}
+
+.button-highlight {
+  background-color: var(--light);
   color: var(--white);
+  padding: 0.6rem 1.5rem;
+  border-radius: 5rem;
 }
 
-.nextra-banner-container:hover {
-  background-color: var(--b);
+.dark .button-highlight {
+  background-color: var(--dark);
 }
 
-.dark .nextra-banner-container {
-  background-color: var(--a);
-  color: var(--white);
+.button-highlight:hover {
+  color: var(--light);
+  border: 1px solid var(--light);
+  background-color: var(--light-09);
 }
 
-.dark .nextra-banner-container:hover {
-  background-color: var(--a);
-  color: var(--a-09);
+.dark .button-highlight:hover {
+  color: var(--dark);
+  border: 1px solid var(--dark);
+  background-color: var(--dark-09);
 }
+
+.button-outline {
+  color: var(--light);
+  border: 1px solid var(--light);
+  padding: 0.6rem 1.5rem;
+  border-radius: 5rem;
+}
+
+.dark .button-outline {
+  color: var(--dark);
+  border: 1px solid var(--dark);
+}
+
+.button-outline .quickstart-svg path {
+  fill: var(--dark);
+}
+
+.dark .button-outline .quickstart-svg path {
+  fill: var(--dark);
+}
+
+.button-outline:hover {
+  color: var(--light);
+  border: 1px solid var(--light);
+  background-color: var(--light-09);
+}
+
+.dark .button-outline:hover {
+  color: var(--dark);
+  border: 1px solid var(--dark);
+  background-color: var(--dark-09);
+}
+
+.button-outline:hover .quickstart-svg path {
+  fill: var(--light-09);
+}
+
+.dark .button-outline:hover .quickstart-svg path {
+  fill: var(--dark-09);
+}
+

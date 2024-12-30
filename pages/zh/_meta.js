@@ -3,6 +3,9 @@ export default {
     'title': 'Web Neural Network API',
     type: 'page',
     display: 'hidden',
+    theme: {
+      layout: 'raw'
+    }
   },
   learn: {
     title: 'Learn',
