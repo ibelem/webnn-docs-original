@@ -7,9 +7,62 @@
   --light-09: hsla(210, 100%, 97%, 1);
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
-  --dark: hsl(334, 85%, 57%);
+  --dark: hsl(333, 93%, 56%);
   --dark-09: hsla(334, 85%, 57%, 0.03);
   --white: rgba(255, 255, 255, 1);
+  --n-1: #f72684;
+  --n-2:#7209b7;
+  --n-3: #3a0ca3;
+  --n-4: #4361ee;
+  --n-6: #4cc9f0;
+  --n-7: #eb6424;
+  --n-border: rgba(229, 231, 235, 1);
+}
+
+.netron label {
+  padding: 0.1rem 0.4rem;
+  font-size: 0.8rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width: 100%;
+  display: block;
+}
+
+.netron .l0 {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.netron label:hover {
+  color: #111;
+  background-color: var(--white);
+}
+
+.netron div {
+  padding: 0.1rem 0.4rem;
+}
+
+.netron .conn {
+  border: 0px solid transparent;
+  background-color: transparent;
+  width: 3px;
+  height: 1px;
+}
+
+.netron {
+  font-size: 0.7rem;
+}
+
+.netron {
+  border: 1px solid var(--n-border);
+  border-radius: 5px;
+}
+
+
+.netron.dot {
+  border: 1px solid var(--n-border);
+  width: 9px;
+  height: 9px;
 }
 
 @font-face {
@@ -211,4 +264,16 @@ body {
 
 ._bg-gray-100 {
   background-color: rgba(243, 244, 246, 0.2);
+}
+
+.react-flow__attribution {
+  background: transparent !important;
+}
+
+.light .react-flow__attribution a {
+  color: rgba(0, 0, 0, 0.02);
+}
+
+.dark .react-flow__attribution a {
+  color: rgba(255, 255, 255, 0.05);
 }
