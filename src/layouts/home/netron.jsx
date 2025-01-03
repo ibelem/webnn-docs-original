@@ -16,166 +16,190 @@ const initialNodes = [
   {
     id: "node0",
     type: "netronNodeDot",
-    position: { x: 958, y: 30 },
+    position: { x: 0, y: 0 },
+    data: {
+      nodeClassName: "netron dot translate-x-[202px] md:translate-x-[958px] translate-y-[30px]",
+    }
   },
   {
     id: "node1",
     type: "netronNode2",
-    position: { x: 900, y: 60 },
+    position: { x: 0, y: 0 },
     data: {
       label: "LayerNormalization",
       n1: "Scale",
       n1_data: "<320>",
       n2: "B",
       n2_data: "<320>",
+      nodeClassName: "netron translate-x-[144px] md:translate-x-[900px] translate-y-[60px]",
       labelClassName: "bg-[#f72585] text-white text-center",
     },
   },
   {
     id: "node2a",
     type: "netronNode1",
-    position: { x: 760, y: 150 },
+    position: { x: 0, y: 0 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
+      nodeClassName: "netron translate-x-[30px] md:translate-x-[760px] translate-y-[150px]",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
     id: "node2b",
     type: "netronNode1",
-    position: { x: 923, y: 150 },
+    position: { x: 0, y: 0 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
+      nodeClassName: "netron translate-x-[167px] md:translate-x-[923px] translate-y-[150px]",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
     id: "node2c",
     type: "netronNode1",
-    position: { x: 1105, y: 150 },
+    position: { x: 0, y: 0 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
+      nodeClassName: "netron translate-x-[305px] md:translate-x-[1087px] translate-y-[150px]",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
     id: "node3a",
     type: "netronNode1",
-    position: { x: 767, y: 220 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
+      nodeClassName: "netron translate-x-[37px] md:translate-x-[767px] translate-y-[220px]",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
     id: "node3b",
     type: "netronNode1",
-    position: { x: 930, y: 220 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
+      nodeClassName: "netron translate-x-[174px] md:translate-x-[930px] translate-y-[220px]",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
     id: "node3c",
     type: "netronNode1",
-    position: { x: 1112, y: 220 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
+      nodeClassName: "netron translate-x-[312px] md:translate-x-[1094px] translate-y-[220px]",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
     id: "node4a",
     type: "netronNode0",
-    position: { x: 763, y: 290 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Transpose",
+      nodeClassName: "netron translate-x-[763px] translate-y-[290px]",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
     id: "node4b",
     type: "netronNode0",
-    position: { x: 926, y: 290 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Transpose",
+      nodeClassName: "netron translate-x-[926px] translate-y-[290px]",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
     id: "node5dot1",
     type: "netronNodeDot",
-    position: { x: 722, y: 300 },
+    position: { x: 0, y: 0 },
+    data: {
+      nodeClassName: "netron dot translate-x-[714px] translate-y-[300px]",
+    }
   },
   {
     id: "node5dot2",
     type: "netronNodeDot",
-    position: { x: 885, y: 300 },
+    position: { x: 0, y: 0 },
+    data: {
+      nodeClassName: "netron dot translate-x-[877px] translate-y-[300px]",
+    }
   },
   {
     id: "node5a",
     type: "netronNode0",
-    position: { x: 782, y: 340 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Mul",
+      nodeClassName: "netron translate-x-[782px] translate-y-[340px]",
       labelClassName: "bg-[#4cc9f0] text-white l0 text-center",
     },
   },
   {
     id: "node5b",
     type: "netronNode0",
-    position: { x: 945, y: 340 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Mul",
+      nodeClassName: "netron translate-x-[945px] translate-y-[340px]",
       labelClassName: "bg-[#4cc9f0] text-white l0 text-center",
     },
   },
   {
     id: "node6b",
     type: "netronNode0",
-    position: { x: 935, y: 390 },
+    position: { x: 0, y: 0 },
     data: {
       label: "MatMul",
+      nodeClassName: "netron translate-x-[852px] translate-y-[390px]",
       labelClassName: "bg-[#7209b7] text-white l0 text-center",
     },
   },
   {
     id: "node7b",
     type: "netronNode0",
-    position: { x: 933, y: 440 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Softmax",
+      nodeClassName: "netron translate-x-[850px] translate-y-[440px]",
       labelClassName: "bg-[#eb6424] text-white l0 text-center",
     },
   },
   {
     id: "node7c",
     type: "netronNode0",
-    position: { x: 1108, y: 440 },
+    position: { x: 0, y: 0 },
     data: {
       label: "Transpose",
+      nodeClassName: "netron translate-x-[1090px] translate-y-[440px]",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
     id: "node8",
     type: "netronNode0",
-    position: { x: 935, y: 490 },
+    position: { x: 0, y: 0 },
     data: {
       label: "MatMul",
+      nodeClassName: "netron translate-x-[935px] translate-y-[490px]",
       labelClassName: "bg-[#7209b7] text-white l0 text-center",
     },
   },
@@ -563,7 +587,7 @@ export default function Netron() {
 
   return (
     <ReactFlow
-      className="px-5 hidden md:block md:px-20 py-12 mx-0 min-h-[50vh] md:min-h-[66vh]"
+      className="px-5 md:block md:px-20 py-12 mx-0 min-h-[50vh] md:min-h-[66vh]"
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}

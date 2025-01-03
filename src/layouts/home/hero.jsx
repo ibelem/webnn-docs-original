@@ -14,7 +14,7 @@ export default function Hero() {
   }
 
   return (
-    <div className="z-10 w-full md:w-1/3 px-6 md:px-0 py-20 items-center justify-items-base backdrop-blur-[1px] static md:absolute left-0 md:left-28">
+    <div className="z-10 w-full md:w-1/2 lg:w-1/3 px-6 md:px-0 py-20 items-center justify-items-base backdrop-blur-[1px] static md:absolute left-0 md:left-8 lg:left-28">
       <h1 className="font-title tracking-[-0.02rem] text-4xl lg:text-5xl mb-4 font-black">
         WebNN: Neural Network Acceleration for the Web
       </h1>

@@ -9,7 +9,7 @@ function NetronNodeDot({ data, isConnectable }) {
   }, []);
  
   return (
-    <div className="netron dot">
+    <div className={data.nodeClassName}>
       <Handle className="conn"
         type="source"
         position={Position.Bottom}
