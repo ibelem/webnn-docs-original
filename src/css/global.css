@@ -11,7 +11,7 @@
   --dark-09: hsla(334, 85%, 57%, 0.03);
   --white: rgba(255, 255, 255, 1);
   --n-1: #f72684;
-  --n-2:#7209b7;
+  --n-2: #7209b7;
   --n-3: #3a0ca3;
   --n-4: #4361ee;
   --n-6: #4cc9f0;
@@ -66,11 +66,13 @@
 }
 
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Roboto Flex';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/roboto-flex-v26-latin/roboto-flex-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../fonts/roboto-flex-v26-latin/roboto-flex-v26-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 body {
@@ -123,13 +125,13 @@ body {
 }
 
 @keyframes spin {
-  
+
   from {
-    transform: rotate( 0deg );
+    transform: rotate(0deg);
   }
-  
+
   to {
-    transform: rotate( 360deg );
+    transform: rotate(360deg);
   }
 }
 
@@ -189,7 +191,7 @@ body {
 
 @media (min-width: 768px) {
   .md\:_text-lg {
-      font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -258,11 +260,13 @@ body {
   fill: var(--dark-09);
 }
 
-._text-slate-900, .font-title {
+._text-slate-900,
+.font-title {
   color: var(--light);
 }
 
-.dark\:_text-slate-100:is(html[class~=dark] *), .dark .font-title {
+.dark\:_text-slate-100:is(html[class~=dark] *),
+.dark .font-title {
   color: var(--dark);
 }
 
