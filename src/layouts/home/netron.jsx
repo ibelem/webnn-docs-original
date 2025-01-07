@@ -3,9 +3,9 @@ import {
   ReactFlow,
   useNodesState,
   useEdgesState,
+  useReactFlow,
+  ReactFlowProvider,
   addEdge,
-  reconnectEdge,
-  Background,
   Controls,
 } from "@xyflow/react";
 import NetronNodeDot from "./node-dot";
@@ -224,129 +224,6 @@ const initialNodes = [
     },
   },
 ];
-
-const nodesPosition = {
-  mobile: {
-    n0: 175,
-    n1: 117,
-    n2a: 24,
-    n2b: 140,
-    n2c: 258,
-    n3a: 31,
-    n3b: 147,
-    n3c: 265,
-    n4a: 27,
-    n4b: 143,
-    n5d1: 11,
-    n5d2: 127,
-    n5a: 46,
-    n5b: 162,
-    n6b: 92,
-    n7b: 90,
-    n7c: 262,
-    n8: 151,
-  },
-  sm: {
-    n0: 319,
-    n1: 261,
-    n2a: 84,
-    n2b: 284,
-    n2c: 484,
-    n3a: 91,
-    n3b: 291,
-    n3c: 491,
-    n4a: 87,
-    n4b: 287,
-    n5d1: 20,
-    n5d2: 220,
-    n5a: 106,
-    n5b: 306,
-    n6b: 194,
-    n7b: 192,
-    n7c: 487,
-    n8: 295,
-  },
-  md: {
-    n0: 568,
-    n1: 510,
-    n2a: 392,
-    n2b: 533,
-    n2c: 676,
-    n3a: 399,
-    n3b: 540,
-    n3c: 683,
-    n4a: 395,
-    n4b: 536,
-    n5d1: 355,
-    n5d2: 496,
-    n5a: 414,
-    n5b: 555,
-    n6b: 544,
-    n7b: 543,
-    n7c: 680,
-    n8: 613,
-  },
-  lg: {
-    n0: 758,
-    n1: 700,
-    n2a: 560,
-    n2b: 723,
-    n2c: 887,
-    n3a: 567,
-    n3b: 730,
-    n3c: 894,
-    n4a: 563,
-    n4b: 726,
-    n5d1: 514,
-    n5d2: 677,
-    n5a: 582,
-    n5b: 745,
-    n6b: 652,
-    n7b: 650,
-    n7c: 890,
-    n8: 735,
-  },
-  xl: {
-    n0: 958,
-    n1: 900,
-    n2a: 760,
-    n2b: 923,
-    n2c: 1087,
-    n3a: 767,
-    n3b: 930,
-    n3c: 1094,
-    n4a: 763,
-    n4b: 926,
-    n5d1: 714,
-    n5d2: 877,
-    n5a: 782,
-    n5b: 945,
-    n6b: 852,
-    n7b: 850,
-    n7c: 1090,
-    n8: 935,
-  },
-  "2xl": {
-    n0: 1158,
-    n1: 1100,
-    n2a: 960,
-    n2b: 1123,
-    n2c: 1287,
-    n3a: 967,
-    n3b: 1130,
-    n3c: 1294,
-    n4a: 963,
-    n4b: 1126,
-    n5d1: 914,
-    n5d2: 1077,
-    n5a: 982,
-    n5b: 1145,
-    n6b: 1052,
-    n7b: 1050,
-    n7c: 1290,
-    n8: 1135,
-  },
-};
 
 const initialEdges = [
   {
@@ -712,7 +589,7 @@ const initialEdges = [
   },
 ];
 
-export default function Netron() {
+function NetronFlow () {
   const nodeTypes = {
     netronNodeDot: NetronNodeDot,
     netronNode0: NetronNode0,
@@ -720,28 +597,22 @@ export default function Netron() {
     netronNode2: NetronNode2,
   };
 
+  
+  const { fitView } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  // const onConnect = useCallback(
-  //   (connection) => setEdges((eds) => addEdge(connection, eds)),
-  //   [setEdges]
-  // );
-
-  // const onReconnect = useCallback((oldEdge, newConnection) => {
-  //   setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
-  // }, []);
+  const onResize = useCallback(() => {
+    fitView({ padding: 0.2, duration: 200 });
+  }, [fitView]);
 
   useEffect(() => {
-    const handleResize = () => {
-      fitView();
-    };
-
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', onResize);
+    
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', onResize);
     };
-  }, [setEdges]);
+  }, [onResize]);
 
   return (
     <ReactFlow
@@ -750,14 +621,19 @@ export default function Netron() {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      // onConnect={onConnect}
-      // onReconnect={onReconnect}
       nodeTypes={nodeTypes}
       fitView
     >
       { 
         /* <Controls /> <MiniMap /> */}
-      {/* <Background variant="dots" gap={20} size={1} color="#d1d1d1" /> */}
     </ReactFlow>
+  );
+}
+
+export default function Netron() {
+  return (
+    <ReactFlowProvider>
+      <NetronFlow />
+    </ReactFlowProvider>
   );
 }
