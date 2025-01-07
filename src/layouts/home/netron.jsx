@@ -5,8 +5,6 @@ import {
   useEdgesState,
   useReactFlow,
   ReactFlowProvider,
-  addEdge,
-  Controls,
 } from "@xyflow/react";
 import NetronNodeDot from "./node-dot";
 import NetronNode0 from "./node-0";
@@ -16,7 +14,7 @@ import "@xyflow/react/dist/style.css";
 
 const initialNodes = [
   {
-    id: "n0",
+    id: "n0d",
     type: "netronNodeDot",
     position: { x: 175, y: 30 },
     data: {
@@ -42,7 +40,7 @@ const initialNodes = [
   {
     id: "n2a",
     type: "netronNode1",
-    position: { x: 24, y: 150 },
+    position: { x: 22, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
@@ -81,7 +79,7 @@ const initialNodes = [
   {
     id: "n3a",
     type: "netronNode1",
-    position: { x: 31, y: 220 },
+    position: { x: 29, y: 220 },
     data: {
       label: "Reshape",
       n1: "shape",
@@ -120,7 +118,7 @@ const initialNodes = [
   {
     id: "n4a",
     type: "netronNode0",
-    position: { x: 27, y: 290 },
+    position: { x: 25, y: 290 },
     data: {
       label: "Transpose",
       nodeClassName:
@@ -142,7 +140,7 @@ const initialNodes = [
   {
     id: "n5d1",
     type: "netronNodeDot",
-    position: { x: 11, y: 300 },
+    position: { x: 9, y: 300 },
     data: {
       nodeClassName:
         "netron dot",
@@ -160,7 +158,7 @@ const initialNodes = [
   {
     id: "n5a",
     type: "netronNode0",
-    position: { x: 46, y: 340 },
+    position: { x: 44, y: 340 },
     data: {
       label: "Mul",
       nodeClassName:
@@ -182,7 +180,7 @@ const initialNodes = [
   {
     id: "n6b",
     type: "netronNode0",
-    position: { x: 92, y: 390 },
+    position: { x: 91, y: 390 },
     data: {
       label: "MatMul",
       nodeClassName:
@@ -193,7 +191,7 @@ const initialNodes = [
   {
     id: "n7b",
     type: "netronNode0",
-    position: { x: 90, y: 440 },
+    position: { x: 89, y: 440 },
     data: {
       label: "Softmax",
       nodeClassName:
@@ -223,12 +221,21 @@ const initialNodes = [
       labelClassName: "bg-[#7209b7] text-white l0 text-center",
     },
   },
+  {
+    id: "n9d",
+    type: "netronNodeDot",
+    position: { x: 176, y: 540 },
+    data: {
+      nodeClassName:
+        "netron dot",
+    },
+  },
 ];
 
 const initialEdges = [
   {
-    id: "e0_1",
-    source: "n0",
+    id: "e0d_1",
+    source: "n0d",
     target: "n1",
     type: "default",
     style: {
@@ -587,6 +594,25 @@ const initialEdges = [
     },
     animated: true,
   },
+  {
+    id: "e8_9d",
+    source: "n8",
+    target: "n9d",
+    type: "default",
+    style: {
+      stroke: "#f72684",
+      strokeWidth: 1,
+      strokeDasharray: 2,
+      opacity: 1,
+    },
+    markerEnd: {
+      type: "arrowclosed",
+      color: "#f72684",
+      width: 20,
+      height: 20,
+    },
+    animated: true,
+  },
 ];
 
 function NetronFlow () {
@@ -616,7 +642,7 @@ function NetronFlow () {
 
   return (
     <ReactFlow
-      className="px-5 xl:col-span-3 md:px-20 my-0 py-0 md:py-0 mx-0 !h-[550px]"
+      className="px-5 xl:col-span-3 md:px-20 my-0 py-0 md:py-0 mx-0 !h-[570px]"
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}

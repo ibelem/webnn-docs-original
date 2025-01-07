@@ -16,7 +16,12 @@
   --n-4: #4361ee;
   --n-6: #4cc9f0;
   --n-7: #eb6424;
-  --n-border: rgba(229, 231, 235, 1);
+  --n-border: rgba(229, 231, 235, 0.5);
+  --shiny-cta-bg: #000000;
+  --shiny-cta-bg-subtle: #1a1818;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: blue;
+  --shiny-cta-highlight-subtle: #8484ff;
 }
 
 .netron label {
@@ -34,8 +39,7 @@
 }
 
 .netron label:hover {
-  color: #111;
-  background-color: var(--white);
+  background-color: var(--light);
 }
 
 .netron div {
@@ -135,6 +139,102 @@ body {
   }
 }
 
+.snow {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.snow span {
+  position: fixed;
+  top: -10%;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
+  width: 9px;
+  height: 12px;
+  box-shadow: -100px -290px 0px -2px #fff5;
+  rotate: 35deg;
+  filter: blur(3px)
+}
+
+.dark .snow span {
+  display: none;
+}
+
+@keyframes snowflakes-fall {
+  0% {
+    top: -10%;
+  }
+
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes snowflakes-shake {
+  0% {
+    transform: translateX(0px);
+  }
+
+  50% {
+    transform: translateX(80px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+
+.snow span {
+  z-index: 1;
+  animation-name: snowflakes-fall, snowflakes-shake;
+  animation-duration: 10s, 3s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-play-state: running, running;
+}
+
+.snow span:nth-of-type(0) {
+  left: 1%;
+  animation-delay: 0s, 0s;
+}
+
+.snow span:nth-of-type(1) {
+  left: 90%;
+  animation-delay: 3s, 8s;
+  scale: 0.5;
+}
+
+.snow span:nth-of-type(2) {
+  left: 20%;
+  animation-delay: 6s, 12s;
+  scale: 0.7;
+}
+
+.snow span:nth-of-type(3) {
+  left: 30%;
+  animation-delay: 5s, 10s;
+  scale: 0.8;
+}
+
+.snow span:nth-of-type(4) {
+  left: 40%;
+  animation-delay: 4s, 9s;
+  scale: 0.4;
+}
+
+.snow span:nth-of-type(5) {
+  left: 50%;
+  animation-delay: 8s, 3s;
+  scale: 1.2
+}
+
 .nextra-banner-container {
   background-color: var(--light);
   color: var(--white);
@@ -147,6 +247,10 @@ body {
 .nextra-banner-container a {
   background: none;
   color: var(--white);
+  z-index: 10;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
 
 .nextra-banner-container:hover {

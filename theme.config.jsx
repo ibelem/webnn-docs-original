@@ -210,9 +210,14 @@ export default {
   banner: {
     key: 'webnn-public-preview-announcement',
     content: (
-      <a href="https://webnn.io" target="_blank">
-        🎉 WebNN Public Preview is released. Read more →
-      </a>
+      <div>
+        <div className="snow">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <a href="https://webnn.io">
+          🎉 WebNN Public Preview is released. Read more →
+        </a>
+      </div>
     )
   },
   i18n: [
