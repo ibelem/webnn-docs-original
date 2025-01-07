@@ -6,7 +6,7 @@ import {
   addEdge,
   reconnectEdge,
   Background,
-  Controls
+  Controls,
 } from "@xyflow/react";
 import NetronNodeDot from "./node-dot";
 import NetronNode0 from "./node-0";
@@ -16,202 +16,343 @@ import "@xyflow/react/dist/style.css";
 
 const initialNodes = [
   {
-    id: "node0",
+    id: "n0",
     type: "netronNodeDot",
-    position: { x: 0, y: 0 },
+    position: { x: 175, y: 30 },
     data: {
-      nodeClassName: "netron dot translate-x-[175px] sm:translate-x-[319px] md:translate-x-[568px] lg:translate-x-[758px] xl:translate-x-[958px] 2xl:translate-x-[1158px] translate-y-[30px]",
-    }
+      nodeClassName:
+        "netron dot",
+    },
   },
   {
-    id: "node1",
+    id: "n1",
     type: "netronNode2",
-    position: { x: 0, y: 0 },
+    position: { x: 117, y: 60 },
     data: {
       label: "LayerNormalization",
       n1: "Scale",
       n1_data: "<320>",
       n2: "B",
       n2_data: "<320>",
-      nodeClassName: "netron translate-x-[117px] sm:translate-x-[261px] md:translate-x-[510px] lg:translate-x-[700px] xl:translate-x-[900px] 2xl:translate-x-[1100px] translate-y-[60px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#f72585] text-white text-center",
     },
   },
   {
-    id: "node2a",
+    id: "n2a",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 24, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
-      nodeClassName: "netron translate-x-[24px] sm:translate-x-[84px] md:translate-x-[392px] lg:translate-x-[560px] xl:translate-x-[760px] 2xl:translate-x-[960px] translate-y-[150px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
-    id: "node2b",
+    id: "n2b",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 140, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
-      nodeClassName: "netron translate-x-[140px] sm:translate-x-[284px] md:translate-x-[533px] lg:translate-x-[723px] xl:translate-x-[923px] 2xl:translate-x-[1123px] translate-y-[150px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
-    id: "node2c",
+    id: "n2c",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 258, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
       n1_data: "<320x320>",
-      nodeClassName: "netron translate-x-[258px] sm:translate-x-[484px] md:translate-x-[676px] lg:translate-x-[887px] xl:translate-x-[1087px] 2xl:translate-x-[1287px] translate-y-[150px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#7209b7] text-white text-center",
     },
   },
   {
-    id: "node3a",
+    id: "n3a",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 31, y: 220 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
-      nodeClassName: "netron translate-x-[31px] sm:translate-x-[91px] md:translate-x-[399px] lg:translate-x-[567px] xl:translate-x-[767px] 2xl:translate-x-[967px] translate-y-[220px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
-    id: "node3b",
+    id: "n3b",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 147, y: 220 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
-      nodeClassName: "netron translate-x-[147px] sm:translate-x-[291px] md:translate-x-[540px] lg:translate-x-[730px] xl:translate-x-[930px] 2xl:translate-x-[1130px] translate-y-[220px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
-    id: "node3c",
+    id: "n3c",
     type: "netronNode1",
-    position: { x: 0, y: 0 },
+    position: { x: 265, y: 220 },
     data: {
       label: "Reshape",
       n1: "shape",
       n1_data: "<4>",
-      nodeClassName: "netron translate-x-[265px] sm:translate-x-[491px] md:translate-x-[683px] lg:translate-x-[894px] xl:translate-x-[1094px] 2xl:translate-x-[1294px] translate-y-[220px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#3a0ca3] text-white text-center",
     },
   },
   {
-    id: "node4a",
+    id: "n4a",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 27, y: 290 },
     data: {
       label: "Transpose",
-      nodeClassName: "netron translate-x-[27px] sm:translate-x-[87px] md:translate-x-[395px] lg:translate-x-[563px] xl:translate-x-[763px] 2xl:translate-x-[963px] translate-y-[290px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
-    id: "node4b",
+    id: "n4b",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 143, y: 290 },
     data: {
       label: "Transpose",
-      nodeClassName: "netron translate-x-[143px] sm:translate-x-[287px] md:translate-x-[536px] lg:translate-x-[726px] xl:translate-x-[926px] 2xl:translate-x-[1126px] translate-y-[290px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
-    id: "node5dot1",
+    id: "n5d1",
     type: "netronNodeDot",
-    position: { x: 0, y: 0 },
+    position: { x: 11, y: 300 },
     data: {
-      nodeClassName: "netron dot translate-x-[11px] sm:translate-x-[20px] md:translate-x-[355px] lg:translate-x-[514px] xl:translate-x-[714px] 2xl:translate-x-[914px] translate-y-[300px]",
-    }
+      nodeClassName:
+        "netron dot",
+    },
   },
   {
-    id: "node5dot2",
+    id: "n5d2",
     type: "netronNodeDot",
-    position: { x: 0, y: 0 },
+    position: { x: 127, y: 300 },
     data: {
-      nodeClassName: "netron dot translate-x-[127px] sm:translate-x-[220px] md:translate-x-[496px] lg:translate-x-[677px] xl:translate-x-[877px] 2xl:translate-x-[1077px] translate-y-[300px]",
-    }
+      nodeClassName:
+        "netron dot",
+    },
   },
   {
-    id: "node5a",
+    id: "n5a",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 46, y: 340 },
     data: {
       label: "Mul",
-      nodeClassName: "netron translate-x-[46px] sm:translate-x-[106px] md:translate-x-[414px] lg:translate-x-[582px] xl:translate-x-[782px] 2xl:translate-x-[982px] translate-y-[340px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#4cc9f0] text-white l0 text-center",
     },
   },
   {
-    id: "node5b",
+    id: "n5b",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 162, y: 340 },
     data: {
       label: "Mul",
-      nodeClassName: "netron translate-x-[162px] sm:translate-x-[306px] md:translate-x-[555px] lg:translate-x-[745px] xl:translate-x-[945px] 2xl:translate-x-[1145px] translate-y-[340px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#4cc9f0] text-white l0 text-center",
     },
   },
   {
-    id: "node6b",
+    id: "n6b",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 92, y: 390 },
     data: {
       label: "MatMul",
-      nodeClassName: "netron translate-x-[92px] sm:translate-x-[194px] md:translate-x-[544px] lg:translate-x-[652px] xl:translate-x-[852px] 2xl:translate-x-[1052px] translate-y-[390px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#7209b7] text-white l0 text-center",
     },
   },
   {
-    id: "node7b",
+    id: "n7b",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 90, y: 440 },
     data: {
       label: "Softmax",
-      nodeClassName: "netron translate-x-[90px] sm:translate-x-[192px] md:translate-x-[543px] lg:translate-x-[650px] xl:translate-x-[850px] 2xl:translate-x-[1050px] translate-y-[440px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#eb6424] text-white l0 text-center",
     },
   },
   {
-    id: "node7c",
+    id: "n7c",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 262, y: 440 },
     data: {
       label: "Transpose",
-      nodeClassName: "netron translate-x-[262px] sm:translate-x-[487px] md:translate-x-[680px] lg:translate-x-[890px] xl:translate-x-[1090px] 2xl:translate-x-[1290px] translate-y-[440px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",
     },
   },
   {
-    id: "node8",
+    id: "n8",
     type: "netronNode0",
-    position: { x: 0, y: 0 },
+    position: { x: 151, y: 490 },
     data: {
       label: "MatMul",
-      nodeClassName: "netron translate-x-[151px] sm:translate-x-[295px] md:translate-x-[613px] lg:translate-x-[735px] xl:translate-x-[935px] 2xl:translate-x-[1135px] translate-y-[490px]",
+      nodeClassName:
+        "netron",
       labelClassName: "bg-[#7209b7] text-white l0 text-center",
     },
   },
 ];
 
+const nodesPosition = {
+  mobile: {
+    n0: 175,
+    n1: 117,
+    n2a: 24,
+    n2b: 140,
+    n2c: 258,
+    n3a: 31,
+    n3b: 147,
+    n3c: 265,
+    n4a: 27,
+    n4b: 143,
+    n5d1: 11,
+    n5d2: 127,
+    n5a: 46,
+    n5b: 162,
+    n6b: 92,
+    n7b: 90,
+    n7c: 262,
+    n8: 151,
+  },
+  sm: {
+    n0: 319,
+    n1: 261,
+    n2a: 84,
+    n2b: 284,
+    n2c: 484,
+    n3a: 91,
+    n3b: 291,
+    n3c: 491,
+    n4a: 87,
+    n4b: 287,
+    n5d1: 20,
+    n5d2: 220,
+    n5a: 106,
+    n5b: 306,
+    n6b: 194,
+    n7b: 192,
+    n7c: 487,
+    n8: 295,
+  },
+  md: {
+    n0: 568,
+    n1: 510,
+    n2a: 392,
+    n2b: 533,
+    n2c: 676,
+    n3a: 399,
+    n3b: 540,
+    n3c: 683,
+    n4a: 395,
+    n4b: 536,
+    n5d1: 355,
+    n5d2: 496,
+    n5a: 414,
+    n5b: 555,
+    n6b: 544,
+    n7b: 543,
+    n7c: 680,
+    n8: 613,
+  },
+  lg: {
+    n0: 758,
+    n1: 700,
+    n2a: 560,
+    n2b: 723,
+    n2c: 887,
+    n3a: 567,
+    n3b: 730,
+    n3c: 894,
+    n4a: 563,
+    n4b: 726,
+    n5d1: 514,
+    n5d2: 677,
+    n5a: 582,
+    n5b: 745,
+    n6b: 652,
+    n7b: 650,
+    n7c: 890,
+    n8: 735,
+  },
+  xl: {
+    n0: 958,
+    n1: 900,
+    n2a: 760,
+    n2b: 923,
+    n2c: 1087,
+    n3a: 767,
+    n3b: 930,
+    n3c: 1094,
+    n4a: 763,
+    n4b: 926,
+    n5d1: 714,
+    n5d2: 877,
+    n5a: 782,
+    n5b: 945,
+    n6b: 852,
+    n7b: 850,
+    n7c: 1090,
+    n8: 935,
+  },
+  "2xl": {
+    n0: 1158,
+    n1: 1100,
+    n2a: 960,
+    n2b: 1123,
+    n2c: 1287,
+    n3a: 967,
+    n3b: 1130,
+    n3c: 1294,
+    n4a: 963,
+    n4b: 1126,
+    n5d1: 914,
+    n5d2: 1077,
+    n5a: 982,
+    n5b: 1145,
+    n6b: 1052,
+    n7b: 1050,
+    n7c: 1290,
+    n8: 1135,
+  },
+};
+
 const initialEdges = [
   {
-    id: "e0->21",
-    source: "node0",
-    target: "node1",
+    id: "e0_1",
+    source: "n0",
+    target: "n1",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -228,9 +369,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e1->2a",
-    source: "node1",
-    target: "node2a",
+    id: "e1_2a",
+    source: "n1",
+    target: "n2a",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -247,9 +388,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e1->2b",
-    source: "node1",
-    target: "node2b",
+    id: "e1_2b",
+    source: "n1",
+    target: "n2b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -266,9 +407,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e1->2c",
-    source: "node1",
-    target: "node2c",
+    id: "e1_2c",
+    source: "n1",
+    target: "n2c",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -285,9 +426,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e2a->3a",
-    source: "node2a",
-    target: "node3a",
+    id: "e2a_3a",
+    source: "n2a",
+    target: "n3a",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -304,9 +445,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e2b->3b",
-    source: "node2b",
-    target: "node3b",
+    id: "e2b_3b",
+    source: "n2b",
+    target: "n3b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -323,9 +464,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e2c->3c",
-    source: "node2c",
-    target: "node3c",
+    id: "e2c_3c",
+    source: "n2c",
+    target: "n3c",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -342,9 +483,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e3a->4a",
-    source: "node3a",
-    target: "node4a",
+    id: "e3a_4a",
+    source: "n3a",
+    target: "n4a",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -361,9 +502,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e3b->4b",
-    source: "node3b",
-    target: "node4b",
+    id: "e3b_4b",
+    source: "n3b",
+    target: "n4b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -380,9 +521,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e4a->5a",
-    source: "node4a",
-    target: "node5a",
+    id: "e4a_5a",
+    source: "n4a",
+    target: "n5a",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -399,9 +540,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e4b->5b",
-    source: "node4b",
-    target: "node5b",
+    id: "e4b_5b",
+    source: "n4b",
+    target: "n5b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -418,9 +559,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e5d1->5a",
-    source: "node5dot1",
-    target: "node5a",
+    id: "e5d1_5a",
+    source: "n5d1",
+    target: "n5a",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -437,9 +578,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e5d2->5a",
-    source: "node5dot2",
-    target: "node5b",
+    id: "e5d2_5a",
+    source: "n5d2",
+    target: "n5b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -456,9 +597,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e5a->6b",
-    source: "node5a",
-    target: "node6b",
+    id: "e5a_6b",
+    source: "n5a",
+    target: "n6b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -475,9 +616,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e5b->6b",
-    source: "node5b",
-    target: "node6b",
+    id: "e5b_6b",
+    source: "n5b",
+    target: "n6b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -494,9 +635,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e6b->7b",
-    source: "node6b",
-    target: "node7b",
+    id: "e6b_7b",
+    source: "n6b",
+    target: "n7b",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -513,9 +654,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e3c->7c",
-    source: "node3c",
-    target: "node7c",
+    id: "e3c_7c",
+    source: "n3c",
+    target: "n7c",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -532,9 +673,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e7b->8",
-    source: "node7b",
-    target: "node8",
+    id: "e7b_8",
+    source: "n7b",
+    target: "n8",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -551,9 +692,9 @@ const initialEdges = [
     animated: true,
   },
   {
-    id: "e7c->8",
-    source: "node7c",
-    target: "node8",
+    id: "e7c_8",
+    source: "n7c",
+    target: "n8",
     type: "default",
     style: {
       stroke: "#f72684",
@@ -593,10 +734,9 @@ export default function Netron() {
 
   useEffect(() => {
     const handleResize = () => {
-      // setNodes((nodes) => [...nodes]);
-      setEdges((edges) => [...edges]);
+      fitView();
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -605,7 +745,7 @@ export default function Netron() {
 
   return (
     <ReactFlow
-      className="px-5 md:block md:px-20 my-0 py-0 md:py-0 mx-0 !h-[550px]"
+      className="px-5 xl:col-span-3 md:px-20 my-0 py-0 md:py-0 mx-0 !h-[550px]"
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}
@@ -613,10 +753,11 @@ export default function Netron() {
       // onConnect={onConnect}
       // onReconnect={onReconnect}
       nodeTypes={nodeTypes}
+      fitView
     >
-      {/* <Controls />
-        <MiniMap /> */}
-      <Background variant="dots" gap={20} size={1} color="#d1d1d1" />
+      { 
+        /* <Controls /> <MiniMap /> */}
+      {/* <Background variant="dots" gap={20} size={1} color="#d1d1d1" /> */}
     </ReactFlow>
   );
 }
