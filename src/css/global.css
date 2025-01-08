@@ -8,6 +8,7 @@
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
   --dark: hsl(333, 93%, 56%);
+  --dark-bg: hsla(333, 93%, 56%, 0.03);
   --dark-09: hsla(334, 85%, 57%, 0.03);
   --white: rgba(255, 255, 255, 1);
   --n-1: #f72684;
@@ -22,6 +23,43 @@
   --shiny-cta-fg: #ffffff;
   --shiny-cta-highlight: blue;
   --shiny-cta-highlight-subtle: #8484ff;
+}
+
+.info path {
+  stroke: var(--dark);
+}
+
+.info:hover path {
+  stroke: var(--light);
+}
+
+blockquote {
+  border: 1px solid var(--dark) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: var(--dark-bg);
+  font-style: normal !important;
+}
+
+blockquote:hover {
+  border: 1px solid var(--light);
+}
+
+blockquote a {
+  color: var(--dark) !important;
+}
+
+summary {
+  font-size: 1.5rem;
+  color: var(--light) !important;
+}
+
+._mt-2 {
+  margin-top: 1rem;
+}
+
+.dark summary {
+  color: var(--dark) !important;
 }
 
 .netron label {

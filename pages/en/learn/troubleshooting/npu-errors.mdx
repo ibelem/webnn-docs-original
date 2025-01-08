@@ -1,5 +1,3 @@
-Hello, Troubleshooting!
+# Unable to run WebNN NPU on Qualcomm Snapdragon X Elite?
 
-### Why can't I observe performance benefits from WebNN GPU?
-
-The DirectML execution of metacommands was disabled on Intel GPUs with driver version between 31.0.101.5518 and 32.0.101.6083. Please add `--disable_dml_meta_commands_for_gpu=0` flag to enable MetaCommands and measure the performance if the GPU driver is in the range [31.0.101.5518, 32.0.101.6083]. It's only applied on the GPU, will not impact the NPU. 
+Ensure the Qualcomm NPU driver is updated.

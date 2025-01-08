@@ -1,6 +1,6 @@
 export default {
-  quickstart: {
-    title: "🚀 Quickstart"
+  introduction: {
+    title: "Introduction"
   },
   'get-started': { title: 'Get Started', },
   tutorials: { title: 'Tutorials', },

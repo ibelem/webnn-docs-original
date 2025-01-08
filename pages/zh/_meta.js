@@ -15,14 +15,13 @@ export default {
     title: 'Reference',
     type: 'page',
   },
+  faq: {
+    title: 'FAQ',
+    type: 'page',
+  },
   spec: {
     title: <span className="after:content-['_↗'] after:font-sans">Spec</span>,
     type: 'page',
     href: 'https://www.w3.org/TR/webnn/',
-    newWindow: true
-  },
-  faq: {
-    title: 'FAQ',
-    type: 'page',
   }
 }
