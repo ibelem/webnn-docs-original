@@ -19,7 +19,7 @@ export default function HeroCh() {
         WebNN: Web 端侧推理加速
       </h1>
       <div>
-      Web Neural Network（WebNN）API 允许 Web 开发者在浏览器中直接运行人工智能模型。利用端侧 CPU, GPU 或 NPU 加速，WebNN 能显著提升 AI 应用的性能和效率。
+      Web Neural Network (WebNN) API 允许 Web 开发者在浏览器中通过 TypeScript 或 JavaScript 运行人工智能模型。利用端侧 CPU, GPU 或 NPU 加速，WebNN 能显著提升 AI 应用的性能和效率。
       </div>
       <div className="my-8">
         <Link
