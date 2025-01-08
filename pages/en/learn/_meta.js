@@ -2,7 +2,7 @@ export default {
   quickstart: {
     title: "🚀 Quickstart"
   },
-  'getting-started': { title: 'Getting Started', },
+  'get-started': { title: 'Get Started', },
   tutorials: { title: 'Tutorials', },
   troubleshooting: { title: 'Troubleshooting', },
 };

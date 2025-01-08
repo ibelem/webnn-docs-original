@@ -1,6 +1,6 @@
 export default {
-  'getting-started': {
-    title: "Getting Started"
+  'get-started': {
+    title: "Get Started"
   },
   'installation': {
     title: "Installation"

@@ -1,41 +1,41 @@
 ### How is the architecture of WebNN?
 
-As illustrated in the architecture diagram of the figure above, web browsers may implement the WebNN API using native machine learning API available in the operating system. This architecture allows JavaScript frameworks to tap into cutting-edge machine learning innovations in the operating system and the hardware platform underneath it without being tied to platform-specific capabilities, bridging the gap between software and hardware through a hardware-agnostic abstraction layer.
-
-WebNN architecture
-
-At the heart of neural networks is a computational graph of mathematical operations. These operations are the building blocks of modern machine learning technologies in computer vision, natural language processing, and robotics.
+The WebNN API enables web browsers to leverage native machine learning capabilities provided by the underlying operating system. By implementing a hardware-agnostic abstraction layer, the API allows JavaScript frameworks to access advanced machine learning features without depending on platform-specific implementations. Neural networks in WebNN are represented as computational graphs composed of mathematical operations, which form the foundation for computer vision, natural language processing, and other machine learning applications.
 
 ### Can I use WebNN API on PC desktop? 
 
-Web applications and frameworks can target typical computing devices on popular operating systems that people use in their daily lives. Initial prototypes demonstrate respectable performance on: 
+The WebNN API runs on common computing devices and operating systems. Performance testing shows effective operation on:
 
-* Smartphones e.g. Google Pixel 3 or similar 
-* Laptops e.g. Intel Core Ultra mobile processors (Meteor Lake) or similar 
- 
-The WebNN API is not tied to specific platforms and is implementable by existing major platform APIs, such as: 
+- Current-generation laptops (e.g., devices with Intel Core Ultra mobile processors)
+- Modern smartphones (e.g., Google Pixel 3 class devices)
 
-* Windows DirectML API 
-* Android LiteRT API 
-* ChromeOS LiteRT API 
-* macOS/iOS CoreML API 
+The API is platform-independent and integrates with major ML acceleration frameworks:
 
-Depending on the underlying hardware capabilities, these platform APIs may make use of CPU parallelism, general-purpose GPU, or dedicated hardware accelerators for machine learning. The WebNN API provides performance adaptation options but remains hardware agnostic. 
+- Windows: DirectML
+- Android: LiteRT
+- ChromeOS: LiteRT
+- Apple platforms: CoreML
+
+The API automatically leverages available hardware acceleration features, including CPU parallel processing, GPU compute capabilities, and dedicated ML accelerators, while maintaining hardware abstraction. Developers can tune performance parameters without managing specific hardware details.
 
 ### What is the right level of abstraction for neural network operations? 
 
-Neural network operations are mathematical functions. There are about a hundred standard functions universally supported in popular frameworks today e.g. convolution, matrix multiplication, various reductions, and normalizations. Additionally, some frameworks provide an even more extensive set of variants of these functions for ease of use.
+Neural network operations are mathematical functions used in machine learning frameworks. Modern frameworks support approximately 100 standard operations (convolution, matrix multiplication, reductions, normalizations) with some frameworks offering additional variants.
 
-In designing the WebNN operations, a proposal to decompose high-level functions to the more rudimentary mathematical operations was considered, with the key benefit of having a reduced number of operations defined. However, such an approach would make the networks more verbose and harder to construct. It’ll also risk losing the opportunity to leverage known optimizations for highly reusable functions in the operating systems and in the hardware platforms underneath it. For instance, most operating systems and modern hardware today support widely-used variants of convolutions and recurrent networks out of the box. By decomposing well-known functions into networks of rudimentary mathematical operations, their identities may be lost in the process with opportunities for significant performance gains left behind.
+When designing WebNN operations, we considered decomposing high-level functions into basic mathematical operations. While this would reduce the number of defined operations, it would make networks more verbose and risk losing hardware-level optimizations. Modern platforms provide built-in optimizations for common operations like convolutions and recurrent networks.
 
-To balance the needs of providing for future extensibility while ensuring maximum reuse and performance optimization opportunity, we chose to include both the standard functions and all the smaller operations making up the functions in the spec. For each high-level function defined, we make sure that all of its decomposed operations are also defined. This way, a newly-conceived function may be represented as a network of our decomposed operations, while a standard function can also be fully supported by the underlying platforms. 
+WebNN therefore implements both the standard functions and all the smaller operations making up the functions in the spec. This preserves access to platform-specific optimizations while enabling construction of new functions using decomposed operations.
 
 ### What alternatives have been considered?
 
-Stay the course and build machine learning solutions on WebGPU
+WebGPU provides a web API abstraction over graphics hardware that can be used to implement GPU-accelerated neural network operations. Major JavaScript ML frameworks like TensorFlow.js and ONNX Runtime Web currently use WebGPU as a backend. Instead of adopting WebNN, one alternative is to continue using these graphics-based frameworks for ML workloads on the web.
 
- WebGPU is a Web API abstraction to the underlying graphics API, which could be used to implement neural network operations that run on the GPU. Popular JavaScript machine learning frameworks such as TensorFlow.js and ONNX Runtime Web already uses WebGPU backend. An alternative to the WebNN proposal is to continue with this architecture and rely on JavaScript frameworks implemented with these graphics abstraction to address the current and future needs of ML scenarios on the web.
+However, this approach has two significant limitations:
 
-We believe this alternative is insufficient for two reasons. First, although graphics abstraction layers provide the flexibility of general programmability of the GPU graphics pipelines, they are unable to tap into hardware-specific optimizations and special instructions that are available to the operating system internals. The hardware ecosystem has been investing significantly in innovating in the ML space, and much of that is about improving the performance of intensive compute workloads in machine learning scenarios. Some key technologies that are important to model performance may not be uniformly accessible to applications through generic graphics pipeline states.
+1. Limited Hardware Optimization
 
-Secondly, the hardware diversity with numerous driver generations make conformance testing of neural network operations at the framework level more challenging. Conformance testing, compatibility, and quality assurance of hardware results have been the traditional areas of strength of the operating systems, something that should be leveraged by frameworks and applications alike. Since neural network models could be used in mission-critical scenarios such as in healthcare or industry processes, the trustworthiness of the results produced by the frameworks are of utmost importance to the users.
+WebGPU's graphics abstraction layer cannot fully utilize hardware-specific optimizations and special instructions available at the OS level. While GPU manufacturers continue to innovate with ML-specific hardware features, these performance improvements may not be accessible through generic graphics pipeline interfaces.
+
+2. Conformance Challenges
+
+The diverse hardware ecosystem and multiple driver versions make it difficult to ensure consistent and accurate results across different devices when implementing neural network operations through graphics frameworks. Operating systems traditionally excel at hardware conformance testing and quality assurance - crucial capabilities for ML frameworks, especially in critical applications like healthcare and industrial processes where result accuracy is paramount.
