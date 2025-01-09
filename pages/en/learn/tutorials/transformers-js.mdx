@@ -1,1 +1,8 @@
 # Transformers.js
+
+```js showLineNumbers filename="example.js"
+import * as transformers from from '@huggingface/transformers';
+
+const classifier = await transformers.pipeline("image-classification", path, options);
+let [err, output] = await asyncErrorHandling(classifier(imageUrl, { topk: 3 }));
+```

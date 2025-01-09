@@ -18,6 +18,7 @@ const nextConfig = {
 
 const withNextra = nextra({
   latex: true,
+  defaultShowCopyCode: true,
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.jsx',
 })
