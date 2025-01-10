@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 450">
+  <defs>
+    <filter id="bbblurry-filter" x="-100%" y="-100%" width="400%" height="400%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="74" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
+    </filter>
+  </defs>
+  
+  <g filter="url(#bbblurry-filter)">
+    <ellipse rx="68" ry="115" cx="564.558" cy="480.073" fill="hsl(37, 99%, 67%)" opacity="0.2">
+      <animate attributeName="cx" values="564.558; 644.558; 484.558; 564.558" dur="10s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+      <animate attributeName="cy" values="480.073; 400.073; 560.073; 480.073" dur="10s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+    </ellipse>
+    
+    <ellipse rx="68" ry="115" cx="469.939" cy="156.642" fill="hsl(316, 73%, 52%)" opacity="0.2">
+      <animate attributeName="cx" values="469.939; 549.939; 389.939; 469.939" dur="12s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+      <animate attributeName="cy" values="156.642; 106.642; 206.642; 156.642" dur="12s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+    </ellipse>
+    
+    <ellipse rx="68" ry="115" cx="246.420" cy="415.333" fill="hsl(185, 100%, 57%)" opacity="0.2">
+      <animate attributeName="cx" values="246.420; 326.420; 166.420; 246.420" dur="14s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+      <animate attributeName="cy" values="415.333; 355.333; 475.333; 415.333" dur="14s" repeatCount="indefinite" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" calcMode="spline" />
+    </ellipse>
+  </g>
+</svg>

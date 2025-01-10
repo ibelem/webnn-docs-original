@@ -27,12 +27,11 @@
 
 @font-face {
   font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Roboto Flex';
   font-style: normal;
   font-weight: 400;
   src: url('../fonts/roboto-flex-v26-latin/roboto-flex-v26-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+
 }
 
 @font-face {
@@ -43,29 +42,58 @@
   src: url('../fonts/intel-one-mono/IntelOneMono-Regular.woff2') format('woff2');
 }
 
-/* plus-jakarta-sans-regular - latin */
-@font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+/* @font-face {
+  font-display: swap; 
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-regular.woff2') format('woff2');
 }
-/* plus-jakarta-sans-500 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap; 
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 500;
-  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-500.woff2') format('woff2');
 }
-/* plus-jakarta-sans-600 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap; 
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 600;
-  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-600.woff2') format('woff2');
+} */
+
+@font-face {
+  font-display: swap;
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/instrument-sans-v1-latin/instrument-sans-v1-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/instrument-sans-v1-latin/instrument-sans-v1-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/instrument-sans-v1-latin/instrument-sans-v1-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/instrument-sans-v1-latin/instrument-sans-v1-latin-700.woff2') format('woff2');
 }
 
 body {
@@ -73,15 +101,46 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-code, kbd, samp, pre {
+code,
+kbd,
+samp,
+pre {
   font-family: 'Intel One Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: 'Plus Jakarta Sans', 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Instrument Sans', 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.hero-section {
+  margin-top: -570px;
+  height: 570px;
+  position: relative;
+  z-index: -1;
+}
+
+.hero-section svg {
+  height: 570px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 906px;
+    margin-top: -906px;
+  }
+
+  .hero-section svg {
+    height: 906px;
+    width: auto;
+  }
 }
 
 .info path {
