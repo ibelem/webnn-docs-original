@@ -1,8 +1,10 @@
-# Why can't I observe performance benefits from WebNN GPU on Intel GPUs?
+# Common Errors
+
+## Why can't I observe performance benefits from WebNN GPU on Intel GPUs?
 
 DirectML metacommands execution is disabled by default on Intel GPUs between driver versions `31.0.101.5518` and `32.0.101.6083`. To enable metacommands and evaluate performance on affected GPU drivers, add the following flag:
 
-```bash copy
+```bash copy showLineNumbers filename="gpu-flag"
 --disable_dml_meta_commands_for_gpu=0
 ```
 

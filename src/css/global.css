@@ -7,7 +7,8 @@
   --light-09: hsla(210, 100%, 97%, 1);
   --c: hsl(58, 89%, 93%);
   --d: hsl(29, 97%, 86%);
-  --dark: hsl(333, 93%, 56%);
+  --dark: hsl(193, 100%, 50%);
+  --dark-backup: hsl(333, 93%, 56%);
   --dark-bg: hsla(333, 93%, 56%, 0.03);
   --dark-09: hsla(334, 85%, 57%, 0.03);
   --white: rgba(255, 255, 255, 1);
@@ -502,6 +503,23 @@ summary {
 
 .dark .button-outline:hover .quickstart-svg path {
   fill: var(--dark-09);
+}
+
+.font-title {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.tutorials-title img.onnx-runtime-logo {
+  max-height: 40px;
+}
+
+.tutorials-title img.lite-rt-logo {
+  width: 136px;
+  height: 40px;
+}
+
+.tutorials-title img.webnn-logo {
+  max-height: 40px;
 }
 
 ._text-slate-900,

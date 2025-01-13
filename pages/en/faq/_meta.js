@@ -8,10 +8,13 @@ export default {
   api: {
     title: "API"
   },
-  'js-framework': {
-    title: "JavaScript Framework"
+  framework: {
+    title: "JavaScript ML Framework"
   },
-  'model': {
+  model: {
     title: "Model"
+  },
+  hardware: {
+    title: "Hardware and NPU"
   }
 };

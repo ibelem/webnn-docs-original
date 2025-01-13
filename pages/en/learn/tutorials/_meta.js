@@ -1,14 +1,17 @@
 export default {
+  index: {
+    title: "Framework vs Native"
+  },
   'transformers-js': {
     title: "Transformers.js"
   },
-  'onnx-runtime-web': {
-    title: "ONNX Runtime Web"
+  'onnx-runtime': {
+    title: "ONNX Runtime"
   },
   'lite-rt': {
     title: "Lite RT"
   },
-  'vanilla-webnn': {
-    title: "Vanilla WebNN"
+  'webnn': {
+    title: "Native WebNN"
   },
 };
