@@ -1,4 +1,32 @@
+import { Cards } from 'nextra/components'
+import { CpuChipIcon, BuildingLibraryIcon, PuzzlePieceIcon, CodeBracketIcon, CubeIcon } from '@heroicons/react/24/solid'
 
-[architecture](./architecture)
+# Frequently Asked Questions
 
-[api](./api)
+<Cards>
+  <Cards.Card
+    icon={<BuildingLibraryIcon />}
+    title="Architecture"
+    href="./architecture"
+  />
+  <Cards.Card
+    icon={<CodeBracketIcon />}
+    title="API"
+    href="./api"
+  />
+  <Cards.Card
+    icon={<PuzzlePieceIcon />}
+    title="JavaScript ML Framework"
+    href="./framework"
+  />
+  <Cards.Card
+    icon={<CubeIcon />}
+    title="Model"
+    href="./model"
+  />
+    <Cards.Card
+    icon={<CpuChipIcon />}
+    title="Hardware and NPU"
+    href="./hardware"
+  />
+</Cards>

@@ -1,4 +1,7 @@
 export default {
+  index: {
+    title: "Framework vs Native"
+  },
   'transformers-js': {
     title: "Transformers.js"
   },
@@ -8,7 +11,7 @@ export default {
   'lite-rt': {
     title: "Lite RT"
   },
-  'native-webnn': {
+  'webnn': {
     title: "Native WebNN"
   },
 };

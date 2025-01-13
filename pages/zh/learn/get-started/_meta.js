@@ -1,8 +1,8 @@
 export default {
+  'installation': {
+    title: "⚙️ Installation"
+  },
   'quickstart': {
     title: "🚀 Quickstart"
   },
-  'installation': {
-    title: "Installation"
-  }
 };

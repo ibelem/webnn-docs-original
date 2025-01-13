@@ -1,4 +1,146 @@
 # ML
 
-## createContext
-- Type: operation
+The ML Interface provides methods for creating and managing machine learning contexts in web applications.
+
+## Syntax
+
+```idl showLineNumbers filename="web-idl"
+Promise<MLContext> createContext(optional MLContextOptions options = {})
+Promise<MLContext> createContext(GPUDevice gpuDevice)
+```
+
+## Description
+
+The `ML` interface enables creation of machine learning contexts with specific device and power preferences. It provides two methods for creating contexts - one accepting configuration options and another accepting a specific GPU device.
+
+### Device Type Options
+
+An enumeration defining supported device types for ML operations:
+- `"cpu"`: CPU-based processing
+- `"gpu"`: GPU-based processing
+- `"npu"`: Neural Processing Unit-based processing
+
+#### `"cpu"`
+- Provides maximum compatibility across devices
+- Variable performance based on hardware capabilities
+- Default option if not specified
+
+#### `"gpu"`
+- Offers highest performance potential
+- May fall back to other devices for certain operations
+- Requires compatible graphics hardware
+
+#### `"npu"`
+- Optimized for power efficiency
+- Suitable for sustained workloads
+- May fall back to other devices for unsupported operations
+
+### Power Preference Options
+
+An enumeration specifying power consumption preferences:
+- `"default"`: System-determined behavior
+- `"high-performance"`: Prioritizes speed over power efficiency
+- `"low-power"`: Prioritizes power efficiency over performance
+
+#### `"default"`
+- Lets the user agent determine optimal behavior
+- Balanced approach to performance and power consumption
+
+#### `"high-performance"`
+- Maximizes execution speed
+- May increase power consumption
+- Suitable for compute-intensive tasks
+
+#### `"low-power"`
+- Minimizes power consumption
+- May reduce performance
+- Ideal for battery-powered devices
+
+### ML Context Options
+A dictionary of configuration options for ML contexts:
+
+```idl showLineNumbers filename="web-idl"
+dictionary MLContextOptions {
+  MLDeviceType deviceType = "cpu";
+  MLPowerPreference powerPreference = "default";
+}
+```
+
+## Specifications
+
+| Web Neural Network API Specification |
+|-------------------------|
+| [`ML` interface](https://www.w3.org/TR/webnn/#api-ml) |
+
+## Security Requirements
+- Requires a secure context
+- Available in Window and DedicatedWorker contexts
+
+## Examples
+
+### Creating a Context with Default Options
+
+```js showLineNumbers filename="example-1.js"
+try {
+  const context = await navigator.ml.createContext();
+  // Context ready for use
+} catch (error) {
+  console.error('Failed to create ML context:', error);
+}
+```
+
+### Creating a Context with Specific Options
+
+```js showLineNumbers filename="example-2.js"
+const options = {
+  deviceType: "gpu",
+  powerPreference: "high-performance"
+};
+
+try {
+  const context = await navigator.ml.createContext(options);
+  // High-performance GPU context ready
+} catch (error) {
+  console.error('Failed to create GPU context:', error);
+}
+```
+
+### Using with a Specific GPU Device
+
+```js showLineNumbers filename="example-3.js"
+// Assuming we have a GPUDevice instance
+const gpuDevice = await navigator.gpu.requestAdapter()
+  .then(adapter => adapter.requestDevice());
+
+try {
+  const context = await navigator.ml.createContext(gpuDevice);
+  // Context created with specific GPU device
+} catch (error) {
+  console.error('Failed to create context with GPU device:', error);
+}
+```
+
+## Browser Compatibility
+
+> ⚠️ The ML interface is under active development and browser support may vary.
+
+| Browser | Support |
+|---------|---------|
+| Chrome  | In Development |
+| Firefox | In Development |
+| Safari  | In Development |
+| Edge    | In Development |
+
+## Development Status
+
+The ML interface and MLContextOptions are actively being developed. Current considerations include:
+
+- Implementation of fallback device mechanisms
+- Support for multiple devices in preferred order
+- Device exclusion capabilities
+- Enhanced error handling
+- Quantized operator support
+
+## See Also
+
+- [GPUDevice Interface](https://www.w3.org/TR/webgpu/#gpudevice)
