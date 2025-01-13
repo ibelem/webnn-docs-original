@@ -1,27 +1,39 @@
 
 import { Cards } from 'nextra/components'
+import Image from 'next/image'
+import TransformersJs from '../../../../src/components/images/transformersjs.jsx'
+import OnnxRuntime from '../../../../src/components/images/onnxruntime.jsx'
+import LiteRt from '../../../../src/components/images/litert.jsx'
+import WebNn from '../../../../src/components/images/webnn.jsx'
 
+WebNN can be used either through supported JavaScript machine learning frameworks or directly via its native API. Choose the approach that best suits your needs.
 
-<Cards>
+# ML Frameworks
+
+<Cards className="quick-start-card">
   <Cards.Card
-
+    icon={<TransformersJs />}
     title="Transformers.js"
     href="../tutorials/transformers-js"
   />
   <Cards.Card
- 
-    title="ONNX Runtime Web"
+    icon={<OnnxRuntime />}
+    title="ONNX Runtime"
     href="../tutorials/onnx-runtime-web"
   />
   <Cards.Card
- 
+    icon={<LiteRt />}
     title="Lite RT"
-    href="tutorials/lite-rt"
+    href="../tutorials/lite-rt"
   />
-    <Cards.Card
- 
+</Cards>
+
+# Native WebNN API
+
+<Cards className="quick-start-card">
+  <Cards.Card
+    icon={<WebNn />}
     title="Vanilla WebNN"
     href="../tutorials/vanilla-webnn"
-    arrow
   />
 </Cards>

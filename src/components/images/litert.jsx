@@ -1,11 +1,11 @@
 import Image from 'next/image'
  
-export default function LiteRT() {
+export default function LiteRt() {
   return (
     <Image
-      src="../../images/logo/litert-min.png"
-      width={500}
-      height={500}
+      src="/static/images/logo/lite-rt.png"
+      width={70}
+      height={20}
       alt="Lite RT"
     />
   )
