@@ -25,7 +25,7 @@ const HeroBackground = (props) => (
     </defs>
     <g filter="url(#a)">
       <ellipse
-        cx={564.558}
+        cx={504.558}
         cy={480.073}
         fill="hsl(37, 99%, 67%)"
         opacity={1}
@@ -38,7 +38,7 @@ const HeroBackground = (props) => (
           dur="10s"
           keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"
           repeatCount="indefinite"
-          values="564.558; 644.558; 484.558; 564.558"
+          values="504.558; 584.558; 424.558; 504.558"
         />
         <animate
           attributeName="cy"
@@ -50,8 +50,8 @@ const HeroBackground = (props) => (
         />
       </ellipse>
       <ellipse
-        cx={469.939}
-        cy={156.642}
+        cx={369.939}
+        cy={56.642}
         fill="hsl(316, 73%, 52%)"
         opacity={1}
         rx={68}
@@ -63,7 +63,7 @@ const HeroBackground = (props) => (
           dur="10s"
           keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"
           repeatCount="indefinite"
-          values="469.939; 549.939; 389.939; 469.939"
+          values="369.939; 449.939; 289.939; 369.939"
         />
         <animate
           attributeName="cy"
@@ -71,11 +71,11 @@ const HeroBackground = (props) => (
           dur="10s"
           keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"
           repeatCount="indefinite"
-          values="156.642; 106.642; 206.642; 156.642"
+          values="56.642; 6.642; 106.642; 56.642"
         />
       </ellipse>
       <ellipse
-        cx={246.42}
+        cx={226.42}
         cy={415.333}
         fill="hsl(185, 100%, 57%)"
         opacity={1}
@@ -88,7 +88,7 @@ const HeroBackground = (props) => (
           dur="4s"
           keySplines="0.4 0 0.2 1; 0.4 0 0.2 1;"
           repeatCount="indefinite"
-          values="246.420; 326.420; 166.420; 246.420"
+          values="226.420; 106.420; 46.420; 226.420"
         />
         <animate
           attributeName="cy"

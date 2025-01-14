@@ -151,7 +151,7 @@ h5 {
 }
 
 blockquote {
-  border: 1px solid var(--dark) !important;
+  border: 1px solid var(--dark-backup) !important;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   background-color: var(--dark-bg);
@@ -163,7 +163,7 @@ blockquote:hover {
 }
 
 blockquote a {
-  color: var(--dark) !important;
+  color: var(--dark-backup) !important;
 }
 
 summary {

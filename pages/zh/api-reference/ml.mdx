@@ -1,13 +1,54 @@
 # ML
 
-The ML Interface provides methods for creating and managing machine learning contexts in web applications.
+The `ML` Interface provides methods for creating and managing machine learning contexts in web applications.
 
-## Syntax
+## Web IDL
 
 ```idl showLineNumbers filename="web-idl"
-Promise<MLContext> createContext(optional MLContextOptions options = {})
-Promise<MLContext> createContext(GPUDevice gpuDevice)
+enum MLDeviceType {
+  "cpu",
+  "gpu",
+  "npu"
+};
+
+enum MLPowerPreference {
+  "default",
+  "high-performance",
+  "low-power"
+};
+
+dictionary MLContextOptions {
+  MLDeviceType deviceType = "cpu";
+  MLPowerPreference powerPreference = "default";
+};
+
+[SecureContext, Exposed=(Window, DedicatedWorker)]
+interface ML {
+  Promise<MLContext> createContext(optional MLContextOptions options = {});
+  Promise<MLContext> createContext(GPUDevice gpuDevice);
+};
 ```
+
+## Methods
+
+### createContext()
+
+#### Syntax
+
+```js showLineNumbers filename="createContext.js"
+createContext()
+createContext(options)
+createContext(gpuDevice)
+```
+
+#### Parameters
+
+- `options`: A `MLContextOptions` object providing the application’s preferences
+- `gpuDevice`: A specific `GPUDevice` object to use with the context
+
+#### Return Value
+
+A `MLContext`
 
 ## Description
 
@@ -59,22 +100,12 @@ An enumeration specifying power consumption preferences:
 ### ML Context Options
 A dictionary of configuration options for ML contexts:
 
-```idl showLineNumbers filename="web-idl"
+```webidl showLineNumbers filename="web-idl"
 dictionary MLContextOptions {
   MLDeviceType deviceType = "cpu";
   MLPowerPreference powerPreference = "default";
 }
 ```
-
-## Specifications
-
-| Web Neural Network API Specification |
-|-------------------------|
-| [`ML` interface](https://www.w3.org/TR/webnn/#api-ml) |
-
-## Security Requirements
-- Requires a secure context
-- Available in Window and DedicatedWorker contexts
 
 ## Examples
 
@@ -119,16 +150,25 @@ try {
   console.error('Failed to create context with GPU device:', error);
 }
 ```
+## Specifications
+
+| Web Neural Network API Specification |
+|-------------------------|
+| [`ML` interface](https://www.w3.org/TR/webnn/#api-ml) |
+
+## Security Requirements
+- Requires a secure context
+- Available in Window and DedicatedWorker contexts
 
 ## Browser Compatibility
 
-> ⚠️ The ML interface is under active development and browser support may vary.
+> The `ML` interface is under active development and browser support may vary.
 
 | Browser | Support |
 |---------|---------|
 | Chrome  | In Development |
-| Firefox | In Development |
-| Safari  | In Development |
+| Firefox | TBD |
+| Safari  | TBD |
 | Edge    | In Development |
 
 ## Development Status

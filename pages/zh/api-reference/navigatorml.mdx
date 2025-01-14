@@ -2,6 +2,16 @@
 
 The `navigator.ml` property provides access to the WebNN API, allowing web applications to interact with machine learning capabilities in the browser.
 
+## Web IDL
+
+```idl showLineNumbers filename="web-idl"
+interface mixin NavigatorML {
+  [SecureContext, SameObject] readonly attribute ML ml;
+};
+Navigator includes NavigatorML;
+WorkerNavigator includes NavigatorML;
+```
+
 ## Syntax
 
 ```js showLineNumbers filename="navigator.ml.js"
@@ -21,16 +31,6 @@ The `navigator.ml` property returns a read-only reference to an `ML` object, whi
 - Accessible through the `WorkerNavigator` interface in dedicated worker contexts
 - Protected by a secure context requirement (HTTPS or localhost)
 
-## Specifications
-
-| Web Neural Network API Specification |
-|-------------------------|
-| [The `navigator.ml` interface](https://www.w3.org/TR/webnn/#api-navigator-ml) |
-
-## Browser Compatibility
-
-The `navigator.ml` interface is experimental and support may vary across browsers.
-
 ## Example
 
 ```js showLineNumbers filename="example.js"
@@ -42,10 +42,19 @@ if ('ml' in navigator) {
   console.log('ML API is not supported in this browser');
 }
 ```
+## Specifications
+
+| Web Neural Network API Specification |
+|-------------------------|
+| [The `navigator.ml` interface](https://www.w3.org/TR/webnn/#api-navigator-ml) |
 
 ## Security Requirements
 
 Access to `navigator.ml` requires a secure context (HTTPS or localhost). Attempting to access this API in a non-secure context will result in an error.
+
+## Browser Compatibility
+
+The `navigator.ml` interface is experimental and support may vary across browsers.
 
 ## See Also
 - xxxx
