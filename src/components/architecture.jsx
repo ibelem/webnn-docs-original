@@ -4,7 +4,7 @@ import {
   useNodesState,
   useEdgesState,
   useReactFlow,
-  ReactFlowProvider,
+  ReactFlowProvider
 } from "@xyflow/react";
 import NetronNode0 from "./node-0";
 import "@xyflow/react/dist/style.css";
@@ -46,7 +46,7 @@ const initialNodes = [
   {
     id: "n0c",
     type: "netronNode0",
-    position: { x: 357, y: 0 },
+    position: { x: 359, y: 0 },
     data: {
       label: "PyTorch",
       nodeClassName:
@@ -59,7 +59,7 @@ const initialNodes = [
     type: "netronNode0",
     position: { x: 466, y: 0 },
     data: {
-      label: ".npy + weights",
+      label: ".npy",
       nodeClassName:
         "architecture",
       labelClassName: "bg-[#f72585] model text-white l0 text-center",
@@ -68,12 +68,12 @@ const initialNodes = [
   {
     id: "n1a",
     type: "netronNode0",
-    position: { x: 140, y: 50 },
+    position: { x: 234, y: 50 },
     data: {
       label: "Transformers.js",
       nodeClassName:
         "architecture",
-      labelClassName: "bg-[#7209b7] text-white l0 text-center",
+      labelClassName: "bg-[#7209b7] transformers text-white l0 text-center",
     },
   },
   {
@@ -101,7 +101,7 @@ const initialNodes = [
   {
     id: "n2b",
     type: "netronNode0",
-    position: { x: 365, y: 100 },
+    position: { x: 358, y: 100 },
     data: {
       label: "LiteRT",
       nodeClassName:
@@ -134,7 +134,7 @@ const initialNodes = [
   {
     id: "n3b",
     type: "netronNode0",
-    position: { x: 290, y: 150 },
+    position: { x: 284, y: 150 },
     data: {
       label: "WebNN",
       nodeClassName:
@@ -145,7 +145,7 @@ const initialNodes = [
   {
     id: "n3c",
     type: "netronNode0",
-    position: { x: 440, y: 150 },
+    position: { x: 430, y: 150 },
     data: {
       label: "WebGPU",
       nodeClassName:
@@ -167,7 +167,7 @@ const initialNodes = [
   {
     id: "n4a",
     type: "netronNode0",
-    position: { x: 210, y: 200 },
+    position: { x: 205, y: 200 },
     data: {
       label: "LiteRT",
       nodeClassName:
@@ -178,7 +178,7 @@ const initialNodes = [
   {
     id: "n4b",
     type: "netronNode0",
-    position: { x: 310, y: 200 },
+    position: { x: 307, y: 200 },
     data: {
       label: "DirectML",
       nodeClassName:
@@ -222,7 +222,7 @@ const initialNodes = [
   {
     id: "n5b",
     type: "netronNode0",
-    position: { x: 290, y: 250 },
+    position: { x: 285, y: 250 },
     data: {
       label: "NPU",
       nodeClassName:
@@ -233,7 +233,7 @@ const initialNodes = [
   {
     id: "n5c",
     type: "netronNode0",
-    position: { x: 440, y: 250 },
+    position: { x: 430, y: 250 },
     data: {
       label: "GPU",
       nodeClassName:
@@ -249,11 +249,12 @@ const initialEdges = [
     source: "n0a",
     target: "n1a",
     type: "default",
+    label: 'Path 1',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -268,11 +269,12 @@ const initialEdges = [
     source: "n0a",
     target: "n2a",
     type: "default",
+    label: 'Path 2',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -287,11 +289,12 @@ const initialEdges = [
     source: "n1a",
     target: "n2a",
     type: "default",
+    label: 'Path 1',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -310,7 +313,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -329,7 +332,7 @@ const initialEdges = [
   //     stroke: "#999",
   //     strokeWidth: 1,
   //     strokeDasharray: 2,
-  //     opacity: 1,
+  //     opacity: 0.8,
   //   },
   //   markerEnd: {
   //     type: "arrowclosed",
@@ -344,11 +347,12 @@ const initialEdges = [
     source: "n0b",
     target: "n2b",
     type: "default",
+    label: 'Path 3',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -367,7 +371,7 @@ const initialEdges = [
   //     stroke: "#999",
   //     strokeWidth: 1,
   //     strokeDasharray: 2,
-  //     opacity: 1,
+  //     opacity: 0.8,
   //   },
   //   markerEnd: {
   //     type: "arrowclosed",
@@ -377,35 +381,36 @@ const initialEdges = [
   //   },
   //   animated: true,
   // },
-  {
-    id: "e2a_3a",
-    source: "n2a",
-    target: "n3a",
-    type: "default",
-    style: {
-      stroke: "#999",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#999",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
+  // {
+  //   id: "e2a_3a",
+  //   source: "n2a",
+  //   target: "n3a",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
   {
     id: "e2a_3b",
     source: "n2a",
     target: "n3b",
     type: "default",
+    label: 'Path 1, Path 2',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -415,73 +420,74 @@ const initialEdges = [
     },
     animated: true,
   },
-  {
-    id: "e2a_3c",
-    source: "n2a",
-    target: "n3c",
-    type: "default",
-    style: {
-      stroke: "#999",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#999",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
-  {
-    id: "e2b_3a",
-    source: "n2b",
-    target: "n3a",
-    type: "default",
-    style: {
-      stroke: "#999",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#999",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
+  // {
+  //   id: "e2a_3c",
+  //   source: "n2a",
+  //   target: "n3c",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
+  // {
+  //   id: "e2b_3a",
+  //   source: "n2b",
+  //   target: "n3a",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
+  // {
+  //   id: "e2b_3c",
+  //   source: "n2b",
+  //   target: "n3c",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
   {
     id: "e2b_3b",
     source: "n2b",
     target: "n3b",
     type: "default",
+    label: 'Path 3',
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#999",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
-  {
-    id: "e2b_3c",
-    source: "n2b",
-    target: "n3c",
-    type: "default",
-    style: {
-      stroke: "#999",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -496,30 +502,13 @@ const initialEdges = [
     source: "n0d",
     target: "n3b",
     type: "default",
-    style: {
-      stroke: "#3a0ca3",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#3a0ca3",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
-  {
-    id: "e3a_5a",
-    source: "n3a",
-    target: "n5a",
-    type: "default",
+    label: 'Path 4',
+    // labelStyle: { fill: '#999' },
     style: {
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -529,25 +518,44 @@ const initialEdges = [
     },
     animated: true,
   },
-  {
-    id: "e3c_5c",
-    source: "n3c",
-    target: "n5c",
-    type: "default",
-    style: {
-      stroke: "#999",
-      strokeWidth: 1,
-      strokeDasharray: 2,
-      opacity: 1,
-    },
-    markerEnd: {
-      type: "arrowclosed",
-      color: "#999",
-      width: 20,
-      height: 20,
-    },
-    animated: true,
-  },
+  // {
+  //   id: "e3a_5a",
+  //   source: "n3a",
+  //   target: "n5a",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
+  // {
+  //   id: "e3c_5c",
+  //   source: "n3c",
+  //   target: "n5c",
+  //   type: "default",
+  //   style: {
+  //     stroke: "#eee",
+  //     strokeWidth: 1,
+  //     strokeDasharray: 2,
+  //     opacity: 0.8,
+  //   },
+  //   markerEnd: {
+  //     type: "arrowclosed",
+  //     color: "#eee",
+  //     width: 20,
+  //     height: 20,
+  //   },
+  //   animated: true,
+  // },
   {
     id: "e3b_4a",
     source: "n3b",
@@ -557,7 +565,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -576,7 +584,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -595,7 +603,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -614,7 +622,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -633,7 +641,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -652,7 +660,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -671,7 +679,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -690,7 +698,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -709,7 +717,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -728,7 +736,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -747,7 +755,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",
@@ -766,7 +774,7 @@ const initialEdges = [
       stroke: "#999",
       strokeWidth: 1,
       strokeDasharray: 2,
-      opacity: 1,
+      opacity: 0.8,
     },
     markerEnd: {
       type: "arrowclosed",

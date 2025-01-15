@@ -1,1 +1,56 @@
+import InfoIcon from '../../../src/components/icons/info.jsx'
+
 # MLGraph
+
+The `MLGraph` interface represents a compiled computational graph. Once constructed, a compiled graph is immutable and cannot be modified.
+
+## Web IDL
+
+```webidl showLineNumbers filename="web-idl"
+[SecureContext, Exposed=(Window, DedicatedWorker)]
+interface MLGraph {};
+```
+
+## Description
+
+The `MLGraph` interface provides a representation of a compiled computational graph used in machine learning operations. Each instance maintains internal state through several slots that define its context, inputs, outputs, and implementation details.
+
+### Internal Slots
+
+The `MLGraph` interface maintains the following internal slots:
+
+- `context`: An `MLContext` instance associated with this graph
+- `inputDescriptors`: A record mapping input names (`USVString`) to their corresponding `MLOperandDescriptor`
+- `outputDescriptors`: A record mapping output names (`USVString`) to their corresponding `MLOperandDescriptor`
+- `implementation`: The underlying implementation provided by the User Agent
+
+### Notes
+
+- The graph is immutable after construction to ensure computational integrity
+- All input and output operands must be properly described through their respective descriptors
+- The implementation details are managed by the User Agent and are not directly accessible
+
+## Specifications
+
+| WebNN API | Status |
+|--------------|---------|
+| [`MLGraph` Interface](https://webmachinelearning.github.io/webnn/#mlgraph) | Candidate Recommendation Draft |
+
+## Security Requirements
+
+The `MLGraph` interface:
+
+1. Requires a secure context (`SecureContext`)
+2. Is exposed only to `Window` and `DedicatedWorker` contexts
+3. Cannot be modified after construction to prevent tampering with computational graphs
+
+## Browser Compatibility
+
+> <InfoIcon /> The `Graph` interface is under active development and browser support may vary.
+
+| Browser | Support |
+|---------|---------|
+| Chrome  | ✓ 112 |
+| Firefox | × Not supported |
+| Safari  | × Not supported |
+| Edge    | ✓ 112 |

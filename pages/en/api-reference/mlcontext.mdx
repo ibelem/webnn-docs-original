@@ -1,3 +1,5 @@
+import InfoIcon from '../../../src/components/icons/info.jsx'
+
 # MLContext
 
 The `MLContext` interface represents a global state of neural network compute workload and execution processes. Each `MLContext` object has associated `context type`, `MLDeviceType` and `MLPowerPreference`.
@@ -210,50 +212,67 @@ dictionary MLSingleInputSupportLimits {
 ### Executing an MLGraph using MLTensors
 
 ```js showLineNumbers filename="example-1.js"
-const descriptor = {dataType: 'float32', shape: [2, 2]};
-const context = await navigator.ml.createContext();
-const builder = new MLGraphBuilder(context);
+  const mlGraphExecution = async () => {
+    const descriptor = {
+      dataType: 'float32',
+      shape: [2, 2]
+    };
+    const context = await navigator.ml.createContext({
+      deviceType: 'gpu'
+    });
+    const builder = new MLGraphBuilder(context);
 
-// 1. Create a computational graph 'C = 0.2 * A + B'.
-const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
-const A = builder.input('A', descriptor);
-const B = builder.input('B', descriptor);
-const C = builder.add(builder.mul(A, constant), B);
+    // 1. Create a computational graph 'C = 0.2 * A + B'.
+    const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
+    const A = builder.input('A', descriptor);
+    const B = builder.input('B', descriptor);
+    const C = builder.add(builder.mul(A, constant), B);
 
-// 2. Compile the graph.
-const graph = await builder.build({'C': C});
+    // 2. Compile the graph.
+    const graph = await builder.build({
+      'C': C
+    });
 
-// 3. Create reusable input and output tensors.
-const [inputTensorA, inputTensorB, outputTensorC] =
-    await Promise.all([
-      context.createTensor({
-        dataType: A.dataType, shape: A.shape, writable: true
-      }),
-      context.createTensor({
-        dataType: B.dataType, shape: B.shape, writable: true
-      }),
-      context.createTensor({
-        dataType: C.dataType, shape: C.shape, readable: true
-      })
-    ]);
+    // 3. Create reusable input and output tensors.
+    const [inputTensorA, inputTensorB, outputTensorC] =
+      await Promise.all([
+        context.createTensor({
+          dataType: A.dataType,
+          shape: A.shape,
+          writable: true
+        }),
+        context.createTensor({
+          dataType: B.dataType,
+          shape: B.shape,
+          writable: true
+        }),
+        context.createTensor({
+          dataType: C.dataType,
+          shape: C.shape,
+          readable: true
+        })
+      ]);
 
-// 4. Initialize the inputs.
-context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
-context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
+    // 4. Initialize the inputs.
+    context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
+    context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
 
-// 5. Execute the graph.
-const inputs = {
-  'A': inputTensorA,
-  'B': inputTensorB
-};
-const outputs = {
-  'C': outputTensorC
-};
-context.dispatch(graph, inputs, outputs);
-    
-// 6. Read back the computed result.
-const result = await context.readTensor(outputTensorC);
-console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
+    // 5. Execute the graph.
+    const inputs = {
+      'A': inputTensorA,
+      'B': inputTensorB
+    };
+    const outputs = {
+      'C': outputTensorC
+    };
+    context.dispatch(graph, inputs, outputs);
+
+    // 6. Read back the computed result.
+    const result = await context.readTensor(outputTensorC);
+    console.log('Output value:', new Float32Array(result));
+  }
+
+  mlGraphExecution();
 ```
 
 ### Checking Operator Support Limits
@@ -266,9 +285,9 @@ console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
 
 ## Specifications
 
-| Web Neural Network API Specification |
-|-------------------------|
-| [`MLContext` interface](https://www.w3.org/TR/webnn/#mlcontext) |
+| WebNN API | Status |
+|--------------|---------|
+| [`MLContext` interface](https://www.w3.org/TR/webnn/#mlgraph) | Candidate Recommendation Draft |
 
 ## Security Requirements
 
@@ -278,11 +297,11 @@ console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
 
 ## Browser Compatibility
 
-> The `MLContext` interface is under active development and browser support may vary.
+> <InfoIcon /> The `MLContext` interface is under active development and browser support may vary.
 
 | Browser | Support |
 |---------|---------|
-| Chrome  | In Development |
-| Firefox | TBD |
-| Safari  | TBD |
-| Edge    | In Development |
+| Chrome  | ✓ 112 |
+| Firefox | × Not supported |
+| Safari  | × Not supported |
+| Edge    | ✓ 112 |

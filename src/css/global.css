@@ -192,7 +192,7 @@ summary {
   border-top-left-radius: 1px;
   border-top-right-radius: 1px;
   font-size: 0.8rem;
-  width: 120px;
+  width: 125px;
 }
 
 .netron .l0 {
@@ -211,11 +211,15 @@ summary {
 }
 
 .architecture .fw {
-  width: 195px;
+  width: 197px;
 }
 
 .architecture .model {
-  width: 95px;
+  width: 88px;
+}
+
+.architecture  .transformers {
+  width: 102px;
 }
 
 .architecture .native {
@@ -227,7 +231,7 @@ summary {
 }
 
 .architecture .grey {
-  background-color: #999;
+  background-color: #eee;
 }
 
 .netron label:hover, .architecture label:hover {

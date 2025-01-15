@@ -46,7 +46,7 @@ const initialNodes = [
   {
     id: "n0c",
     type: "netronNode0",
-    position: { x: 357, y: 0 },
+    position: { x: 368, y: 0 },
     data: {
       label: "PyTorch",
       nodeClassName:
@@ -57,9 +57,9 @@ const initialNodes = [
   {
     id: "n0d",
     type: "netronNode0",
-    position: { x: 466, y: 0 },
+    position: { x: 477, y: 0 },
     data: {
-      label: ".npy + weights",
+      label: ".npy",
       nodeClassName:
         "architecture",
       labelClassName: "bg-[#f72585] model text-white l0 text-center",
@@ -90,7 +90,7 @@ const initialNodes = [
   {
     id: "n2b",
     type: "netronNode0",
-    position: { x: 365, y: 50 },
+    position: { x: 368, y: 50 },
     data: {
       label: "LiteRT",
       nodeClassName:

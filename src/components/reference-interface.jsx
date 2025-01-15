@@ -17,7 +17,9 @@ function InterfaceIcon() {
 const api = [
   ['navigator.ml', 'navigatorml'],
   ['ML', 'ml'],
-  ['MLContext', 'mlcontext']
+  ['MLContext', 'mlcontext'],
+  ['MLGraph', 'mlgraph'],
+  ['MLOperand', 'mloperand']
 ]
 
 export default function ReferenceCards() {
