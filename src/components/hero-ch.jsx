@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { BoltIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import BoltIcon from './icons/bolt.jsx'
+import FaqIcon from './icons/faq.jsx'
 
 export default function HeroCh() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function HeroCh() {
           locale={locale}
           className="button-outline ml-4 px-4 md:px-6 py-2 md:py-3"
         >
-          <SparklesIcon className="w-5 h-5 mr-1 inline-flex" /> 常见问题
+          <FaqIcon className="w-5 h-5 mr-1 inline-flex" /> 常见问题
         </Link>
       </div>
     </div>

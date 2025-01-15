@@ -1,31 +1,35 @@
 import { Cards } from 'nextra/components'
-import { CpuChipIcon, BuildingLibraryIcon, PuzzlePieceIcon, CodeBracketIcon, CubeIcon } from '@heroicons/react/24/solid'
+import ArchitectureIcon from '../../../src/components/icons/architecture.jsx'
+import ApiIcon from '../../../src/components/icons/api.jsx'
+import HardwareIcon from '../../../src/components/icons/hardware.jsx'
+import ModelIcon from '../../../src/components/icons/model.jsx'
+import JsIcon from '../../../src/components/icons/js.jsx'
 
 # Frequently Asked Questions
 
 <Cards>
   <Cards.Card
-    icon={<BuildingLibraryIcon />}
+    icon={<ArchitectureIcon />}
     title="Architecture"
     href="./architecture"
   />
   <Cards.Card
-    icon={<CodeBracketIcon />}
+    icon={<ApiIcon />}
     title="API"
     href="./api"
   />
   <Cards.Card
-    icon={<PuzzlePieceIcon />}
+    icon={<JsIcon />}
     title="JavaScript ML Framework"
     href="./framework"
   />
   <Cards.Card
-    icon={<CubeIcon />}
+    icon={<ModelIcon />}
     title="Model"
     href="./model"
   />
     <Cards.Card
-    icon={<CpuChipIcon />}
+    icon={<HardwareIcon />}
     title="Hardware and NPU"
     href="./hardware"
   />
@@ -41,7 +45,7 @@ File issues to following WebNN issue trackers:
 - [WebNN Samples](https://github.com/webmachinelearning/webnn-samples/issues)
 - [WebNN Developer Preview Demo](https://github.com/microsoft/webnn-developer-preview/issues)
 
-If you're unsure about which issue type to select, feel free to submit your issue [here](https://github.com/webmachinelearning/webnn-samples/issues) and our team will help categorize and resolve it.
+If you're unsure about which issue type to select, feel free to submit your issue [here](https://github.com/webmachinelearning/webnn-samples/issues) and we will help categorize and resolve it.
 
 ## How do I debug issues with WebNN?
 
@@ -54,15 +58,14 @@ about://gpu
 about://histograms/webnn
 ```
 
-### Additional Resources
-
-- Review the [W3C WebNN Specification](https://www.w3.org/TR/webnn/) for complete error handling documentation
+- Review the [W3C WebNN Specification](https://www.w3.org/TR/webnn/) for complete error handling documentation.
+- Feel free to raise your questions [here](https://github.com/webmachinelearning/webnn-samples/issues) and we will help analyze and try to resolve them.
 
 ## What operating systems does WebNN support?
 
 WebNN currently supports Windows, Android, ChromeOS, and macOS. The availability of WebNN operations may vary depending on the device type (CPU, GPU, NPU) and operating system. Progress is ongoing, so your patience is appreciated.
 
-## What WebNN backends are currently supported? Are some models restricted to specific backends or hardware?
+## What WebNN backends are currently supported? Are some models restricted to specific backend or hardware?
 
 - [WebNN Architecture](../learn/introduction#architecture)
 - Find information about [Implementation Status of WebNN Operations](https://webmachinelearning.github.io/webnn-status/)

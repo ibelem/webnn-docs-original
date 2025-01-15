@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/ibelem/webnn-docs#readme",
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
     "@xyflow/react": "^12.3.6",
     "next": "^15.1.4",
     "next-sitemap": "^4.2.3",
