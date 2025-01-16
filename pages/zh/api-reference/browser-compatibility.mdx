@@ -1,0 +1,407 @@
+import { AndroidIcon, WindowsIcon, ChromeosIcon, MacosIcon, LinuxIcon, IosIcon } from '../../../src/components/icons/os.jsx'
+
+<div className="browser-compatibility">
+
+# Browser Compatibility
+
+## WebNN APIs
+
+<table className="not-prose block overflow-x-auto nextra-scrollbar [&:not(:first-child)]:mt-6 p-0">
+  <thead>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20">
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">WebNN</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">Support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><ChromeosIcon /> chromsOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><LinuxIcon /> Linux</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><MacosIcon /> macOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><WindowsIcon /> Windows</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><AndroidIcon /> Android</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><IosIcon /> iOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+  </tbody>  
+</table>
+
+- The WebNN API mainly supported with Chromium-based browsers on ChromeOS, Linux, macOS, Windows and Android
+- Chromium-based browsers include but are not limited to Chrome, Edge, Opera, Vivaldi etc.
+
+| Interface | Method | Chromium Version |
+| --- | --- | --- |
+| navigator.ml | | M112 |
+| ML | | M112 |
+| ML | createContext() | M112 |
+| MLContext | | M112 |
+|MLContext|dispatch()|M128|
+|MLContext|createTensor()|M129|
+|MLContext|readTensor(tensor)|M129|
+|MLContext|readTensor(tensor, outputData)|M129|
+|MLContext|writeTensor()|M129|
+|MLContext|opSupportLimits()|M128|
+|MLGraph|| M112|
+|MLOperand||M112|
+|MLOperand| MLNumber | M132 |
+|MLTensor|| M124|
+|MLTensor|destroy()| M124 |
+|MLGraphBuilder| | M112|
+|MLGraphBuilder| MLGraphBuilder() constructor | M112 | 
+|MLGraphBuilder| input(name, descriptor)| M112|
+|MLGraphBuilder| constant(descriptor, buffer) | M112|
+|MLGraphBuilder| constant(type, value) | M112|
+|MLGraphBuilder| build(outputs)| M112|
+
+## LiteRT Backend / chromeOS, Linux, Windows and Android
+
+<table className="not-prose block overflow-x-auto nextra-scrollbar [&:not(:first-child)]:mt-6 p-0">
+  <thead>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20">
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">LiteRT</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">CPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">GPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">NPU</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><ChromeosIcon /> chromsOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><LinuxIcon /> Linux</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><MacosIcon /> macOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><WindowsIcon /> Windows</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><AndroidIcon /> Android</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">🚀</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><IosIcon /> iOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+  </tbody>  
+</table>
+ 
+The WebNN LiteRT backend mainly supported on ChromeOS, Linux, Windows and Android
+
+| [WebNN Spec](https://www.w3.org/TR/webnn/) | Operations | Chromium Version |
+| --- | --- | --- | 
+| [argMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ ARG\_MAX | M126 |
+| [argMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ ARG\_MIN | M126 | 
+| [batchNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-batchnorm) | ✅ Emulated with Scale \* ((Input - Mean) / sqrt(Variance + Epsilon)) + Bias | M127 |
+| [cast](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cast) | ✅ CAST | M126 | 
+| [clamp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-clamp) | ✅ RELU\_N1\_TO\_1 ✅ RELU6 ✅ RELU | M112 | 
+| [concat](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-concat) | ✅ CONCATENATION | M113 | 
+| [conv2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-conv2d) | ✅ CONV\_2D ✅ DEPTHWISE\_CONV\_2D | M112 | 
+| [convTranspose2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-convtranspose2d) | ✅ TRANSPOSE\_CONV | M128 | 
+| [cumulativeSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cumulativesum) | ✅ CUMSUM | M132 |
+| [dequantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-dequantizelinear) | ✅ QUANTIZE | M132 | 
+| [element-wise binary / add](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ADD | M112 | 
+| [element-wise binary / div](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ DIV | M112 | 
+| [element-wise binary / max](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ MAXIMUM | M112 |
+| [element-wise binary / min](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ MINIMUM | M112 | 
+| [element-wise binary / mul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ MUL | M112 | 
+| [element-wise binary / pow](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ POW | M122 | 
+| [element-wise binary / sub](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ SUB | M112 | 
+| [element-wise logical / equal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ EQUAL | M126 | 
+| [element-wise logical / greater](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ GREATER | M126 | 
+| [element-wise logical / greaterOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ GREATER\_EQUAL | M126 | 
+| [element-wise logical / lesser](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ LESS | M126 |
+| [element-wise logical / lesserOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ LESS\_EQUAL | M126 |
+| [element-wise logical / logicalAnd](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicaland) | ✅ LOGICAL\_AND | M132 | 
+| [element-wise logical / logicalOr](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalor) | ✅ LOGICAL\_OR | M132 | 
+| [element-wise logical / logicalXor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalxor) | ✅ NOT\_EQUAL | M132 | 
+| [element-wise logical / not](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ LOGICAL\_NOT | M126 | 
+| [element-wise unary / abs](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ABS | M116 | 
+| [element-wise unary / ceil](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ CEIL | M116 | 
+| [element-wise unary / identity](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ RESHAPE | 
+| [element-wise unary / cos](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ COS | M123 | 
+| [element-wise unary / erf](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ SIGN | M128 | 
+| [element-wise unary / exp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ EXP | M123 | 
+| [element-wise unary / floor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ FLOOR | M116 | 
+| [element-wise unary / log](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ LOG | M123 | 
+| [element-wise unary / neg](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ NEG | M116 | 
+| [element-wise unary / reciprocal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ Emulated with 1/x | M127 | 
+| [element-wise unary / sin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ SIN | M123 |
+| [element-wise unary / sqrt](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ SQRT | M122 | 
+| [elu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-elu) | ✅ ELU | M115 | 
+| [expand](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-expand) | ✅ BROADCAST\_TO | M128 | 
+| [gather](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gather) | ✅ GATHER | M126 | 
+| [gatherElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gatherelements) | | 🚀 Emulated with GATHER\_ND | M133 | 
+| [gatherND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gathernd) | ✅ GATHER\_ND | M132 | 
+| [gelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gelu) | ✅ GELU | M128 | 
+| [gemm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gemm) | ✅ FULLY\_CONNECTED | M112 | 
+| [gru](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gru) | ✅ Emulated | M129 | 
+| [gruCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-grucell) | ✅ Emulated | M129 | 
+| [hardSigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-sigmoid) | ✅ Emulated with y = max(0, min(1, alpha \* // x + beta)) | M126 | 
+| [hardSwish](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-swish) | ✅ HARD\_SWISH | M112 | 
+| [instanceNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-instancenorm) | ✅ Emulated with Scale \* ((Input - Mean) / sqrt(Variance + Epsilon)) + Bias | M127 | 
+| [layerNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-layernorm) | ✅ Emulated | M127 | 
+| [leakyRelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-leakyrelu) | ✅ LEAKY\_RELU | M113 | 
+| [linear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-linear) | ✅ Emulated with alpha \* x + beta | M126 | 
+| [lstm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstm) | ✅ Emulated | M129 | 
+| [lstmCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstmcell) | ✅ Emulated | M129 | 
+| [matmul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-matmul) | ✅ BATCH\_MATMUL | M126 | 
+| [pad](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pad) | ✅ PAD | M114 | 
+| [pooling / averagePool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ AVERAGE\_POOL\_2D | M112 | 
+| [pooling / l2Pool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | |
+| [pooling / maxPool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ MAX\_POOL\_2D | M112 | 
+| [prelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-prelu) | ✅ PRELU | M115 | 
+| [quantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-quantizelinear) | ✅ QUANTIZE | M132 |
+| [reduction / reduceL1](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ Emulated with adding abs operation before reduceSum | M128 |
+| [reduction / reduceL2](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ Emulated with appending pow(x, 0.5) after reduceSumSquare | M128 | 
+| [reduction / reduceLogSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ Emulated with log and reduceSum | M127 |
+| [reduction / reduceLogSumExp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ Emulated with log, reduceSum and exp | M127 | 
+| [reduction / reduceMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_MAX | M126 | 
+| [reduction / reduceMean](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ MEAN | M120 | 
+| [reduction / reduceMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_MIN | M126 | 
+| [reduction / reduceProduct](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_PROD | M126 | 
+| [reduction / reduceSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ SUM | M126 |
+| [reduction / reduceSumSquare](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ Emulated with reduceSum and square | M127 | 
+| [relu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-relu) | ✅ RELU | M112 | 
+| [resample2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-resample2d) | ✅ RESIZE\_BILINEAR ✅ RESIZE\_NEAREST\_NEIGHBOR | M112 |
+| [reshape](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reshape) | ✅ RESHAPE | M112 | 
+| [reverse](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reverse) | | 
+| [scatterElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatterelements) | 🚀 Emulated with SCATTER\_ND and WHERE | M133 |
+| [scatterND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatternd) | ✅ SCATTER\_ND | M132 | 
+| [sigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-sigmoid) | ✅ LOGISTIC | M112 | 
+| [sign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ SIGN | M130 | 
+| [slice](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-slice) | ✅ SLICE | M116 | 
+| [softmax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softmax) | ✅ SOFTMAX | M112 |
+| [softplus](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softplus) | ✅ Emulated with ln(1 + exp(x)) | M126 | 
+| [softsign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softsign) | ✅ Emulated with x / (1 + \|x\|) | M127 | 
+| [split](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-split) | ✅ SPLIT\_V | M116 | 
+| [tanh](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tanh) | ✅ TANH | M116 | 
+| [tile](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tile) | ✅ TILE | M131 | 
+| [transpose](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-transpose) | ✅ TRANSPOSE | M113 | 
+| [triangular](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-triangular) | ✅ Emulated | M128 | 
+| [where](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-where) | ✅ SELECT\_V2 | M126 | 
+
+## DirectML Backend / Windows
+
+<table className="not-prose block overflow-x-auto nextra-scrollbar [&:not(:first-child)]:mt-6 p-0">
+  <thead>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20">
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">DirectML</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">CPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">GPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">NPU</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><ChromeosIcon /> chromsOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><LinuxIcon /> Linux</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><MacosIcon /> macOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><WindowsIcon /> Windows</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><AndroidIcon /> Android</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><IosIcon /> iOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+  </tbody>  
+</table>
+ 
+The WebNN DirectML backend mainly supported on Windows
+
+| [WebNN Spec](https://www.w3.org/TR/webnn/) | Operations | Chromium Version |
+| --- | --- | --- |
+| [argMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ REDUCE\_FUNCTION\_ARGMAX | M122 | 
+| [argMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ REDUCE\_FUNCTION\_ARGMIN | M122 | 
+| [batchNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-batchnorm) | ✅ BATCH\_NORMALIZATION | M122 | 
+| [cast](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cast) | ✅ CAST | M122 | 
+| [clamp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-clamp) | ✅ ELEMENT\_WISE\_CLIP | M119 | 
+| [concat](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-concat) | ✅ JOIN | M120 | 
+| [conv2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-conv2d) | ✅ CONVOLUTION | M119 | 
+| [convTranspose2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-convtranspose2d) | ✅ CONVOLUTION | M121 |
+| [cumulativeSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cumulativesum) | ✅ CUMULATIVE\_SUMMATION | M131 | 
+| [dequantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-dequantizelinear) | ✅ ELEMENT\_WISE\_DEQUANTIZE\_LINEAR | M132 | 
+| [element-wise binary / add](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_ADD | M119 | 
+| [element-wise binary / div](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_DIVIDE | M119 | 
+| [element-wise binary / max](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_MAX | M119 | 
+| [element-wise binary / min](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_MIN | M119 | 
+| [element-wise binary / mul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_MULTIPLY | M119 | 
+| [element-wise binary / pow](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_POW | M119 | 
+| [element-wise binary / sub](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ ELEMENT\_WISE\_SUBTRACT | M119 | 
+| [element-wise logical / equal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_EQUALS | M122 | 
+| [element-wise logical / greater](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_GREATER\_THAN | M122 | 
+| [element-wise logical / greaterOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_GREATER\_THAN\_OR\_EQUAL | M122 | 
+| [element-wise logical / lesser](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_LESS\_THAN | M122 | 
+| [element-wise logical / lesserOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_LESS\_THAN\_OR\_EQUAL | M122 | 
+| [element-wise logical / logicalAnd](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicaland) | ✅ ELEMENT\_WISE\_LOGICAL\_AND | M131 | 
+| [element-wise logical / logicalOr](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalor) | ✅ ELEMENT\_WISE\_LOGICAL\_OR | M131 | 
+| [element-wise logical / logicalXor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalxor) | ✅ ELEMENT\_WISE\_LOGICAL\_XOR | M131 | 
+| [element-wise logical / not](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ ELEMENT\_WISE\_LOGICAL\_NOT | M121 | 
+| [element-wise unary / abs](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_ABS | M121 | 
+| [element-wise unary / ceil](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_CEIL | M121 | 
+| [element-wise unary / identity](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_IDENTITY | M121 | 
+| [element-wise unary / cos](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_COS | M121 | 
+| [element-wise unary / erf](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_ERF | M121 | 
+| [element-wise unary / exp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_EXP | M121 | 
+| [element-wise unary / floor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_FLOOR | M121 | 
+| [element-wise unary / log](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_LOG | M121 | 
+| [element-wise unary / neg](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_NEGATE | M121 | 
+| [element-wise unary / reciprocal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_RECIP | M121 | 
+| [element-wise unary / sin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_SIN | M121 | 
+| [element-wise unary / sqrt](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_SQRT | M121 | 
+| [element-wise unary / tan](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_TAN | M121 | 
+| [elu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-elu) | ✅ ACTIVATION\_ELU | M121 | 
+| [expand](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-expand) | ✅ ELEMENT\_WISE\_IDENTITY | M121 |
+| [gather](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gather) | ✅ GATHER | M122 | 
+| [gatherElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gatherelements) | ✅ GATHER\_ELEMENTS | M130 | 
+| [gatherND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gathernd) | ✅ GATHER\_ND | M131 |
+| [gelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gelu) | ✅ ACTIVATION\_GELU | M126 | 
+| [gemm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gemm) | ✅ GEMM | M119 | 
+| [gru](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gru) | ✅ GRU | M125 | 
+| [gruCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-grucell) | ✅ GRU | M125 | 
+| [hardSigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-sigmoid) | ✅ ACTIVATION\_HARD\_SIGMOID | M123 | 
+| [hardSwish](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-swish) | ✅ Map to other op | M123 | 
+| [instanceNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-instancenorm) | ✅ MEAN\_VARIANCE\_NORMALIZATION1 | M122 | 
+| [layerNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-layernorm) | ✅ MEAN\_VARIANCE\_NORMALIZATION1 | M122 |
+| [leakyRelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-leakyrelu) | ✅ ACTIVATION\_LEAKY\_RELU | M121 |
+| [linear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-linear) | ✅ ACTIVATION\_LINEAR | M122 | 
+| [lstm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstm) | ✅ LSTM | M125 | 
+| [lstmCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstmcell) | ✅ LSTM | M125 |
+| [matmul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-matmul) | ✅ GEMM | M121 | 
+| [pad](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pad) | ✅ PADDING | M120 | 
+| [pooling / averagePool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ AVERAGE\_POOLING | M119 | 
+| [pooling / l2Pool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ LP\_POOLING | M123 |
+| [pooling / maxPool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ MAX\_POOLING2 | M119 | 
+| [prelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-prelu) | ✅ ACTIVATION\_PARAMETERIZED\_RELU | M120 |
+| [quantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-quantizelinear) | ✅ ELEMENT\_WISE\_QUANTIZE\_LINEAR | M132 | 
+| [reduction / reduceL1](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_L1 | M121 | 
+| [reduction / reduceL2](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_L2 | M121 | 
+| [reduction / reduceLogSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_LOG\_SUM | M121 | 
+| [reduction / reduceLogSumExp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_LOG\_SUM\_EXP | M121 | 
+| [reduction / reduceMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_MAX | M121 | 
+| [reduction / reduceMean](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_AVERAGE | M121 | 
+| [reduction / reduceMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_MIN | M121 | 
+| [reduction / reduceProduct](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_MULTIPLY | M121 | 
+| [reduction / reduceSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_SUM | M121 | 
+| [reduction / reduceSumSquare](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ REDUCE\_FUNCTION\_SUM\_SQUARE | M121 | 
+| [relu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-relu) | ✅ ACTIVATION\_RELU | M119 | 
+| [resample2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-resample2d) | ✅ RESAMPLE | M121 | 
+| [reshape](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reshape) | ✅ Supported by tensor strides | M119 | 
+| [reverse](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reverse) | 🚀 SLICE1 | M133 | 
+| [scatterElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatterelements) | ✅ SCATTER\_ELEMENTS | M132 | 
+| [scatterND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatternd) | ✅ SCATTER\_ND | M131 | 
+| [sigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-sigmoid) | ✅ ACTIVATION\_SIGMOID | M121 |
+| [sign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ELEMENT\_WISE\_SIGN | M130 |
+| [slice](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-slice) | ✅ SLICE | M120 | 
+| [softmax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softmax) | ✅ ACTIVATION\_SOFTMAX | M119 | 
+| [softplus](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softplus) | ✅ ACTIVATION\_SOFTPLUS | M122 | 
+| [softsign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softsign) | ✅ ACTIVATION\_SOFTSIGN | M123 | 
+| [split](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-split) | ✅ SPLIT | M120 | 
+| [tanh](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tanh) | ✅ ACTIVATION\_TANH | M121 | 
+| [tile](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tile) | ✅ TILE | M130 | 
+| [transpose](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-transpose) | ✅ Supported by tensor strides | M120 | 
+| [triangular](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-triangular) | ✅ Supported by combined operations | M126 | 
+| [where](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-where) | ✅ ELEMENT\_WISE\_IF | M122 |
+
+### See Also
+
+[ONNX Layers supported using OpenVINO](https://onnxruntime.ai/docs/execution-providers/OpenVINO-ExecutionProvider.html#support-coverage)
+
+## CoreML Backend / macOS
+
+<table className="not-prose block overflow-x-auto nextra-scrollbar [&:not(:first-child)]:mt-6 p-0">
+  <thead>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20">
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">CoreML</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">CPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">GPU</th>
+      <th className="m-0 border border-gray-300 px-4 py-2 font-semibold dark:border-gray-600">NPU</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><ChromeosIcon /> chromsOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><LinuxIcon /> Linux</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><MacosIcon /> macOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">✅</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><WindowsIcon /> Windows</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><AndroidIcon /> Android</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+    <tr className="m-0 border-t border-gray-300 p-0 dark:border-gray-600 even:bg-gray-100 even:dark:bg-gray-600/20"><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600"><IosIcon /> iOS</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td><td className="m-0 border border-gray-300 px-4 py-2 dark:border-gray-600">❌</td></tr>
+  </tbody>  
+</table>
+ 
+The WebNN coreML backend mainly supported on macOS
+
+| [WebNN Spec](https://www.w3.org/TR/webnn/) | Operations | Chromium Version |
+| --- | --- | --- |
+| [argMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ reduce\_argmax | M128 |
+| [argMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ reduce\_argmin | M128 |
+| [batchNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-batchnorm) | ✅ batch\_norm | M126 |
+| [cast](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cast) | ✅ cast | M124 |
+| [clamp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-clamp) | ✅ clip | M125 |
+| [concat](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-concat) | ✅ concat | M125 |
+| [conv2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-conv2d) | ✅ conv | M125 |
+| [convTranspose2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-convtranspose2d) | ✅ conv\_transpose | M126 |
+| [cumulativeSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-cumulativesum) | 📅 cumsum | |
+| [dequantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-dequantizelinear) | 🚀 dequantize\_linear | M133 |
+| [element-wise binary / add](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ add | M122 |
+| [element-wise binary / div](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ real\_div | M124 |
+| [element-wise binary / max](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ maximum | M124 |
+| [element-wise binary / min](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ minimum | M124 |
+| [element-wise binary / mul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ mul | M124 |
+| [element-wise binary / pow](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ pow | M124 |
+| [element-wise binary / sub](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-binary) | ✅ sub | M124 |
+| [element-wise logical / equal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ equal | M125 |
+| [element-wise logical / greater](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ greater | M125 |
+| [element-wise logical / greaterOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ greater\_equal | M125 |
+| [element-wise logical / lesser](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ less | M125 |
+| [element-wise logical / lesserOrEqual](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ less\_equal | M125 |
+| [element-wise logical / logicalAnd](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicaland) | ✅ logical\_and | M132 |
+| [element-wise logical / logicalOr](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalor) | ✅ logical\_or | M132 |
+| [element-wise logical / logicalXor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logicalxor) | ✅ logical\_xor | M132 |
+| [element-wise logical / not](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-logical) | ✅ logical\_not | M128 |
+| [element-wise unary / abs](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ abs | M126 |
+| [element-wise unary / ceil](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ ceil | M126 |
+| [element-wise unary / identity](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ identity | M126 |
+| [element-wise unary / cos](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ cos | M126 |
+| [element-wise unary / erf](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ erf | M126 |
+| [element-wise unary / exp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ exp | M126 |
+| [element-wise unary / floor](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ floor | M126 |
+| [element-wise unary / log](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ log | M126 |
+| [element-wise unary / neg](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ Emulated with mul(a, -1) | M127 |
+| [element-wise unary / reciprocal](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ inverse | M126 |
+| [element-wise unary / sin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ sin | M126 |
+| [element-wise unary / sqrt](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ sqrt | M126 |
+| [element-wise unary / tan](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | ✅ tan | M126 |
+| [elu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-elu) | ✅ elu | M126 |
+| [expand](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-expand) | ✅ tile | M128 |
+| [gather](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gather) | ✅ gather | M126 |
+| [gatherElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gatherelements) | ✅ gather\_along\_axis | M132 |
+| [gatherND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gathernd) | ✅ gather\_nd | M132 |
+| [gelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gelu) | ✅ gelu | M132 |
+| [gemm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gemm) | ✅ Emulated with add(mul(alpha, matmul(A, B)), mul(beta, C)) | M126 |
+| [gru](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-gru) | 🚀 gru | M133 |
+| [gruCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-grucell) | 🚀 gru | M133 |
+| [hardSigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-sigmoid) | ✅ sigmoid\_hard | M126 |
+| [hardSwish](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-hard-swish) | ✅ Emulated by mul(x, hardsigmoid(x, alpha=1.0/6, beta=0.5)) | M126 |
+| [instanceNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-instancenorm) | ✅ instance\_norm | M126 |
+| [layerNormalization](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-layernorm) | ✅ layer\_norm | M129 |
+| [leakyRelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-leakyrelu) | ✅ leaky\_relu | M126 |
+| [linear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-linear) | Emulated with add(mul(alpha, a), beta) | M126 |
+| [lstm](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstm) | | |
+| [lstmCell](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-lstmcell) | | | |
+| [matmul](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-matmul) | ✅ matmul | M126 |
+| [pad](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pad) | ✅ pad | M129 |
+| [pooling / averagePool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ avg\_pool | M126 |
+| [pooling / l2Pool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ l2\_pool | M126 |
+| [pooling / maxPool2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-pool2d) | ✅ max\_pool | M126 |
+| [prelu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-prelu) | 🚀 prelu | |
+| [quantizeLinear](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-quantizelinear) | 🚀 quantize\_linear | M133 |
+| [reduction / reduceL1](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_l1\_norm | M126 |
+| [reduction / reduceL2](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_l2\_norm | M126 |
+| [reduction / reduceLogSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_log\_sum | M126 |
+| [reduction / reduceLogSumExp](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_log\_sum\_exp | M126 |
+| [reduction / reduceMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_max | M126 |
+| [reduction / reduceMean](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_mean | M126 |
+| [reduction / reduceMin](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_min | M126 |
+| [reduction / reduceProduct](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_prod | M126 |
+| [reduction / reduceSum](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_sum | M126 |
+| [reduction / reduceSumSquare](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reduce) | ✅ reduce\_sum\_square | M126 |
+| [relu](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-relu) | ✅ relu | M125 |
+| [resample2d](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-resample2d) | ✅ upsample\_bilinear ✅ upsample\_nearest\_neighbor | M126 |
+| [reshape](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reshape) | ✅ reshape | M126 |
+| [reverse](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-reverse) | | |
+| [scatterElements](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatterelements) | ✅ scatter\_along\_axis | M132 |
+| [scatterND](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-scatternd) | ✅ scatter\_nd | M132 |
+| [sigmoid](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-sigmoid) | ✅ sigmoid | M126 |
+| [sign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-unary) | | |
+| [slice](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-slice) | ✅ slice\_by\_size | M126 |
+| [softmax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softmax) | ✅ softmax | M127 |
+| [softplus](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softplus) | ✅ softplus | M126 |
+| [softsign](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-softsign) | ✅ softsign | M125 |
+| [split](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-split) | ✅ split | M130 |
+| [tanh](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tanh) | ✅ tanh | M126 |
+| [tile](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-tile) | ✅ tile | M131 |
+| [transpose](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-transpose) | ✅ transpose | M125 |
+| [triangular](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-triangular) | ✅ band\_part | M132 |
+| [where](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-where) | ✅ select | M126 |
+
+</div>
