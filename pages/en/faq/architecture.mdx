@@ -1,6 +1,12 @@
+import ArchitectureDiagramIntro from '../../../src/components/architecture-intro.jsx'
+
 ## How is the architecture of WebNN?
 
 The WebNN API enables web browsers to leverage native machine learning capabilities provided by the underlying operating system. By implementing a hardware-agnostic abstraction layer, the API allows JavaScript frameworks to access advanced machine learning features without depending on platform-specific implementations. Neural networks in WebNN are represented as computational graphs composed of mathematical operations, which form the foundation for computer vision, natural language processing, and other machine learning applications.
+
+### Architecture
+
+<ArchitectureDiagramIntro />
 
 ## Can I use WebNN API on PC desktop? 
 
@@ -12,8 +18,9 @@ The WebNN API runs on common computing devices and operating systems. Performanc
 The API is platform-independent and integrates with major ML acceleration frameworks:
 
 - Windows: DirectML
-- Android: LiteRT
 - ChromeOS: LiteRT
+- Linux: LiteRT
+- Android: LiteRT
 - Apple platforms: CoreML
 
 The API automatically leverages available hardware acceleration features, including CPU parallel processing, GPU compute capabilities, and dedicated ML accelerators, while maintaining hardware abstraction. Developers can tune performance parameters without managing specific hardware details.
@@ -32,10 +39,10 @@ WebGPU provides a web API abstraction over graphics hardware that can be used to
 
 However, this approach has two significant limitations:
 
-1. **Limited Hardware Optimization**
+1. Limited Hardware Optimization
 
 WebGPU's graphics abstraction layer cannot fully utilize hardware-specific optimizations and special instructions available at the OS level. While GPU manufacturers continue to innovate with ML-specific hardware features, these performance improvements may not be accessible through generic graphics pipeline interfaces.
 
-2. **Conformance Challenges**
+2. Conformance Challenges
 
 The diverse hardware ecosystem and multiple driver versions make it difficult to ensure consistent and accurate results across different devices when implementing neural network operations through graphics frameworks. Operating systems traditionally excel at hardware conformance testing and quality assurance - crucial capabilities for ML frameworks, especially in critical applications like healthcare and industrial processes where result accuracy is paramount.
