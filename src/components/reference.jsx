@@ -15,11 +15,13 @@ function InterfaceIcon() {
 }
 
 const api = [
-  ['navigator.ml', 'navigatorml'],
-  ['ML', 'ml'],
-  ['MLContext', 'mlcontext'],
-  ['MLGraph', 'mlgraph'],
-  ['MLOperand', 'mloperand']
+  ['navigator.ml', 'webnn/navigatorml'],
+  ['ML', 'webnn/ml'],
+  ['MLContext', 'webnn/mlcontext'],
+  ['MLGraph', 'webnn/mlgraph'],
+  ['MLOperand', 'webnn/mloperand'],
+  ['MLTensor', 'webnn/mltensor'],
+  ['MLGraphBuilder', 'webnn/mlgraphbuilder']
 ]
 
 export function ReferenceCards() {
@@ -51,12 +53,18 @@ function MethodIcon() {
 }
 
 const api2 = [
-  ['createContext', 'ml#createcontext'],
-  ['dispatch', 'mlcontext#dispatch'],
-  ['createTensor', 'mlcontext#createtensor'],
-  ['readTensor', 'mlcontext#readtensor'],
-  ['writeTensor', 'mlcontext#writetensor'],
-  ['opSupportLimits', 'mlcontext#opsupportlimits'],
+  ['ml.createContext', 'webnn/ml#createcontext'],
+  ['context.dispatch', 'webnn/mlcontext#dispatch'],
+  ['context.createTensor', 'webnn/mlcontext#createtensor'],
+  ['context.readTensor', 'webnn/mlcontext#readtensor'],
+  ['context.writeTensor', 'webnn/mlcontext#writetensor'],
+  ['context.opSupportLimits', 'webnn/mlcontext#opsupportlimits'],
+  ['context.destory', 'webnn/mlcontext#destroy'],
+  ['graph.destory', 'webnn/mlgraph#destroy'],
+  ['tensor.destory', 'webnn/mltensor#destroy'],
+  ['builder.input', 'webnn/mlgraphbuilder#input'],
+  ['builder.constant', 'webnn/mlgraphbuilder#constant'],
+  ['builder.build', 'webnn/mlgraphbuilder#build']
 ]
 
 export function MethodCards() {
@@ -87,10 +95,10 @@ function CompatibilityIcon() {
 }
 
 const api3 = [
-  ['WebNN Interfaces', 'browser-compatibility#webnn-apis'],
-  ['LiteRT Backend', 'browser-compatibility#litert-backend--chromeos-linux-windows-and-android'],
-  ['DirectML Backend', 'browser-compatibility#directml-backend--windows'],
-  ['CoreML Backend', 'browser-compatibility#coreml-backend--macos'],
+  ['WebNN Interfaces', 'browser-compatibility/api'],
+  ['LiteRT Backend', 'browser-compatibility/litert'],
+  ['DirectML Backend', 'browser-compatibility/directml'],
+  ['Core ML Backend', 'browser-compatibility/coreml'],
 ]
 
 export function CompatibilityCards() {

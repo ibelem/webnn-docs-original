@@ -1,40 +1,8 @@
-import InfoIcon from '../../../src/components/icons/info.jsx'
+import InfoIcon from '../../../../src/components/icons/info.jsx'
 
 # MLOperand
 
 The `MLOperand` interface represents an intermediary graph node during the construction of machine learning operations. It can represent constants, operation inputs, or results from combining multiple operations in a neural network graph.
-
-## Web IDL
-
-```webidl showLineNumbers filename="web-idl"
-[SecureContext, Exposed=(Window, DedicatedWorker)]
-interface MLOperand {
-  readonly attribute MLOperandDataType dataType;
-  readonly attribute FrozenArray<unsigned long> shape;
-};
-
-dictionary MLOperatorOptions {
-  USVString label = "";
-};
-
-typedef (bigint or unrestricted double) MLNumber;
-```
-
-## Description
-
-The `MLOperand` interface provides access to the fundamental properties of an operand in a neural network graph. Each `MLOperand` is associated with an `MLGraphBuilder` and contains internal descriptors that define its characteristics.
-
-### Properties
-
-#### `dataType` (readonly)
-- Type: `MLOperandDataType`
-- Description: Returns the data type of the operand
-- Value is derived from the operand's internal descriptor
-
-#### `shape` (readonly)
-- Type: `FrozenArray<unsigned long>`
-- Description: Returns the array of dimensions defining the operand's shape
-- Empty array for scalar operands
 
 ## MLOperandDescriptor Dictionary
 
@@ -96,12 +64,44 @@ The `MLInputOperandLayout` enum defines possible layout configurations: `nchw` a
 
 #### Examples
 
-```js showLineNumbers filename="operand-descriptor.js"
+```js showLineNumbers filename="example-1.js"
 const operandDescriptor = {
   dataType: "float32",
   shape: [1, 224, 224, 3]
 };
 ```
+
+## MLOperand Interface
+
+The `MLOperand` interface provides access to the fundamental properties of an operand in a neural network graph. Each `MLOperand` is associated with an `MLGraphBuilder` and contains internal descriptors that define its characteristics.
+
+## Web IDL
+
+```webidl showLineNumbers filename="web-idl"
+[SecureContext, Exposed=(Window, DedicatedWorker)]
+interface MLOperand {
+  readonly attribute MLOperandDataType dataType;
+  readonly attribute FrozenArray<unsigned long> shape;
+};
+
+dictionary MLOperatorOptions {
+  USVString label = "";
+};
+
+typedef (bigint or unrestricted double) MLNumber;
+```
+
+### Properties
+
+#### `dataType` (readonly)
+- Type: `MLOperandDataType`
+- Description: Returns the data type of the operand
+- Value is derived from the operand's internal descriptor
+
+#### `shape` (readonly)
+- Type: `FrozenArray<unsigned long>`
+- Description: Returns the array of dimensions defining the operand's shape
+- Empty array for scalar operands
 
 ## MLNumber
 
@@ -139,7 +139,7 @@ The implementation automatically converts the `MLNumber` value to match the oper
 
 ## Examples
 
-```js showLineNumbers filename="operand-descriptor.js"
+```js showLineNumbers filename="example-2.js"
 const context = await navigator.ml.createContext({
     deviceType: 'gpu'
 });

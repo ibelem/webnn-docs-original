@@ -1,4 +1,4 @@
-import InfoIcon from '../../../src/components/icons/info.jsx'
+import InfoIcon from '../../../../src/components/icons/info.jsx'
 
 # MLContext
 
@@ -9,17 +9,28 @@ The `MLContext` interface represents a global state of neural network compute wo
 ```webidl showLineNumbers filename="web-idl"
 typedef record<USVString, MLTensor> MLNamedTensors;
 
+dictionary MLContextLostInfo {
+  DOMString message;
+};
+
 [SecureContext, Exposed=(Window, DedicatedWorker)]
 interface MLContext {
-  undefined dispatch(MLGraph graph, MLNamedTensors inputs, MLNamedTensors outputs);  
+  undefined dispatch(MLGraph graph, MLNamedTensors inputs, MLNamedTensors outputs);
+
   Promise<MLTensor> createTensor(MLTensorDescriptor descriptor);
+
   Promise<ArrayBuffer> readTensor(MLTensor tensor);
   Promise<undefined> readTensor(MLTensor tensor, AllowSharedBufferSource outputData);
+
   undefined writeTensor(MLTensor tensor, AllowSharedBufferSource inputData);
+
   MLOpSupportLimits opSupportLimits();
+
+  undefined destroy();
+
+  readonly attribute Promise<MLContextLostInfo> lost;
 };
 ```
-
 ## Context Types
 
 The context type determines how the execution context manages resources and facilitates neural network graph compilation and execution:
@@ -28,6 +39,15 @@ The context type determines how the execution context manages resources and faci
 - `"webgpu"`: Context created from WebGPU device
 
 When the `contextType` is set to `default` with the `MLContextOptions.deviceType` set to `"gpu"`, the user agent creates an internal GPU device that operates within the context and can submit ML workloads on behalf of the calling application.
+
+## Properties
+
+### lost (readonly)
+
+Returns a `Promise` that resolves when the context is lost. A context is considered lost when its `lost` `Promise` is settled.
+
+- Type: `Promise<undefined>`
+- Throws: None
 
 ## Methods
 
@@ -38,7 +58,7 @@ Schedules the computational workload of a compiled `MLGraph` on the `MLContext`'
 #### Syntax
 
 ```js showLineNumbers filename="dispatch.js"
-dispatch(graph, inputs, outputs)
+context.dispatch(graph, inputs, outputs)
 ```
 
 #### Parameters
@@ -62,7 +82,7 @@ Creates an `MLTensor` associated with this `MLContext`.
 #### Syntax
 
 ```js showLineNumbers filename="create-tensor.js"
-createTensor(descriptor)
+context.createTensor(descriptor)
 ```
 
 #### Parameters
@@ -71,16 +91,16 @@ createTensor(descriptor)
 
 #### Return Value
 
-`Promise` that resolves to an `MLTensor`
+Returns a `Promise` that resolves to an `MLTensor`
 
 ### readTensor()
 
 There are two variations of this method:
 
-#### Syntax (tensor)
+#### Syntax 1: (tensor)
 
 ```js showLineNumbers filename="read-tensor-1.js"
-readTensor(tensor)
+context.readTensor(tensor)
 ```
 
 Reads back the `data` of an `MLTensor` from the `MLContext` timeline to script.
@@ -91,12 +111,12 @@ Reads back the `data` of an `MLTensor` from the `MLContext` timeline to script.
 
 ##### Return Value
 
-`Promise` that resolves to an `ArrayBuffer` containing the result of the read
+Returns a `Promise` that resolves to an `ArrayBuffer` containing the result of the read
 
-#### Syntax (tensor, outputData)
+#### Syntax 2: (tensor, outputData)
 
 ```js showLineNumbers filename="read-tensor-2.js"
-readTensor(tensor, outputData)
+context.readTensor(tensor, outputData)
 ```
 
 Bring-your-own-buffer variant that reads back the `data` of an `MLTensor` into the provided buffer.
@@ -108,7 +128,7 @@ Bring-your-own-buffer variant that reads back the `data` of an `MLTensor` into t
 
 ##### Return Value
 
-`Promise` that resolves to `undefined`
+Returns a `Promise` that resolves to `undefined`
 
 ### writeTensor()
 
@@ -117,7 +137,7 @@ Writes data to the `data` of an `MLTensor` on the `MLContext`'s timeline.
 #### Syntax
 
 ```js showLineNumbers filename="write-tensor.js"
-writeTensor(tensor, inputData)
+context.writeTensor(tensor, inputData)
 ```
 
 #### Parameters
@@ -140,14 +160,14 @@ Returns information about the level of support that differs across implementatio
 #### Syntax
 
 ```js showLineNumbers filename="op-support-limits.js"
-opSupportLimits()
+context.opSupportLimits()
 ```
 
 #### Return Value
 
 Returns an `MLOpSupportLimits` object containing support information.
 
-### MLOpSupportLimits Dictionary
+#### MLOpSupportLimits Dictionary
 
 ```webidl showLineNumbers filename="web-idl"
 dictionary MLOpSupportLimits {
@@ -158,14 +178,14 @@ dictionary MLOpSupportLimits {
 };
 ```
 
-#### Members
+##### Members
 
 - `preferredInputLayout`: Preferred input layout for layout dependent operators like `conv2d()`
 - `input`: Support limits for input `MLOperand`s for an `MLGraph`
 - `constant`: Support limits for constant `MLOperand`s for an `MLGraph`
 - `output`: Support limits for output `MLOperand`s for an `MLGraph`
 
-### MLSupportLimits Dictionary
+#### MLSupportLimits Dictionary
 
 ```webidl showLineNumbers filename="web-idl"
 dictionary MLSupportLimits {
@@ -173,11 +193,11 @@ dictionary MLSupportLimits {
 };
 ```
 
-#### Members
+##### Members
 
 - `dataTypes`: Supported data types
 
-### MLBinarySupportLimits Dictionary
+#### MLBinarySupportLimits Dictionary
 
 ```webidl showLineNumbers filename="web-idl"
 dictionary MLBinarySupportLimits {
@@ -187,13 +207,13 @@ dictionary MLBinarySupportLimits {
 };
 ```
 
-#### Members
+##### Members
 
 - `a`: `MLSupportLimits` for a operand
 - `b`: `MLSupportLimits` for b operand
 - `output`: `MLSupportLimits` for output operand
 
-### MLSingleInputSupportLimits Dictionary
+#### MLSingleInputSupportLimits Dictionary
 
 ```webidl showLineNumbers filename="web-idl"
 dictionary MLSingleInputSupportLimits {
@@ -202,10 +222,24 @@ dictionary MLSingleInputSupportLimits {
 };
 ```
 
-#### Members
+##### Members
 
 - `input`: `MLSupportLimits` for input operand
 - `output`: `MLSupportLimits` for output operand
+
+### destroy()
+
+Releases all resources associated with the context. Any pending compute requests and MLTensor operations (creation, read, or write) will fail after this method is called.
+
+#### Syntax
+
+```js showLineNumbers filename="destory.js"
+context.destroy()
+```
+
+#### Return Value
+
+- Type: `undefined`
 
 ## Examples
 

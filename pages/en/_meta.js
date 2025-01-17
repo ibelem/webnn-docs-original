@@ -19,6 +19,14 @@ export default {
     title: 'FAQ',
     type: 'page',
   },
+  showcase: {
+    title: 'Showcase',
+    type: 'page',
+    display: 'hidden',
+    theme: {
+      layout: 'raw'
+    }
+  },
   spec: {
     title: <span className="after:content-['_↗'] after:font-sans">Spec</span>,
     type: 'page',

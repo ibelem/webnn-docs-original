@@ -2,28 +2,13 @@ export default {
   reference: {
     title: "API Reference"
   },
-  navigatorml: {
-    title: "navigator.ml"
+  webnn: {
+    title: "WebNN API"
   },
-  ml: {
-    title: "ML"
+  'browser-compatibility': {
+    title: "Browser Compatibility"
   },
-  mlcontext: {
-    title: "MLContext"
-  },
-  mlgraph: {
-    title: "MLGraph"
-  },
-  mloperand: {
-    title: "MLOperand"
-  },
-  mltensor: {
-    title: "MLTensor"
-  },
-  mlgraphbuilder: {
-    title: "MLGraphBuilder"
-  },
-  "mlgraphbuilder-ops": {
-    title: "MLGraphBuilder (Operations)"
+  'onnx-runtime': {
+    title: "ONNX Runtime"
   },
 };

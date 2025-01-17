@@ -549,7 +549,7 @@ summary {
 }
 
 .font-title {
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
 }
 
 .fw-logo {
@@ -609,34 +609,34 @@ summary {
   max-height: 20px;
 }
 
-.browser-compatibility svg {
+.mdx-table svg {
   display: inline-block;
 }
 
-.browser-compatibility .table {
+.mdx-table .table {
   margin: 1rem auto;
 }
 
-.browser-compatibility table {
+.mdx-table table {
   font-size: 0.9rem;
   margin: 1rem auto;
   width: 100%;
 }
 
-.browser-compatibility table td {
+.mdx-table table td {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
 }
 
-.browser-compatibility table a {
+.mdx-table table a {
   text-decoration: none;
 }
 
-.browser-compatibility table a:hover {
+.mdx-table table a:hover {
   text-decoration: underline;
 }
 
-.browser-compatibility table ._py-2 {
+.mdx-table table ._py-2 {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
 }
