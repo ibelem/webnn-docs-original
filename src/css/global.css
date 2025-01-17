@@ -613,6 +613,10 @@ summary {
   display: inline-block;
 }
 
+.browser-compatibility .table {
+  margin: 1rem auto;
+}
+
 .browser-compatibility table {
   font-size: 0.9rem;
   margin: 1rem auto;
