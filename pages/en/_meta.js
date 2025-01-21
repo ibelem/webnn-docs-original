@@ -22,7 +22,7 @@ export default {
   showcase: {
     title: 'Showcase',
     type: 'page',
-    display: 'hidden',
+    // display: 'hidden',
     theme: {
       layout: 'raw'
     }
