@@ -671,3 +671,7 @@ summary {
 .dark .demo-card {
   border: 1px solid rgb(38, 38, 38);
 }
+
+.reference-icon {
+  width: 16px !important;
+}

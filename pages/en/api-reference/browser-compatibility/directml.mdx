@@ -6,9 +6,15 @@ import { AndroidIcon, WindowsIcon, ChromeosIcon, MacosIcon, LinuxIcon, IosIcon }
 
 ## DirectML Backend / Windows
 
+<div className="table">
+| WebNN | CPU | GPU | NPU |
+| --- | --- | --- | --- |
+|<WindowsIcon /> Windows| ✅ LiteRT/XNNPACK<br />🚀ℹ️ WCR/MLAS (deprecated) | ✅ DirectML | ✅ DirectML | 
+</div>
+
 The WebNN DirectML backend mainly supported on Windows.
 
-<div class="table">
+<div className="table">
 | [WebNN Spec](https://www.w3.org/TR/webnn/) | Operations | Chromium Version |
 | --- | --- | --- |
 | [argMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ REDUCE\_FUNCTION\_ARGMAX | M122 | 

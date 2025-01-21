@@ -7,9 +7,18 @@ import { AndroidIcon, WindowsIcon, ChromeosIcon, MacosIcon, LinuxIcon, IosIcon }
 
 ## LiteRT Backend / chromeOS, Linux, Windows and Android
 
+<div className="table">
+| WebNN | CPU | GPU | NPU |
+| --- | --- | --- | --- |
+| <ChromeosIcon /> chromsOS	| ✅ LiteRT/XNNPACK | 🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK | 🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK | 
+|<LinuxIcon /> Linux | ✅ LiteRT/XNNPACK |  🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK |  🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK | 
+|<WindowsIcon /> Windows| ✅ LiteRT/XNNPACK<br />🚀ℹ️ WCR/MLAS (deprecated) | ✅ DirectML | ✅ DirectML | 
+|<AndroidIcon /> Android| ✅ LiteRT/XNNPACK | 🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK | 🚀ℹ️  LiteRT<br />To do, temporarily fallback to XNNPACK |
+</div>
+
 The WebNN LiteRT backend mainly supported on ChromeOS, Linux, Windows and Android.
 
-<div class="table">
+<div className="table">
 | [WebNN Spec](https://www.w3.org/TR/webnn/) | Operations | Chromium Version |
 | --- | --- | --- | 
 | [argMax](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-argminmax) | ✅ ARG\_MAX | M126 |

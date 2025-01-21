@@ -212,14 +212,14 @@ export default {
     content: Footer,
   },
   banner: {
-    key: 'webnn-public-preview-announcement',
+    key: 'webnn-dev-preview-announcement',
     content: (
       <div>
         <div className="snow">
           <span></span><span></span><span></span><span></span><span></span>
         </div>
         <a href="https://webnn.io">
-          🎉 WebNN Public Preview is released. Read more →
+          🎉 WebNN Developer Preview is released. Read more →
         </a>
       </div>
     )

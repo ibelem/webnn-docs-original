@@ -19,7 +19,7 @@ export function DemoCard({ title, description, imageUrl, demoUrl, codeUrl, tags,
         height={200}
         className="w-full h-48 object-cover"
       />
-      <div className="relative flex flex-wrap gap-2 top-[-2rem] justify-end pr-2">
+      <div className="relative flex flex-wrap gap-2 top-[-2.1rem] justify-end pr-2">
           <motion.span className="inline-block backdrop-blur-sm border-[1px] border-[#ffffff33] border-solid px-2 py-1 rounded-full text-xs text-white" whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}>{framework}</motion.span>
           {tags.map((tag) => (
