@@ -642,7 +642,7 @@ function NetronFlow () {
 
   return (
     <ReactFlow
-      className="px-5 xl:col-span-3 md:px-20 my-0 py-0 md:py-0 mx-0 !h-[570px]"
+      className="px-5 xl:col-span-3 md:px-20 my-0 py-0 md:py-0 mx-0 !h-[676px]"
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}

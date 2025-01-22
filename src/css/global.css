@@ -120,14 +120,14 @@ h5 {
 }
 
 .hero-section {
-  margin-top: -570px;
-  height: 570px;
+  margin-top: -676px;
+  height: 676px;
   position: relative;
   z-index: -1;
 }
 
 .hero-section svg {
-  height: 570px;
+  height: 676px;
   width: 100%;
 }
 
