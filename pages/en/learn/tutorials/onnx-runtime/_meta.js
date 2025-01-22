@@ -2,7 +2,7 @@ export default {
   'onnx-runtime': {
     title: "ONNX Runtime"
   },
-  'freedimensionoverrides': {
+  'free-dimension-overrides': {
     title: "Free Dimension Overrides"
   }
 };

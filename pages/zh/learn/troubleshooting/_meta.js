@@ -8,4 +8,7 @@ export default {
   'npu-errors': {
     title: "NPU Errors"
   },
+  'performance-issues': {
+    title: "Performance Issues"
+  },
 };
