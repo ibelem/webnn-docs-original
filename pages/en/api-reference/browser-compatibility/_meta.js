@@ -11,4 +11,7 @@ export default {
   coreml: {
     title: "Core ML Backend"
   },
+  "chrome-flags": {
+    title: "Chrome Flags"
+  },
 };

@@ -1,0 +1,64 @@
+# WebNN Flags in Chromium based Browsers
+
+<div className="flags">
+
+## Flags
+
+Visit via `about://flags/`
+
+### `#web-machine-learning-neural-network`
+<div><span className="name">Name</span> <p>Enables WebNN API</p></div>
+<div><span className="description">Description</span> <p>Enables the Web Machine Learning Neural Network (WebNN) API. Spec at https://www.w3.org/TR/webnn/ – Mac, Windows, Linux, ChromeOS, Android.</p></div>
+<div><span className="expiry">Expiry Milestone</span> <p>150</p></div>
+
+### `#experimental-web-machine-learning-neural-network`
+<div><span className="name">Name</span> <p>Enables experimental WebNN API features</p></div>
+<div><span className="description">Description</span> <p>Enables additional, experimental features in Web Machine Learning Neural Network (WebNN) API. Requires the "WebNN API" flag to be enabled. – Mac, Windows, Linux, ChromeOS, Android.</p></div>
+<div><span className="expiry">Expiry Milestone</span> <p>150</p></div>
+
+### `#webnn-coreml`
+<div><span className="name">Name</span> <p>Core ML backend for WebNN</p></div>
+<div><span className="description">Description</span> <p>Enables using Core ML for GPU and NPU inference with the WebNN API. Disabling this flag enables a fallback to TFLite.</p></div>
+<div><span className="expiry">Expiry Milestone</span> <p>146</p></div>
+
+### `#webnn-directml`
+<div><span className="name">Name</span> <p>DirectML backend for WebNN</p></div>
+<div><span className="description">Description</span> <p>Enables using DirectML for GPU and NPU inference with the WebNN API. Disabling this flag enables a fallback to TFLite. – Windows.</p></div>
+<div><span className="expiry">Expiry Milestone</span> <p>146</p></div>
+
+## Switches (Command Line Flags)
+
+### `--use-redist-dml`
+<div><span className="name">Name</span> <p>Use redistributable DirectML</p></div>
+<div><span className="description">Description</span> <p>Try to use a redistributable DirectML.dll. Used for testing WebNN against newer DirectML release before it is integrated into Windows OS. Please see more info about DirectML releases at: https://learn.microsoft.com/en-us/windows/ai/directml/dml-version-history</p></div>
+
+### `--disable_dml_meta_commands_for_gpu`
+<div><span className="name">Name</span> <p>Disable DirectML Metacommands for GPU</p></div>
+
+### `--disable_webnn_for_gpu`
+<div><span className="name">Name</span> <p>Disable WebNN for GPU</p></div>
+<div><span className="description">Description</span> <p>If `--disable_webnn_for_gpu` workaround is enabled for the GPU device, we need to check to see if there is a NPU device available before setting the WebNN gpu feature status. If there is a NPU device, check the `--disable_webnn_for_npu` workaround.</p></div>
+
+### `--disable_webnn_for_npu`
+<div><span className="name">Name</span> <p>Disable WebNN for NPU</p></div>
+
+### `--webnn-coreml-dump-model`
+<div><span className="description">Description</span> <p>Copy the generated Core ML model to the folder specified by `--webnn-coreml-dump-model`</p></div>
+<div><span className="note">Note</span> <p>The folder needs to be accessible from the GPU sandbox or use `--no-sandbox`.</p></div>
+<div><span className="usage">Usage</span> <p>`--no-sandbox --webnn-coreml-dump-model=/tmp/CoreMLModels`</p></div>
+
+### `--webnn-tflite-dump-model`
+<div><span className="description">Description</span> <p>Save the generated TFLite model file to the folder specified by `--webnn-tflite-dump-model`. </p></div>
+<div><span className="note">Note</span> <p>The folder needs to be accessible from the GPU process sandbox or `--no-sandbox` must be used.</p></div>
+<div><span className="usage">Usage</span> <p>`--no-sandbox --webnn-tflite-dump-model=/tmp/tflite_models`</p></div>
+
+## Other Switches
+
+### `--no-sandbox`
+<div><span className="name">Name</span> <p>No Sandbox</p></div>
+<div><span className="description">Description</span> <p>The `--no-sandbox` flag disables Chromium's security sandbox, which isolates browser processes to prevent malicious code execution. While sometimes used in development/testing environments, using this flag in regular browsing is dangerous as it removes essential security protections.</p></div>
+<div><span className="note">Note</span> <p>Running with `--no-sandbox` is an insecure configuration. After performing the test, you should quit Chrome and re-launch normally.</p></div>
+
+### `--allow-third-party-modules`
+
+</div>
