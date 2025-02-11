@@ -40,6 +40,27 @@ Visit via `about://flags/`
 
 ## Switches (Command Line Flags)
 
+### `--use-redist-ort`
+
+| Name | Use redistributable ONNX Runtime |
+| :--: | :-------- |
+| Description | Try to use a redistributable onnxruntime.dll. |
+
+### `--webnn-use-ort`
+
+| Name | WebNN Use ONNX Runtime |
+| :--: | :-------- |
+| Description | Introduces `webnn_use_ort` build flag and enable it for Windows. Replaces the DirectML backend with the ONNX Runtime backend. |
+
+### `--webnn-ort-use-openvino`
+
+| Name | WebNN ONNX Runtime Use OpenVINO |
+| :--: | :-------- |
+| Description | Enables the OpenVINO Execution Provider, OpenVINO EP will be
+used for GPU and NPU devices. ONNX Runtime will run with the CPU EP by default. |
+| Usage (No Sandbox) | `"%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --no-sandbox --webnn-use-ort --webnn-ort-use-openvino --use-redist-ort` |
+| Usage (Within Sandbox) | `"%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe"  --allow-third-party-modules --webnn-use-ort --webnn-ort-use-openvino` |
+
 ### `--use-redist-dml`
 
 | Name | Use redistributable DirectML |
@@ -76,7 +97,7 @@ Visit via `about://flags/`
 | :--: | :-------- |
 | Description | Copy the generated Core ML model to the folder specified by `--webnn-coreml-dump-model`. |
 | Note | The folder needs to be accessible from the GPU sandbox or use `--no-sandbox`. |
-| Usage | `--no-sandbox --webnn-coreml-dump-model=/tmp/CoreMLModels` |
+| Usage | `"%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --no-sandbox --webnn-coreml-dump-model=/tmp/CoreMLModels` |
 
 ### `--webnn-tflite-dump-model`
 
@@ -84,7 +105,7 @@ Visit via `about://flags/`
 | :--: | :-------- |
 | Description | Save the generated TFLite model file to the folder specified by `--webnn-tflite-dump-model`. |
 | Note | The folder needs to be accessible from the GPU process sandbox or `--no-sandbox` must be used. |
-| Usage | `--no-sandbox --webnn-tflite-dump-model=/tmp/tflite_models` |
+| Usage | `"%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --no-sandbox --webnn-tflite-dump-model=/tmp/tflite_models` |
 
 ## Other Switches
 
