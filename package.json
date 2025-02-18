@@ -1,39 +1,31 @@
 {
   "name": "webnn-docs",
-  "description": "WebNN Developer Documentation",
   "version": "0.0.1",
+  "description": "WebNN Documentation",
+  "author": "Belem Zhang",
+  "license": "Apache-2.0",
   "scripts": {
-    "dev": "next --experimental-https",
+    "dev": "next --turbopack",
     "build": "next build",
-    "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ibelem/webnn-docs.git"
+    "start": "next start"
   },
   "keywords": [
     "WebNN"
   ],
-  "author": "Belem Zhang",
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ibelem/webnn-docs/issues"
   },
   "homepage": "https://github.com/ibelem/webnn-docs#readme",
   "dependencies": {
-    "@xyflow/react": "^12.3.6",
-    "next": "^15.1.4",
-    "next-sitemap": "^4.2.3",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
+    "@tailwindcss/postcss": "^4.0.6",
+    "@xyflow/react": "^12.4.3",
+    "framer-motion": "^12.4.3",
+    "next": "^15.1.7",
+    "nextra": "^4.2.13",
+    "nextra-theme-docs": "^4.2.13",
+    "postcss": "^8.5.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "framer-motion": "^11.18.1",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.6"
   }
 }

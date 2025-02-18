@@ -1,29 +1,39 @@
 import nextra from 'nextra'
-
-/**
- * @type {import('next').NextConfig}
- */
-const nextConfig = {
-  // output: 'export',
-  images: {
-    unoptimized: true // mandatory, otherwise won't export
+ 
+const withNextra = nextra({
+  defaultShowCopyCode: true,
+  latex: true,
+  contentDirBasePath: '/',
+  unstable_shouldAddLocaleToLinks: true
+  // ... Other Nextra config options
+})
+ 
+// You can include other Next.js configuration options here, in addition to Nextra settings:
+export default withNextra({
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true
   },
-  // Optional: Change the output directory `out` -> `dist`
-  // distDir: "build"
   i18n: {
     locales: ['en', 'zh'],
     defaultLocale: 'en'
-  }
-}
-
-const withNextra = nextra({
-  latex: true,
-  defaultShowCopyCode: true,
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.jsx',
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'microsoft.github.io',
+        port: '',
+        pathname: '/webnn-developer-preview/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'webmachinelearning.github.io',
+        port: '',
+        search: '',
+      },
+    ],
+  },
 })
- 
-export default withNextra(nextConfig);
- 
-// If you have other Next.js configurations, you can pass them as the parameter:
-// export default withNextra({ /* other next.js config */ })
