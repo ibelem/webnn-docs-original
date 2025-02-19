@@ -1,20 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import BoltIcon from '../icons/bolt.jsx'
 import ShowcaseIcon from '../icons/showcase.jsx'
 
 export default function Hero() {
-  const pathname = usePathname()
-  let locale = "en";
-  if (pathname.indexOf("/en")) {
-    locale = "en";
-  }
-  if (pathname.indexOf("/zh")) {
-    locale = "zh";
-  }
-
   return (
     <div className="z-1 xl:col-span-1 px-6 md:px-4 xl:pl-8 xl:pr-4 2xl:pl-10 pt-20 md:pt-24 lg:pt-28 items-center justify-items-base backdrop-blur-[0px] bg-transparent">
       <h1 className="font-title tracking-[-0.02rem] !text-4xl lg:!text-5xl xl:!text-5xl 2xl:!text-5xl mb-4 font-extrabold">

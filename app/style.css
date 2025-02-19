@@ -601,16 +601,19 @@ article.nextra-body-typesetting-article a:hover {
   justify-items: center;
 }
 
-.tutorials-title img.onnx-runtime-logo {
+.tutorials-title svg.transformersjs-logo {
   max-height: 40px;
 }
 
-.tutorials-title img.lite-rt-logo {
-  width: 136px;
-  height: 40px;
+.tutorials-title svg.onnx-runtime-logo {
+  max-height: 40px;
 }
 
-.tutorials-title img.webnn-logo {
+.tutorials-title svg.litert-logo {
+  max-height: 40px;
+}
+
+.tutorials-title svg.webnn-logo {
   max-height: 40px;
 }
 
@@ -651,8 +654,8 @@ article.nextra-body-typesetting-article a:hover {
 }
 
 .quick-start-card svg {
-  width: 100px !important;
-  height: 20px;
+  width: 108px !important;
+  height: 26px !important;
 }
 
 .ort_logo_st0 {

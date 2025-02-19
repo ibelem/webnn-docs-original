@@ -1,11 +1,2 @@
 # Common Errors
 
-## Why am I not seeing performance benefits on Intel GPUs?
-
-DirectML metacommands execution is disabled by default on Intel GPUs between driver versions `31.0.101.5518` and `32.0.101.6083`. To enable metacommands and evaluate performance on affected GPU drivers, add the following flag:
-
-```bash copy showLineNumbers filename="gpu-flag"
---disable_dml_meta_commands_for_gpu=0
-```
-
-Note: This flag only affects GPU inference and has no impact on NPU operations.

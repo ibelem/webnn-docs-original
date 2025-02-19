@@ -9,7 +9,7 @@ export default {
     title: "API"
   },
   framework: {
-    title: "JavaScript ML Framework"
+    title: "Framework and Tool"
   },
   model: {
     title: "Model"

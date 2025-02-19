@@ -2,11 +2,14 @@ export default {
   'common-errors': {
     title: "Common Errors"
   },
-  'onnx-errors': {
-    title: "ONNX Runtime Web Errors"
+  'framework-errors': {
+    title: "JS ML Framework Errors"
   },
-  'npu-errors': {
-    title: "NPU Errors"
+  'backend-errors': {
+    title: "Backend Errors"
+  },
+  'hardware-errors': {
+    title: "Hardware Errors"
   },
   'performance-issues': {
     title: "Performance Issues"
