@@ -24,7 +24,7 @@
   --shiny-cta-highlight: blue;
   --shiny-cta-highlight-subtle: #8484ff;
 }
-
+/* 
 @font-face {
   font-display: swap;
   font-family: 'Roboto Flex';
@@ -32,7 +32,7 @@
   font-weight: 400;
   src: url('./fonts/roboto-flex-v26-latin/roboto-flex-v26-latin-regular.woff2') format('woff2');
 
-}
+} */
 
 @font-face {
   font-display: swap;
@@ -42,27 +42,34 @@
   src: url('./fonts/intel-one-mono/IntelOneMono-Regular.woff2') format('woff2');
 }
 
-/* @font-face {
-  font-display: swap; 
-  font-family: 'Plus Jakarta Sans';
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 200;
+  src: url('./fonts/geist-v1-latin/geist-v1-latin-200.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
   font-style: normal;
   font-weight: 400;
-  src: url('./fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-regular.woff2') format('woff2');
+  src: url('./fonts/geist-v1-latin/geist-v1-latin-regular.woff2') format('woff2');
 }
 @font-face {
-  font-display: swap; 
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-weight: 500;
-  src: url('./fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-500.woff2') format('woff2');
-}
-@font-face {
-  font-display: swap; 
-  font-family: 'Plus Jakarta Sans';
+  font-display: swap;
+  font-family: 'Geist';
   font-style: normal;
   font-weight: 600;
-  src: url('./fonts/plus-jakarta-sans-v8-latin/plus-jakarta-sans-v8-latin-600.woff2') format('woff2');
-} */
+  src: url('./fonts/geist-v1-latin/geist-v1-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./fonts/geist-v1-latin/geist-v1-latin-800.woff2') format('woff2');
+}
 
 @font-face {
   font-display: swap;
@@ -97,7 +104,7 @@
 }
 
 body {
-  font-family: 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Geist', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -114,7 +121,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Instrument Sans', 'Roboto Flex', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Instrument Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
   font-weight: 700;
 }

@@ -1,8 +1,8 @@
 export default {
   index: {
-    'title': 'Web Neural Network API',
-    type: 'page',
+    title: 'Home',
     display: 'hidden',
+    type: 'page',
     theme: {
       typesetting: 'article',
       toc: false,
@@ -25,6 +25,12 @@ export default {
   showcase: {
     title: 'Showcase',
     type: 'page',
+    href: '/showcase'
+  },
+  playground: {
+    title: 'Playground',
+    type: 'page',
+    href: '/playground'
   },
   spec: {
     title: 'Spec',

@@ -1,5 +1,6 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
+import Link from 'next/link'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-docs/style.css'
@@ -10,7 +11,7 @@ export const metadata = {
     'WebNN doc, WebNN documentation, WebNN Neural Network API documentation site.',
   title: {
     absolute: 'WebNN',
-    template: '%s | Web Neural Network API'
+    template: '%s | WebNN Docs - Web Neural Network API'
   },
   metadataBase: new URL('https://webnn.io'),
   openGraph: {
@@ -195,7 +196,9 @@ const navbar = (
     }
   />
 )
-const footer = <Footer><div className="title w-full text-sm">&copy;{new Date().getFullYear()} Web Neural Network API</div></Footer>
+const footer = <Footer>
+  <div className="title w-full text-sm">&copy;{new Date().getFullYear()} Web Neural Network API</div> 
+  </Footer>
  
 export default async function RootLayout({ children, params }) {
   const { lang } = await params;

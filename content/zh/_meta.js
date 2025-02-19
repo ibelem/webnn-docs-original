@@ -25,6 +25,12 @@ export default {
   showcase: {
     title: '示例',
     type: 'page',
+    href: '/showcase'
+  },
+  playground: {
+    title: 'Playground',
+    type: 'page',
+    href: '/playground'
   },
   spec: {
     title: '规范',
