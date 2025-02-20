@@ -91,21 +91,22 @@ export default function Page() {
           showLineNumbers: true
         }}
         files={{
-          'index.js': { code: `const descriptor = {dataType: 'float32', shape: [2, 2]};
-const context = await navigator.ml.createContext();
-const builder = new MLGraphBuilder(context);
+          'index.js': { code: `async function runWebNN() {
+  const descriptor = {dataType: 'float32', shape: [2, 2]};
+  const context = await navigator.ml.createContext();
+  const builder = new MLGraphBuilder(context);
 
-// 1. Create a computational graph 'C = 0.2 * A + B'.
-const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
-const A = builder.input('A', descriptor);
-const B = builder.input('B', descriptor);
-const C = builder.add(builder.mul(A, constant), B);
+  // 1. Create a computational graph 'C = 0.2 * A + B'.
+  const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
+  const A = builder.input('A', descriptor);
+  const B = builder.input('B', descriptor);
+  const C = builder.add(builder.mul(A, constant), B);
 
-// 2. Compile the graph.
-const graph = await builder.build({'C': C});
+  // 2. Compile the graph.
+  const graph = await builder.build({'C': C});
 
-// 3. Create reusable input and output tensors.
-const [inputTensorA, inputTensorB, outputTensorC] =
+  // 3. Create reusable input and output tensors.
+  const [inputTensorA, inputTensorB, outputTensorC] =
     await Promise.all([
       context.createTensor({
         dataType: A.dataType, shape: A.shape, writable: true
@@ -118,23 +119,26 @@ const [inputTensorA, inputTensorB, outputTensorC] =
       })
     ]);
 
-// 4. Initialize the inputs.
-context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
-context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
+  // 4. Initialize the inputs.
+  context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
+  context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
 
-// 5. Execute the graph.
-const inputs = {
-  'A': inputTensorA,
-  'B': inputTensorB
-};
-const outputs = {
-  'C': outputTensorC
-};
-context.dispatch(graph, inputs, outputs);
+  // 5. Execute the graph.
+  const inputs = {
+    'A': inputTensorA,
+    'B': inputTensorB
+  };
+  const outputs = {
+    'C': outputTensorC
+  };
+  context.dispatch(graph, inputs, outputs);
     
-// 6. Read back the computed result.
-const result = await context.readTensor(outputTensorC);
-console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
+  // 6. Read back the computed result.
+  const result = await context.readTensor(outputTensorC);
+  console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
+}
+
+runWebNN();
           `},
           'onnx-runtime-web.js': { 
             code: `const descriptor = {dataType: 'float32', shape: [2, 2]};`
