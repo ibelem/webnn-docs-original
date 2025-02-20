@@ -135,7 +135,7 @@ export default function Page() {
     
   // 6. Read back the computed result.
   const result = await context.readTensor(outputTensorC);
-  console.log('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
+  document.write('Output value:', new Float32Array(result));  // [1, 1, 1, 1]
 }
 
 runWebNN();
@@ -147,7 +147,7 @@ runWebNN();
             code: `import * as transformers from from '@huggingface/transformers';
 const classifier = await transformers.pipeline("image-classification", path, options);
 let [err, output] = await asyncErrorHandling(classifier(imageUrl, { topk: 3 }));
-console.log(output);`
+document.write(output);`
           }
         }} />
       </div>
