@@ -1,6 +1,5 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
-import Link from 'next/link'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-docs/style.css'
@@ -204,9 +203,8 @@ export default async function RootLayout({ children, params }) {
   const { lang } = await params;
   const direction = getDirection(lang);
   const dictionary = await getDictionary(lang);
-  // console.log(`+++++++++ ${lang} +++++++++++` )
   let pageMap = await getPageMap(`/${lang}`);
-  console.log("dictionary: " + dictionary.logo.title);
+  // console.log("dictionary: " + dictionary.logo.title);
   return (
     <html lang={lang} dir={direction} suppressHydrationWarning>
       <Head

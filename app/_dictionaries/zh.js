@@ -8,6 +8,8 @@ export default {
   logo: {
     title: 'WebNN 文档'
   },
+  viewDemo: '查看示例',
+  viewCode: '查看代码',
   // notFound: 'This page could not be found',
   poweredBy: 'Powered by',
   link: {

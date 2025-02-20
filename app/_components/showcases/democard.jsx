@@ -2,10 +2,19 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Tag } from "./tag"
+import { usePathname } from "next/navigation";
 
 const MotionLink = motion.create(Link)
 
 export function DemoCard({ title, description, imageUrl, demoUrl, codeUrl, tags, framework }) {
+  let viewDemo = 'View Demo';
+  let viewCode = 'View Code';
+  const pathname = usePathname();
+  if (pathname.indexOf("/zh") >-1) {
+    viewDemo = '查看示例';
+    viewCode = '查看代码';
+  }
+
   return (
     <motion.div
       className="demo-card rounded-lg shadow-md overflow-hidden"
@@ -32,19 +41,19 @@ export function DemoCard({ title, description, imageUrl, demoUrl, codeUrl, tags,
         <div className="grid grid-cols-2 gap-4 mb-4">
           <MotionLink
             href={demoUrl}
-            className="view-demo inline-block bg-[#03045e] text-white text-center px-1 py-1 rounded-full hover:bg-[#03045e] transition-colors"
+            className="text-sm view-demo inline-block bg-[#03045e] text-white text-center px-1 py-1 rounded-full hover:bg-[#03045e] transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View Demo
+            {viewDemo}
           </MotionLink>
           <MotionLink
             href={codeUrl}
-            className="view-code inline-block border-[1px] border-solid border-[#03045e] text-[#03045e] text-center px-1 py-1 rounded-full hover:bg-[#03045e] hover:text-white transition-colors"
+            className="text-sm view-code inline-block border-[1px] border-solid border-[#03045e] text-[#03045e] text-center px-1 py-1 rounded-full hover:bg-[#03045e] hover:text-white transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View Code
+            {viewCode}
           </MotionLink>
         </div>
       </div>

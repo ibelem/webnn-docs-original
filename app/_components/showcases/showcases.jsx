@@ -1,6 +1,8 @@
+"use client"
 import { Showcase } from "./showcase"
+import { usePathname } from "next/navigation";
 
-const demos = [
+const demosEn = [
   {
     id: "1",
     title: "Image Classification",
@@ -170,10 +172,186 @@ const demos = [
   },
 ]
 
+const demosCh = [
+  {
+    id: "1",
+    title: "图像分类",
+    description: "分类：MobileNet、ResNet、EfficientNet Lite",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/ic.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/image-classification/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/image-classification",
+    tags: ["GPU", "NPU"],
+    framework: ["Transformers.js"],
+  },
+  {
+    id: "2",
+    title: "Stable Diffusion 1.5",
+    description: "文本生成图像：文本编码器、UNet、VAE 解码器、安全检查器",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/sd1.5.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/stable-diffusion-1.5/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/stable-diffusion-1.5",
+    tags: ["GPU"],
+    framework: ["ONNX Runtime"],
+  },
+  {
+    id: "3",
+    title: "SD Turbo",
+    description: "文本生成图像：文本编码器、UNet、VAE 解码器、安全检查器",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/sd-turbo.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/sd-turbo/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/sd-turbo",
+    tags: ["GPU", "NPU"],
+    framework: ["ONNX Runtime"],
+  },
+  {
+    id: "4",
+    title: "任意分割",
+    description: "图像分割：SAM",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/sam.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/segment-anything/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/segment-anything",
+    tags: ["GPU"],
+    framework: ["ONNX Runtime"],
+  },
+  {
+    id: "5",
+    title: "Whisper Base",
+    description: "自动语音识别：Whisper 编码器、解码器",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/whisper.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/whisper-base/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/whisper-base",
+    tags: ["GPU", "NPU"],
+    framework: ["ONNX Runtime"],
+  },
+  {
+    id: "6",
+    title: "Phi-3 Mini",
+    description: "文本生成",
+    imageUrl: "https://microsoft.github.io/webnn-developer-preview/assets/img/demos/phi-3-mini.jpg",
+    demoUrl: "https://microsoft.github.io/webnn-developer-preview/demos/phi-3-mini/",
+    codeUrl: "https://github.com/microsoft/webnn-developer-preview/tree/main/demos/phi-3-mini",
+    tags: ["GPU"],
+    framework: ["ONNX Runtime"],
+  },
+  {
+    id: "7",
+    title: "NNotepad",
+    description: "基于浏览器的 WebNN Playground",
+    imageUrl: "https://webmachinelearning.github.io/assets/images/webnnsamples/nnotepad.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/nnotepad/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nnotepad",
+    tags: ["CPU", "GPU", "NPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "8",
+    title: "代码编辑器",
+    description: "评估、审查和修改 WebNN 示例代码",
+    imageUrl: "https://webmachinelearning.github.io/assets/images/webnnsamples/codeeditor.jpg",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/code/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/code",
+    tags: ["CPU", "GPU", "NPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "9",
+    title: "图像分类",
+    description: "分类：MobileNet、SqueezeNet、ResNet、EfficientNet Lite",
+    imageUrl: "https://webmachinelearning.github.io/assets/images/webnnsamples/ic.jpg",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/image_classification/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/image_classification",
+    tags: ["CPU", "GPU", "NPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "10",
+    title: "手写数字分类",
+    description: "使用 LeNet 对 MNIST 数据集中的手写数字进行分类",
+    imageUrl: "https://webmachinelearning.github.io/assets/images/webnnsamples/handwritten.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/lenet/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/lenet",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "11",
+    title: "快速风格迁移",
+    description: "将梵高的星空夜等风格应用到图像中",
+    imageUrl: "https://webmachinelearning.github.io/assets/images/webnnsamples/starrynight.jpg",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/style_transfer/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/style_transfer",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "12",
+    title: "目标检测",
+    description: "在数字图像和视频中检测语义对象实例",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/od.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/object_detection/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/object_detection/",
+    tags: ["CPU", "GPU", "NPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "13",
+    title: "噪声抑制",
+    description: "基于深度学习的噪声抑制 NSNet2 实现",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/noise.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/nsnet2/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nsnet2/",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "14",
+    title: "噪声抑制",
+    description: "基于深度学习的噪声抑制 RNNoise 实现",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/rnnoise.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/rnnoise/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/rnnoise/",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "15",
+    title: "语义分割",
+    description: "将图像分割成具有语义意义的部分",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/ss.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/semantic_segmentation/",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "16",
+    title: "面部特征点检测",
+    description: "检测眼睛、鼻子、嘴等面部特征点",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/fld.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/facial_landmark_detection/",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+  {
+    id: "17",
+    title: "人脸识别",
+    description: "使用物体检测识别参与者的面部",
+    imageUrl: "https://webmachinelearning.github.io/webnn-samples/common/img/fr.png",
+    demoUrl: "https://webmachinelearning.github.io/webnn-samples/face_recognition/",
+    codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/face_recognition/",
+    tags: ["CPU", "GPU"],
+    framework: ["Native WebNN"],
+  },
+]
+
 export function Showcases() {
+  const pathname = usePathname()
+  const showcaseTitle = pathname.indexOf("/zh") !== -1 ? '示例' : 'Showcase' ;
+  const demos = pathname.indexOf("/zh") !== -1 ? demosCh : demosEn;
   return (
     <div className="min-h-screen">
-      <h2 className="text-4xl font-title light-color !text-center pt-4 mt-0">Showcase</h2>
+      <h2 className="text-4xl font-title light-color !text-center pt-4 mt-4">{showcaseTitle}</h2>
       <Showcase demos={demos} />
     </div>
   )

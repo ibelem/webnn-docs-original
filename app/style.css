@@ -1,29 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --light: rgb(3, 4, 94);
-  --c: hsl(58, 89%, 93%);
-  --d: hsl(29, 97%, 86%);
-  --dark: hsl(193, 100%, 50%);
-  /* --x-color-primary-800: var(--x-color-primary-600); */
-  --x-color-primary-800: var(--light);
-  --dark-backup: hsl(333, 93%, 56%);
-  --dark-bg: hsla(333, 93%, 56%, 0.03);
-  --dark-09: hsla(334, 85%, 57%, 0.03);
-  --white: rgba(255, 255, 255, 1);
-  --n-1: #f72684;
-  --n-2: #7209b7;
-  --n-3: #3a0ca3;
-  --n-4: #4361ee;
-  --n-6: #4cc9f0;
-  --n-7: #eb6424;
-  --n-border: rgba(229, 231, 235, 0.5);
-  --shiny-cta-bg: #000000;
-  --shiny-cta-bg-subtle: #1a1818;
-  --shiny-cta-fg: #ffffff;
-  --shiny-cta-highlight: blue;
-  --shiny-cta-highlight-subtle: #8484ff;
-}
 /* 
 @font-face {
   font-display: swap;
@@ -103,6 +79,31 @@
   src: url('./fonts/instrument-sans-v1-latin/instrument-sans-v1-latin-700.woff2') format('woff2');
 }
 
+:root {
+  --light: rgb(3, 4, 94);
+  --c: hsl(58, 89%, 93%);
+  --d: hsl(29, 97%, 86%);
+  --dark: hsl(193, 100%, 50%);
+  /* --x-color-primary-800: var(--x-color-primary-600); */
+  --x-color-primary-800: var(--light);
+  --dark-backup: hsl(333, 93%, 56%);
+  --dark-bg: hsla(333, 93%, 56%, 0.03);
+  --dark-09: hsla(334, 85%, 57%, 0.03);
+  --white: rgba(255, 255, 255, 1);
+  --n-1: #f72684;
+  --n-2: #7209b7;
+  --n-3: #3a0ca3;
+  --n-4: #4361ee;
+  --n-6: #4cc9f0;
+  --n-7: #eb6424;
+  --n-border: rgba(229, 231, 235, 0.5);
+  --shiny-cta-bg: #000000;
+  --shiny-cta-bg-subtle: #1a1818;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: blue;
+  --shiny-cta-highlight-subtle: #8484ff;
+}
+
 body {
   font-family: 'Geist', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -111,9 +112,17 @@ body {
 code,
 kbd,
 samp,
-pre {
+pre,
+.ͼ16 .cm-scroller,
+.sp-code-editor,
+.sp-tab-container,
+.sp-preview-container {
   font-family: 'Intel One Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   -webkit-font-smoothing: antialiased;
+}
+
+.sp-error-message {
+  color: var(--n-1) !important;
 }
 
 h1,

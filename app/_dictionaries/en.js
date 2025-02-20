@@ -8,6 +8,8 @@ export default {
   logo: {
     title: 'WebNN Documentation'
   },
+  viewDemo: 'View Demo',
+  viewCode: 'View Code',
   // notFound: 'This page could not be found',
   poweredBy: 'Powered by',
   link: {

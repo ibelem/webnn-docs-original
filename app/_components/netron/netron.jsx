@@ -26,7 +26,7 @@ const initialNodes = [
   {
     id: "n1",
     type: "netronNode2",
-    position: { x: 117, y: 60 },
+    position: { x: 116, y: 60 },
     data: {
       label: "LayerNormalization",
       n1: "Scale",
@@ -41,7 +41,7 @@ const initialNodes = [
   {
     id: "n2a",
     type: "netronNode1",
-    position: { x: 22, y: 150 },
+    position: { x: 20, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
@@ -54,7 +54,7 @@ const initialNodes = [
   {
     id: "n2b",
     type: "netronNode1",
-    position: { x: 140, y: 150 },
+    position: { x: 138, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
@@ -67,7 +67,7 @@ const initialNodes = [
   {
     id: "n2c",
     type: "netronNode1",
-    position: { x: 258, y: 150 },
+    position: { x: 256, y: 150 },
     data: {
       label: "MatMul",
       n1: "B",
