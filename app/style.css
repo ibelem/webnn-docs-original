@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* 
 @font-face {
@@ -175,6 +176,83 @@ article.nextra-body-typesetting-article h1 {
 .hero-section svg {
   height: 800px;
   max-width: 100%;
+}
+
+.cm-scroller {
+  scrollbar-width: auto;
+}
+
+.cm-scroller::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background-color: var(--light);
+  border-radius: 10px;
+  border: 3px solid white;
+}
+
+.cm-scroller:hover::-webkit-scrollbar-thumb {
+  background-color: var(--light);
+  border: 2px solid white;
+}
+
+.dark .cm-scroller::-webkit-scrollbar-thumb {
+  background-color: var(--dark);
+  border: 3px solid black;
+}
+
+.dark .cm-scroller:hover::-webkit-scrollbar-thumb {
+  background-color: var(--dark);
+  border: 2px solid black;
+}
+
+.playground-nav {
+  border-left: 1px solid rgb(239, 239, 239);
+  border-right: 1px solid rgb(239, 239, 239);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.dark .playground-nav {
+  border-left: 1px solid rgb(37, 37, 37);
+  border-right: 1px solid rgb(37, 37, 37);
+}
+
+.playground-nav button {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.8rem;
+  border-left: 1px solid rgb(239, 239, 239);
+}
+
+.dark .playground-nav button {
+  border-left: 1px solid rgb(37, 37, 37);
+}
+
+* {
+  outline: none !important;
+}
+
+.playground-nav svg {
+  display: inline-block;
+}
+
+.playground-content {
+  flex: 50 50 0px;
+}
+
+.selected-framework-template svg {
+  margin-right: 0.5rem;
+}
+
+.x\:py-12 {
+  padding-block: 2rem !important;
 }
 
 @media (max-width: 1023px) {
