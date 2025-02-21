@@ -117,7 +117,7 @@ export const editorFiles = {
   const result = await context.readTensor(outputTensorC);
   // [1, 1, 1, 1]
   const output = document.querySelector('#output')
-  output.innerText = "Output value: ' + new Float32Array(result);
+  output.innerText = 'Output value: ' + new Float32Array(result);
 }
 
 runWebNN();
