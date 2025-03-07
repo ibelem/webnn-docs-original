@@ -26,6 +26,7 @@
   font-weight: 200;
   src: url('./fonts/geist-v1-latin/geist-v1-latin-200.woff2') format('woff2');
 }
+
 @font-face {
   font-display: swap;
   font-family: 'Geist';
@@ -33,6 +34,7 @@
   font-weight: 400;
   src: url('./fonts/geist-v1-latin/geist-v1-latin-regular.woff2') format('woff2');
 }
+
 @font-face {
   font-display: swap;
   font-family: 'Geist';
@@ -40,6 +42,7 @@
   font-weight: 600;
   src: url('./fonts/geist-v1-latin/geist-v1-latin-600.woff2') format('woff2');
 }
+
 @font-face {
   font-display: swap;
   font-family: 'Geist';
@@ -103,6 +106,13 @@
   --shiny-cta-fg: #ffffff;
   --shiny-cta-highlight: blue;
   --shiny-cta-highlight-subtle: #8484ff;
+  --webnn-005: hsla(193, 100%, 50%, 0.05);
+  --onnx-005: rgba(0, 0, 0, 0.05);
+  --transformersjs-005: rgba(255, 157, 11, 0.1);
+  --vanilla-005: rgba(247, 223, 30, 0.1);
+  --svelte-005: rgba(255, 62, 0, 0.1);
+  --react-005: rgba(97, 218, 251, 0.1);
+  --vue-005: rgba(65, 184, 131, 0.1);
 }
 
 body {
@@ -215,9 +225,47 @@ article.nextra-body-typesetting-article h1 {
 .playground-nav {
   border-left: 1px solid rgb(239, 239, 239);
   border-right: 1px solid rgb(239, 239, 239);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.pg-framework {
+  border-bottom: 1px solid #efefef;
+}
+
+.pg-framework.webnn button.webnn {
+  background-color: var(--webnn-005);
+}
+
+.pg-framework.onnxruntime button.onnx {
+  background-color: var(--onnx-005);
+}
+
+.pg-framework.transformersjs button.transformersjs {
+  background-color: var(--transformersjs-005);
+}
+
+.pg-js.vanilla button.vanilla {
+  background-color: var(--vanilla-005);
+}
+
+.pg-js.svelte button.svelte {
+  background-color: var(--svelte-005);
+}
+
+.pg-js.react button.react {
+  background-color: var(--react-005);
+}
+
+.pg-js.vue button.vue {
+  background-color: var(--vue-005);
+}
+
+.selected-framework-js svg:last-child {
+  margin-left: 6px;
 }
 
 .dark .playground-nav {
@@ -243,8 +291,21 @@ article.nextra-body-typesetting-article h1 {
   display: inline-block;
 }
 
-.playground-content {
-  flex: 50 50 0px;
+.pg-framework,
+.pg-js {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.pg-framework {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pg-js {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .selected-framework-template svg {
@@ -302,7 +363,8 @@ summary {
   color: var(--dark) !important;
 }
 
-.netron label, .architecture label {
+.netron label,
+.architecture label {
   padding: 0.1rem 0.4rem;
   font-size: 0.8rem;
   border-top-left-radius: 5px;
@@ -341,7 +403,7 @@ summary {
   width: 88px;
 }
 
-.architecture  .transformers {
+.architecture .transformers {
   width: 102px;
 }
 
@@ -357,15 +419,18 @@ summary {
   background-color: #eee;
 }
 
-.netron label:hover, .architecture label:hover {
+.netron label:hover,
+.architecture label:hover {
   background-color: var(--light);
 }
 
-.netron div, .architecture div {
+.netron div,
+.architecture div {
   padding: 0.1rem 0.4rem;
 }
 
-.netron .conn, .architecture .conn {
+.netron .conn,
+.architecture .conn {
   border: 0px solid transparent;
   background-color: transparent;
   width: 3px;
@@ -609,6 +674,25 @@ article.nextra-body-typesetting-article a:hover {
   }
 }
 
+@media (max-width: 1024px) {
+  .playground-nav {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .pg-framework {
+    border-top: 1px solid #efefef;
+  }
+
+  .pg-framework button:first-child {
+    border: 0px solid transparent;
+  }
+
+  .pg-js button:first-child {
+    border: 0px solid transparent;
+  }
+}
+
 .quickstart-svg path {
   fill: var(--white);
 }
@@ -720,7 +804,7 @@ article.nextra-body-typesetting-article a:hover {
 }
 
 .dark .light-color {
-  color:var(--dark);
+  color: var(--dark);
 }
 
 .x\:bg-primary-50 {
