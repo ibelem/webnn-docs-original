@@ -5,7 +5,7 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from 'nextra-theme-docs';
 import { editorFiles, themeDark, themeLight } from './config.js';
 import { VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../_components/icons/js_frameworks.jsx'
-import { TransformersjsIcon, OnnxIcon, WebNNIcon } from '../../_components/icons/editor.jsx'
+import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../_components/icons/editor.jsx'
 
 export default function Page() {
   const { theme, setTheme } = useTheme();
@@ -47,9 +47,9 @@ export default function Page() {
 
   return (
     <div className="md:px-8 xl:px-8 mb-8">
-      <div className="mx-4 md:mx-0 playground-nav">
+      <div className="mx-1 md:mx-0 playground-nav">
         <div className="self-center flex flex-row">
-          <h2 className="pl-4 text-2xl font-title light-color">
+          <h2 className="pl-4 text-xl md:text-2xl font-title light-color py-1">
             Playground
           </h2>
           <div className="selected-framework-js ml-4 self-center">
@@ -57,6 +57,7 @@ export default function Page() {
             {framework === 'webnn' && <WebNNIcon />}
             {framework === 'onnxruntime' && <OnnxIcon />}
             {framework === 'transformersjs' && <TransformersjsIcon />}
+            {framework === 'litert' && <LiteRTIcon />}
             {js === 'vanilla' && <VanillaIcon />}
             {js === 'svelte' && <SvelteIcon />}
             {js === 'react' && <ReactIcon />}
@@ -93,6 +94,16 @@ export default function Page() {
               <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'transformersjs' ? 'text-gray-800 dark:text-gray-200' : ''
                 }`}>
                 Transformers.js
+              </span>
+            </button>
+            <button
+              className="litert hover:cursor-pointer"
+              onClick={() => handleFrameworkChange('litert')}
+            >
+              <LiteRTIcon className="litert" />
+              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'litert' ? 'text-gray-800 dark:text-gray-200' : ''
+                }`}>
+                LiteRT
               </span>
             </button>
           </div>
@@ -140,12 +151,17 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Sandpack className="!mx-4 md:!mx-0"
-        js={js}
+      <Sandpack className="!mx-1 md:!mx-0"
+        template={js}
         theme={editorTheme}
         options={{
           editorHeight: 532,
           showLineNumbers: true
+        }}
+        customSetup={{ 
+          dependencies: { 
+            "svelte": "^5.22.6" 
+          }
         }}
         files={files}
       />

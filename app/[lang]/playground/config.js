@@ -70,8 +70,11 @@ export const themeDark = {
 
 export const editorFiles = {
   "vanilla": {
-    "webnn" : {
-      'index.js': { code: `async function runWebNN() {
+    "webnn": {
+      '/index.js': {
+        code: `import "./styles.css";
+
+async function runWebNN() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
   const context = await navigator.ml.createContext();
   const builder = new MLGraphBuilder(context);
@@ -115,112 +118,31 @@ export const editorFiles = {
     
   // 6. Read back the computed result.
   const result = await context.readTensor(outputTensorC);
-  // [1, 1, 1, 1]
-  const output = document.querySelector('#output')
-  output.innerText = 'Output value: ' + new Float32Array(result);
+  return new Float32Array(result).toString();
 }
 
-runWebNN();
-        `
-       },
-      'index.html': { code: `<!DOCTYPE html>
+document.querySelector("#run").addEventListener("click", async () => {
+  const output = document.querySelector("#output");
+  output.textContent = "Inferencing...";
+  try {
+    const result = await runWebNN();
+    output.textContent = 'Output value: ' + result;
+  } catch (error) {
+    output.textContent = 'Error: ' + error.message;
+  }
+});`
+      },
+      '/index.html': {
+        code: `<!DOCTYPE html>
 <html>
 
 <head>
-  <title>WebNN API</title>
+  <title>WebNN in Vanilla JavaScript</title>
   <meta charset="UTF-8" />
 </head>
 
 <body>
-  <h1>WebNN API</h1>
-  <div id="output"></div>
-  <script src="./index.js" />
-</body>
-
-</html>` },
-    },
-    "ort": {
-      'index.js': { code: `// ONNX Runtime Web + Vanilla JavaScript` },
-    },
-    "transformersjs" : {
-      'index.js': { code: `// Transformers.js + Vanilla JavaScript` },
-    }
-  },
-  "svelte": {
-    "webnn" : {
-      'index.js': { code: `export async function runWebNN() {
-  try {
-    const descriptor = { dataType: 'float32', shape: [2, 2] };
-    const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
-    
-    // 1. Create a computational graph 'C = 0.2 * A + B'.
-    const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
-    const A = builder.input('A', descriptor);
-    const B = builder.input('B', descriptor);
-    const C = builder.add(builder.mul(A, constant), B);
-    
-    // 2. Compile the graph.
-    const graph = await builder.build({ 'C': C });
-    
-    // 3. Create reusable input and output tensors.
-    const [inputTensorA, inputTensorB, outputTensorC] = await Promise.all([
-      context.createTensor({
-        dataType: A.dataType, 
-        shape: A.shape, 
-        writable: true
-      }),
-      context.createTensor({
-        dataType: B.dataType, 
-        shape: B.shape, 
-        writable: true
-      }),
-      context.createTensor({
-        dataType: C.dataType, 
-        shape: C.shape, 
-        readable: true
-      })
-    ]);
-    
-    // 4. Initialize the inputs.
-    context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
-    context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
-    
-    // 5. Execute the graph.
-    const inputs = {
-      'A': inputTensorA,
-      'B': inputTensorB
-    };
-    const outputs = {
-      'C': outputTensorC
-    };
-    await context.dispatch(graph, inputs, outputs);
-    
-    // 6. Read back the computed result.
-    const result = await context.readTensor(outputTensorC);
-    return new Float32Array(result).toString();
-  } catch (error) {
-    console.error("WebNN error:", error);
-    throw error;
-  }
-}` },
-      'App.svelte': { code: `<script>
-  import { onMount } from 'svelte';
-  import { runWebNN } from './index.js';
-  
-  let result = "";
-  
-  onMount(async () => {
-    try {
-      result = await runWebNN();
-    } catch (error) {
-      result = \`Error: ${error.message}\`;
-    }
-  });
-</script>
-
-<main>
-  <h1>WebNN Example</h1>
+  <h1>WebNN in Vanilla JavaScript</h1>
   <div>
     <p>This example demonstrates a simple neural network computation using WebNN:</p>
     <p>C = 0.2 * A + B</p>
@@ -230,48 +152,42 @@ runWebNN();
       <li>B is initialized with all 0.8</li>
     </ul>
   </div>
-  
-  <div id="output">
-    {#if result}
-      Output value: {result}
-    {:else}
-      Computing...
-    {/if}
-  </div>
-</main>
+  <button id="run">Run WebNN</button>
+  <div id="output">Click "Run WebNN" to start</div>
+  <script src="./index.js"></script>
+</body>
 
-<style>
-  main {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  }
-  
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-  
-  #output {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    font-family: monospace;
-  }
-</style>` }
+</html>` },
+      '/styles.css': { code: `body {
+  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
+  padding: 0 1rem;
+}
+
+h1 {
+  color: #F7DF1E;
+}
+
+button {
+  margin: 0.5rem 0;
+}`}
     },
-    "ort": {
-      'index.js': { code: `// ONNX Runtime Web + Svelte` },
+    "onnxruntime": {
+      '/index.js': { code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';
+`}
     },
-    "transformersjs" : {
-      'index.js': { code: `// Transformers.js + Svelte` },
+    "transformersjs": {
+      '/index.js': { code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
+`}
+    },
+    "litert": {
+      '/index.js': { code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
+` },
     }
   },
-  "react": {
-    "webnn" : {
-      'index.js': { code: `export async function runWebNN() {
+  "svelte": {
+    "webnn": {
+      '/webnn.js': {
+        code: `export async function runWebNN() {
   try {
     const descriptor = { dataType: 'float32', shape: [2, 2] };
     const context = await navigator.ml.createContext();
@@ -327,32 +243,173 @@ runWebNN();
     throw error;
   }
 }` },
-'App.js': { code: `import React, { useState, useEffect } from 'react';
-import { runWebNN } from './index.js';
-
-function App() {
-  const [result, setResult] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchResult() {
-      try {
-        const webNNResult = await runWebNN();
-        setResult(webNNResult);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      '/App.svelte': {
+        code: `<script>
+  import { runWebNN } from './webnn.js';
+  let result = $state("");
+  async function run() {
+    try {
+      result = "Computing...";
+      result = await runWebNN();
+    } catch (error) {
+      result = 'Error: ' + error.message;
     }
+  }
+</script>
 
-    fetchResult();
-  }, []);
+<main>
+  <h1>WebNN in Svelte</h1>
+  <div>
+    <p>This example demonstrates a simple neural network computation using WebNN:</p>
+    <p>C = 0.2 * A + B</p>
+    <p>Where:</p>
+    <ul>
+      <li>A is initialized with all 1.0</li>
+      <li>B is initialized with all 0.8</li>
+    </ul>
+  </div>
+
+  <button onclick={run}>Run WebNN</button>
+
+  <div id="output">
+    {#if result}
+      <p>Output value: {result}</p>
+    {:else}
+      <p>Click "Run WebNN" to start</p>
+    {/if}
+  </div>
+</main>` },
+'/styles.css': {
+        code: `main {
+  padding: 0 1rem;
+  font-family: 'Intel One Mono', 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  color: #ff3e00;
+}
+
+button {
+  margin: 0.5rem 0;
+}` },
+    },
+    "onnxruntime": {
+      '/App.svelte': { code: `<script>
+  let name = '// ONNX Runtime Web + Svelte';
+</script>
+
+<main>
+  {name}
+</main>
+`}
+    },
+    "transformersjs": {
+      '/App.svelte': { code: `<script>
+  let name = '// Transformers.js + Svelte';
+</script>
+
+<main>
+  {name}
+</main>
+`}
+    },
+    "litert": {
+      '/App.svelte': { code: `<script>
+  let name = '// LiteRT + Svelte';
+</script>
+
+<main>
+  {name}
+</main>
+`}
+    }
+  },
+  "react": {
+    "webnn": {
+      '/webnn.js': {
+        code: `export async function runWebNN() {
+  try {
+    const descriptor = { dataType: 'float32', shape: [2, 2] };
+    const context = await navigator.ml.createContext();
+    const builder = new MLGraphBuilder(context);
+    
+    // 1. Create a computational graph 'C = 0.2 * A + B'.
+    const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
+    const A = builder.input('A', descriptor);
+    const B = builder.input('B', descriptor);
+    const C = builder.add(builder.mul(A, constant), B);
+    
+    // 2. Compile the graph.
+    const graph = await builder.build({ 'C': C });
+    
+    // 3. Create reusable input and output tensors.
+    const [inputTensorA, inputTensorB, outputTensorC] = await Promise.all([
+      context.createTensor({
+        dataType: A.dataType, 
+        shape: A.shape, 
+        writable: true
+      }),
+      context.createTensor({
+        dataType: B.dataType, 
+        shape: B.shape, 
+        writable: true
+      }),
+      context.createTensor({
+        dataType: C.dataType, 
+        shape: C.shape, 
+        readable: true
+      })
+    ]);
+    
+    // 4. Initialize the inputs.
+    context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
+    context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
+    
+    // 5. Execute the graph.
+    const inputs = {
+      'A': inputTensorA,
+      'B': inputTensorB
+    };
+    const outputs = {
+      'C': outputTensorC
+    };
+    await context.dispatch(graph, inputs, outputs);
+    
+    // 6. Read back the computed result.
+    const result = await context.readTensor(outputTensorC);
+    return new Float32Array(result).toString();
+  } catch (error) {
+    console.error("WebNN error:", error);
+    throw error;
+  }
+}` },
+      '/App.js': {
+        code: `import React, { useState } from 'react';
+import { runWebNN } from './webnn.js';
+
+export default function App() {
+  const [result, setResult] = useState('Click "Run WebNN" to start');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleRunWebNN() {
+    setLoading(true);
+    setError(null);
+    setResult("");
+
+    try {
+      const webNNResult = await runWebNN();
+      setResult(webNNResult);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="App" style={styles.container}>
-      <h1 style={styles.heading}>WebNN Example</h1>
+      <h1 style={styles.heading}>WebNN in React.js</h1>
       <div>
         <p>This example demonstrates a simple neural network computation using WebNN:</p>
         <p>C = 0.2 * A + B</p>
@@ -362,60 +419,64 @@ function App() {
           <li>B is initialized with all 0.8</li>
         </ul>
       </div>
-      
-      <div id="output" style={styles.output}>
-        {loading ? (
-          "Computing..."
-        ) : error ? (
-          \`Error: ${error}\`
-        ) : (
-          \`Output value: ${result}\`
-        )}
+
+      <button style={styles.button} onClick={handleRunWebNN} disabled={loading}>
+        {loading ? "Computing..." : "Run WebNN"}
+      </button>
+
+      <div id="output">
+        {error ? <p style={{ color: "red" }}>Error: {error}</p> : result && <p>Output value: {result}</p>}
       </div>
     </div>
   );
 }
 
-// Inline styles for the component
 const styles = {
   container: {
-    maxWidth: '640px',
-    margin: '0 auto',
-    padding: '1rem',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    padding: '0 1rem',
+    fontFamily: '"Intel One Mono", "Helvetica Neue", sans-serif',
   },
   heading: {
-    color: '#333',
-    textAlign: 'center',
+    color: '#61DAFB',
   },
-  output: {
-    marginTop: '20px',
-    padding: '10px',
-    backgroundColor: '#f0f0f0',
-    borderRadius: '4px',
-    fontFamily: 'monospace',
+  button: {
+    cursor: 'pointer',
+    margin: '0.5rem 0',
   }
-};
-
-export default App;` }
+};` }
     },
-    "ort": {
-      'index.js': { code: `// ONNX Runtime Web + React` },
+    "onnxruntime": {
+      '/App.js': { code: `export default function App() {
+  return <div>// ONNX Runtime Web + React</div>
+}`},
     },
-    "transformersjs" : {
-      'index.js': { code: `// Transformers.js + React` },
+    "transformersjs": {
+      '/App.js': { code: `export default function App() {
+  return <div>// Transformers.js + React</div>
+}`},
+    },
+    "litert": {
+      '/App.js': { code: `export default function App() {
+  return <div>// LiteRT + React</div>
+}`},
     }
   },
   "vue": {
-    "webnn" : {
-      'index.js': { code: `import { createApp } from 'vue'
-import App from './App.vue'
-
-createApp(App).mount('#app')` },
-      'App.vue': { code: `<template>
+    "webnn": {
+      '/src/App.vue': {
+        code: `<template>
   <div>
-    <h1>WebNN in Vue.js</h1>
-    <button @click="runWebNN">Run WebNN Computation</button>
+      <h1>WebNN in Vue.js</h1>
+      <div>
+        <p>This example demonstrates a simple neural network computation using WebNN:</p>
+        <p>C = 0.2 * A + B</p>
+        <p>Where:</p>
+        <ul>
+          <li>A is initialized with all 1.0</li>
+          <li>B is initialized with all 0.8</li>
+        </ul>
+      </div>
+    <button @click="runWebNN">Run WebNN</button>
     <div id="output">{{ outputText }}</div>
   </div>
 </template>
@@ -425,7 +486,7 @@ export default {
   name: 'App',
   data() {
     return {
-      outputText: 'Click the button to run computation'
+      outputText: 'Click "Run WebNN" to start'
     }
   },
   methods: {
@@ -482,22 +543,53 @@ export default {
     }
   }
 }
-</script>
-
-<style scoped>
-#output {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f5f5f5;
+</script>` },
+      '/src/styles.css': {
+        code: `#app {
+  font-family: 'Intel One Mono', 'Helvetica Neue', sans-serif;
+  padding: 0 1rem;
 }
-</style>` }
+
+h1 {
+  color: #41B883;
+}
+  
+button {
+  margin: 0.5rem 0;
+}`},
     },
-    "ort": {
-      'index.js': { code: `// ONNX Runtime Web + Vue` },
+    "onnxruntime": {
+      '/src/App.vue': { code: `<template>
+  <div>{{ msg }}</div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+const msg = ref('// ONNX Runtime Web + Vue');
+</script>
+`},
     },
-    "transformersjs" : {
-      'index.js': { code: `// Transformers.js + Vue` },
+    "transformersjs": {
+      '/src/App.vue': { code: `<template>
+  <div>{{ msg }}</div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+const msg = ref('// Transformers.js + Vue');
+</script>
+`},
+    },
+    "litert": {
+      '/src/App.vue': { code: `<template>
+  <div>{{ msg }}</div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+const msg = ref('// LiteRT + Vue');
+</script>
+`},
     }
   },
 }

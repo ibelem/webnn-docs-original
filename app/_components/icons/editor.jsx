@@ -17,9 +17,9 @@ export function TransformersjsIcon(props) {
       />
       <path
         fill="#3A3B45"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M39.43 54a8.7 8.7 0 0 1 5.3-4.49c.4-.12.81.57 1.24 1.28.4.68.82 1.37 1.24 1.37.45 0 .9-.68 1.33-1.35.45-.7.89-1.38 1.32-1.25a8.61 8.61 0 0 1 5 4.17c3.73-2.94 5.1-7.74 5.1-10.7 0-2.34-1.57-1.6-4.09-.36l-.14.07c-2.31 1.15-5.39 2.67-8.77 2.67s-6.45-1.52-8.77-2.67c-2.6-1.29-4.23-2.1-4.23.29 0 3.05 1.46 8.06 5.47 10.97Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill="#FF9D0B"
@@ -43,45 +43,54 @@ export function TransformersjsIcon(props) {
 
 export function OnnxIcon(props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M23.033 11.296c-.05 0-.101 0-.151.013L18.86 3.87a.968.968 0 0 0-1.558-1.118L9.286 1.156a.97.97 0 0 0-.968-.854a.976.976 0 0 0-.967.967a.93.93 0 0 0 .113.453L1.219 10.68a.8.8 0 0 0-.251-.038a.968.968 0 0 0 0 1.935h.037l3.368 8.33a1.1 1.1 0 0 0-.088.403a.968.968 0 0 0 1.671.666l10.115.993c.1.427.49.728.943.728c.54 0 .967-.44.967-.967a1 1 0 0 0-.226-.628l5.114-8.872c.05.013.1.013.164.013c.54 0 .967-.44.967-.968a.97.97 0 0 0-.967-.98zm-5.806-7.275a1 1 0 0 0 .453.327L16.147 15.92c-.1.025-.189.05-.277.1L7.451 8.708a.8.8 0 0 0 .038-.251c0-.063-.013-.126-.013-.189zm4.876 8.507l-5.177 3.556a1 1 0 0 0-.126-.075l1.546-11.674h.012l3.946 7.288a.96.96 0 0 0-.201.905M6.383 7.502a.98.98 0 0 0-.83.955v.062l-3.455 2.048l5.378-7.702zm.352 1.91a.9.9 0 0 0 .352-.164l8.356 7.263a1.1 1.1 0 0 0-.063.352v.05l-9.31 3.845a.97.97 0 0 0-.604-.402zm8.896 8.117a.92.92 0 0 0 .503.289l.465 4.046a1.05 1.05 0 0 0-.452.452l-9.814-.955zm1.144.213a.96.96 0 0 0 .54-.867a1 1 0 0 0-.038-.25l4.738-3.255l-4.8 8.33zm.251-14.35l-9.889 4.31l-.113-.075l1.257-5.39h.037c.34 0 .641-.176.817-.44l7.891 1.57zm-15.091 8.22c0-.063-.013-.126-.013-.189l3.908-2.3c.076.076.164.151.264.202L4.825 20.243l-3.204-7.904c.188-.176.314-.44.314-.728"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M23.033 11.296c-.05 0-.101 0-.151.013L18.86 3.87a.968.968 0 0 0-1.558-1.118L9.286 1.156a.97.97 0 0 0-.968-.854a.976.976 0 0 0-.967.967a.93.93 0 0 0 .113.453L1.219 10.68a.8.8 0 0 0-.251-.038a.968.968 0 0 0 0 1.935h.037l3.368 8.33a1.1 1.1 0 0 0-.088.403a.968.968 0 0 0 1.671.666l10.115.993c.1.427.49.728.943.728c.54 0 .967-.44.967-.967a1 1 0 0 0-.226-.628l5.114-8.872c.05.013.1.013.164.013c.54 0 .967-.44.967-.968a.97.97 0 0 0-.967-.98zm-5.806-7.275a1 1 0 0 0 .453.327L16.147 15.92c-.1.025-.189.05-.277.1L7.451 8.708a.8.8 0 0 0 .038-.251c0-.063-.013-.126-.013-.189zm4.876 8.507l-5.177 3.556a1 1 0 0 0-.126-.075l1.546-11.674h.012l3.946 7.288a.96.96 0 0 0-.201.905M6.383 7.502a.98.98 0 0 0-.83.955v.062l-3.455 2.048l5.378-7.702zm.352 1.91a.9.9 0 0 0 .352-.164l8.356 7.263a1.1 1.1 0 0 0-.063.352v.05l-9.31 3.845a.97.97 0 0 0-.604-.402zm8.896 8.117a.92.92 0 0 0 .503.289l.465 4.046a1.05 1.05 0 0 0-.452.452l-9.814-.955zm1.144.213a.96.96 0 0 0 .54-.867a1 1 0 0 0-.038-.25l4.738-3.255l-4.8 8.33zm.251-14.35l-9.889 4.31l-.113-.075l1.257-5.39h.037c.34 0 .641-.176.817-.44l7.891 1.57zm-15.091 8.22c0-.063-.013-.126-.013-.189l3.908-2.3c.076.076.164.151.264.202L4.825 20.243l-3.204-7.904c.188-.176.314-.44.314-.728" /></svg>
+  )
+}
+
+export function LiteRTIcon(props) {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 1421 1421" {...props} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M978 454C964.8 520 476.5 787.833 234 913.5L918.5 219.5C929.5 233.833 956.8 270.4 978 302C1004.5 341.5 994.5 371.5 978 454Z" fill="#00CA9B" />
+      <path d="M1189.5 732C1147.5 814 504.333 1180.17 188 1353L1120 414.5L1216 537C1224.67 567.833 1231.5 650 1189.5 732Z" fill="#00CA9B" />
+      <path d="M792.5 262.5C773.7 288.9 467.667 449.833 317 527L773 74C788.333 90.5 820.4 127.5 826 143.5C833 163.5 816 229.5 792.5 262.5Z" fill="#00CA9B" />
+    </svg>
   )
 }
 
 export function WebNNIcon(props) {
   return (
-    <svg width="2em" height="1em" viewBox="0 0 134 146" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M15 66L33 45" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M63 59L44 44" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M77 61L103 55" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M126 16L119 39" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M151 41L127 47" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M161 50L156 85" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M163 38L193 83" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M162 92L188 92" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M148 98L119 119" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M101 90L155 132" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M183 126L155 132" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M194 117L197 105" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M195 131L203 142" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M123 60L149 87" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M67 71L55 103" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M27 72L87 88" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M79 36L97 79" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <path d="M120 11L88 21" stroke="#61bafb" strokeWidth="6" strokeLinecap="round"/>
-    <circle cx="38.5" cy="38.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="69.5" cy="63.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="127.5" cy="8.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="154.5" cy="92.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="112.5" cy="124.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="190.5" cy="124.5" r="6.5" stroke="#61bafb" strokeWidth="4"/>
-    <circle cx="200" cy="93" r="10" stroke="#61bafb" strokeWidth="6"/>
-    <circle cx="115" cy="51" r="10" stroke="#61bafb" strokeWidth="6"/>
-    <circle cx="15" cy="68" r="15" fill="#4777c0"/>
-    <circle cx="75" cy="25" r="15" fill="#4777c0"/>
-    <circle cx="163" cy="38" r="15" fill="#4777c0"/>
-    <circle cx="101" cy="90" r="15" fill="#4777c0"/>
-    <circle cx="156" cy="131" r="15" fill="#4777c0"/>
+    <svg width="1em" height="1em" viewBox="0 0 220 146" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M15 66L33 45" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M63 59L44 44" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M77 61L103 55" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M126 16L119 39" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M151 41L127 47" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M161 50L156 85" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M163 38L193 83" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M162 92L188 92" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M148 98L119 119" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M101 90L155 132" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M183 126L155 132" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M194 117L197 105" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M195 131L203 142" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M123 60L149 87" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M67 71L55 103" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M27 72L87 88" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M79 36L97 79" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <path d="M120 11L88 21" stroke="#61bafb" strokeWidth="6" strokeLinecap="round" />
+      <circle cx="38.5" cy="38.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="69.5" cy="63.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="127.5" cy="8.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="154.5" cy="92.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="112.5" cy="124.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="190.5" cy="124.5" r="6.5" stroke="#61bafb" strokeWidth="4" />
+      <circle cx="200" cy="93" r="10" stroke="#61bafb" strokeWidth="6" />
+      <circle cx="115" cy="51" r="10" stroke="#61bafb" strokeWidth="6" />
+      <circle cx="15" cy="68" r="15" fill="#4777c0" />
+      <circle cx="75" cy="25" r="15" fill="#4777c0" />
+      <circle cx="163" cy="38" r="15" fill="#4777c0" />
+      <circle cx="101" cy="90" r="15" fill="#4777c0" />
+      <circle cx="156" cy="131" r="15" fill="#4777c0" />
     </svg>
-    
   )
 }

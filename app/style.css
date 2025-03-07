@@ -226,7 +226,7 @@ article.nextra-body-typesetting-article h1 {
   border-left: 1px solid rgb(239, 239, 239);
   border-right: 1px solid rgb(239, 239, 239);
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -294,18 +294,10 @@ article.nextra-body-typesetting-article h1 {
 .pg-framework,
 .pg-js {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-}
-
-.pg-framework {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.pg-js {
-  grid-template-columns: repeat(4, 1fr);
 }
 
 .selected-framework-template svg {
@@ -674,10 +666,23 @@ article.nextra-body-typesetting-article a:hover {
   }
 }
 
+@media (max-width: 640px) {
+  .pg-framework button span,
+  .pg-js button span {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .playground-nav {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .playground-nav>div.self-center {
+    align-self: stretch;
   }
 
   .pg-framework {
