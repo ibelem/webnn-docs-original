@@ -160,7 +160,8 @@ export default function Page() {
         }}
         customSetup={{ 
           dependencies: { 
-            "svelte": "^5.22.6" 
+            "svelte": "^5.22.6",
+            "@huggingface/transformers": "^3.4.0"
           }
         }}
         files={files}
