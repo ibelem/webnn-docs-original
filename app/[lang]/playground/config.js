@@ -175,27 +175,40 @@ button {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>WebNN / ONNX Runtime in Static HTML5</title>
-        <link rel="stylesheet" href="/styles.css" />
-        <script src="./main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-        <script src="./imagenetClasses.js"></script>
-    </head>
-
-    <body>
-        <main>
-            <h1>WebNN / ONNX Runtime in Static HTML5</h2>
-            <h2>Image Classification Demo</h2>
-            <div><img src="https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg" /></div>
-            <button onclick="classifyImage('https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg')" type="button">Click Me to Classify Image!</button>
-            <div id="outputText">This image displayed is: </div>
-        </main>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebNN / ONNX Runtime in Static HTML5</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="./main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="./imagenetClasses.js"></script>
+  </head>
+  <body>
+    <main>
+      <h2>Image Classification - WebNN / ONNX Runtime in HTML5</h2>     
+      <select id="imageSelector" onchange="updateImage()">
+        <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+        <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+        <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+        <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+      </select>
+      <div>
+        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+      </div>
+      <button onclick="classifyImage(document.getElementById('selectedImage').src)" type="button">Click Me to Classify Image!</button>
+      <div id="outputText">This image displayed is: </div>
+      <script>
+        function updateImage() {
+          const selector = document.getElementById('imageSelector');
+          const image = document.getElementById('selectedImage');
+          image.src = selector.value;
+        }
+      </script>
+    </main>
+  </body>
 </html>` },
       '/main.js': {
         code: `async function classifyImage(pathToImage) {
@@ -1317,7 +1330,7 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
     998: ["n13133613", "ear"],
     999: ["n15075141", "toilet_tissue"],
 };`},
-'/styles.css': {
+      '/styles.css': {
         code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
@@ -1328,7 +1341,7 @@ h1, h2 {
 }
 
 img {
-  width: 50%;
+  width: 40%;
   height: auto;
 }
 
@@ -1337,6 +1350,7 @@ img {
 }
 
 button {
+  padding: 0.5rem;
   margin: 0.5rem;
 }`},
     },
