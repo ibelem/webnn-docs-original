@@ -215,7 +215,7 @@ button {
     var imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
     var predictions = await runModel(imageTensor); // Run inference on the tensor
     console.log(predictions); // Print predictions to console
-    document.getElementById("outputText").innerHTML += predictions[0].name; // Display prediction in HTML
+    document.getElementById("outputText").innerHTML = predictions[0].name; // Display prediction in HTML
 }
 
 async function getImageTensorFromPath(path, dims = [1, 3, 224, 224]) {
@@ -1341,12 +1341,12 @@ h1, h2 {
 }
 
 select {
-  margin: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
 }
 
 select option {
   padding: 0.2rem 0.5rem;
-  font-size: 1.2rem;
 }
 
 img {
@@ -1360,7 +1360,7 @@ img {
 
 button {
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
 }`},
     },
     "transformersjs": {
