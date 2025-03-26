@@ -274,10 +274,8 @@ async function runModel(preprocessedData) {
     },
   };
 
-  let [err, modelSession] = await ort.InferenceSession.create(modelPath, options);
-  if (err) {
-    document.getElementById("outputText").innerHTML = err.message;
-  } else {
+  try {
+    modelSession = await ort.InferenceSession.create(modelPath, options);
     // Create feeds with the input name from model export and the preprocessed data.
     const feeds = {};
     feeds[modelSession.inputNames[0]] = preprocessedData;
@@ -290,6 +288,8 @@ async function runModel(preprocessedData) {
     // Get the top 5 results.
     var results = imagenetClassesTopK(outputSoftmax, 5);
     return results;
+  } catch (ex) {
+    document.getElementById("outputText").innerHTML = ex.message;
   }
 }
 
