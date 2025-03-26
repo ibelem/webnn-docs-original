@@ -179,6 +179,7 @@ button {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebNN / ONNX Runtime in Static HTML5</title>
+        <h1>WebNN / ONNX Runtime in Static HTML5</h2>
         <h2>Image Classification Demo</h2>
         <script src="./main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
@@ -246,7 +247,7 @@ async function runModel(preprocessedData) {
 
     // Configure WebNN.
     const executionProvider = "webnn"; // Other options: webgpu
-    const modelPath = "https://hf-mirror.com/webml/models/resolve/main/mobilenetv2-10.onnx";
+    const modelPath = "https://d3i5xkfad89fac.cloudfront.net/benchmark/mobilenetv2-10.onnx";
     const options = {
         executionProviders: [
             {
