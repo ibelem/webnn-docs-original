@@ -1384,6 +1384,9 @@ h1, h2 {
   color: #eb6424; 
 }
 
+#outputText {
+color: #eb6424; }
+
 button {
   margin: 0.5rem;
 }`},
