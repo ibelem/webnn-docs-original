@@ -179,6 +179,7 @@ button {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebNN / ONNX Runtime in Static HTML5</title>
+        <h2>Image Classification Demo</h2>
         <script src="./main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
@@ -245,7 +246,7 @@ async function runModel(preprocessedData) {
 
     // Configure WebNN.
     const executionProvider = "webnn"; // Other options: webgpu
-    const modelPath = "https://d3i5xkfad89fac.cloudfront.net/benchmark/mobilenetv2-10.onnx";
+    const modelPath = "https://hf-mirror.com/webml/models/resolve/main/mobilenetv2-10.onnx";
     const options = {
         executionProviders: [
             {
@@ -1373,6 +1374,19 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
 </body>
 
 </html>` },
+'/styles.css': {
+        code: `body {
+  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  color: #eb6424; 
+}
+
+button {
+  margin: 0.5rem;
+}`},
     }
   },
   "vanilla": {
