@@ -180,7 +180,7 @@ button {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebNN / ONNX Runtime in Static HTML5</title>
         <script src="./main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0-dev.20240311-5479124834/dist/ort.webgpu.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.webgpu.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"
             integrity="sha512-8xrUum7qKj8xbiUrOzDEJL5uLjpSIMxVevAM5pvBroaxJnxJGFsKaohQPmlzQP8rEoAxrAujWttTnx3AMgGIww=="
