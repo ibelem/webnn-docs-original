@@ -179,8 +179,7 @@ button {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebNN / ONNX Runtime in Static HTML5</title>
-        <h1>WebNN / ONNX Runtime in Static HTML5</h2>
-        <h2>Image Classification Demo</h2>
+        <link rel="stylesheet" href="/styles.css" />
         <script src="./main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
@@ -190,10 +189,11 @@ button {
 
     <body>
         <main>
-            <h1>Image Classification Demo!</h1>
+            <h1>WebNN / ONNX Runtime in Static HTML5</h2>
+            <h2>Image Classification Demo</h2>
             <div><img src="https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg" style="width: 50%; height: auto" /></div>
             <button onclick="classifyImage('https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg')" type="button">Click Me to Classify Image!</button>
-            <h1 id="outputText">This image displayed is ...</h1>
+            <div id="outputText">This image displayed is: </div>
         </main>
     </body>
 </html>` },
@@ -1326,7 +1326,6 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
 <head>
   <title>WebNN / Transformers.js in Static HTML5</title>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
