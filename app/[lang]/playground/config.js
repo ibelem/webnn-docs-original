@@ -255,11 +255,7 @@ async function runModel(preprocessedData) {
             },
         ],
         freeDimensionOverrides: {
-            batch: 1,
-            channels: 4,
-            height: 64,
-            width: 64,
-            sequence: 77,
+            "batch_size": 1
         },
     };
     modelSession = await ort.InferenceSession.create(modelPath, options);
