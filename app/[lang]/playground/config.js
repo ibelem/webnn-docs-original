@@ -191,7 +191,7 @@ button {
         <main>
             <h1>WebNN / ONNX Runtime in Static HTML5</h2>
             <h2>Image Classification Demo</h2>
-            <div><img src="https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg" style="width: 50%; height: auto" /></div>
+            <div><img src="https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg" /></div>
             <button onclick="classifyImage('https://raw.githubusercontent.com/microsoft/webnn-developer-preview/refs/heads/main/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg')" type="button">Click Me to Classify Image!</button>
             <div id="outputText">This image displayed is: </div>
         </main>
@@ -1317,6 +1317,28 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
     998: ["n13133613", "ear"],
     999: ["n15075141", "toilet_tissue"],
 };`},
+'/styles.css': {
+        code: `body {
+  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  color: #eb6424; 
+}
+
+img {
+  width: 50%;
+  height: auto;
+}
+
+#outputText {
+  color: #eb6424; 
+}
+
+button {
+  margin: 0.5rem;
+}`},
     },
     "transformersjs": {
       '/index.html': {
@@ -1374,22 +1396,6 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
 </body>
 
 </html>` },
-'/styles.css': {
-        code: `body {
-  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
-  padding: 0 1rem;
-}
-
-h1, h2 {
-  color: #eb6424; 
-}
-
-#outputText {
-color: #eb6424; }
-
-button {
-  margin: 0.5rem;
-}`},
     }
   },
   "vanilla": {
