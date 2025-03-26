@@ -180,13 +180,8 @@ button {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebNN / ONNX Runtime in Static HTML5</title>
         <script src="./main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.webgpu.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"
-            integrity="sha512-8xrUum7qKj8xbiUrOzDEJL5uLjpSIMxVevAM5pvBroaxJnxJGFsKaohQPmlzQP8rEoAxrAujWttTnx3AMgGIww=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
         <script src="./imagenetClasses.js"></script>
     </head>
@@ -250,7 +245,7 @@ async function runModel(preprocessedData) {
 
     // Configure WebNN.
     const executionProvider = "webnn"; // Other options: webgpu
-    const modelPath = "https://d3i5xkfad89fac.cloudfront.net/benchmark/mobilenetv2-10.onnx";
+    const modelPath = "https://github.com/onnx/models/raw/refs/heads/main/validated/vision/classification/mobilenet/model/mobilenetv2-10.onnx";
     const options = {
         executionProviders: [
             {
