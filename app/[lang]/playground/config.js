@@ -1340,6 +1340,15 @@ h1, h2 {
   color: #eb6424; 
 }
 
+select {
+  margin: 0.5rem;
+}
+
+select option {
+  padding: 0.2rem 0.5rem;
+  font-size: 1.2rem;
+}
+
 img {
   width: 40%;
   height: auto;
