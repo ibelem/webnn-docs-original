@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from 'nextra-theme-docs';
 import { editorFiles, themeDark, themeLight } from './config.js';
-import { VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../_components/icons/js_frameworks.jsx'
+import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../_components/icons/js_frameworks.jsx'
 import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../_components/icons/editor.jsx'
 
 export default function Page() {
@@ -58,6 +58,7 @@ export default function Page() {
             {framework === 'onnxruntime' && <OnnxIcon />}
             {framework === 'transformersjs' && <TransformersjsIcon />}
             {framework === 'litert' && <LiteRTIcon />}
+            {js === 'static' && <Html5Icon />}
             {js === 'vanilla' && <VanillaIcon />}
             {js === 'svelte' && <SvelteIcon />}
             {js === 'react' && <ReactIcon />}
@@ -108,6 +109,16 @@ export default function Page() {
             </button>
           </div>
           <div className={`pg-js ${js}`}>
+            <button
+              className="static hover:cursor-pointer"
+              onClick={() => handleJsChange('static')}
+            >
+              <Html5Icon className="static"/>
+              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''
+                }`}>
+                HTML5
+              </span>
+            </button>
             <button
               className="vanilla hover:cursor-pointer"
               onClick={() => handleJsChange('vanilla')}

@@ -69,6 +69,197 @@ export const themeDark = {
 }
 
 export const editorFiles = {
+  "static": {
+    "webnn": {
+      '/index.js': {
+        code: `
+async function runWebNN() {
+  const descriptor = {dataType: 'float32', shape: [2, 2]};
+  const context = await navigator.ml.createContext();
+  const builder = new MLGraphBuilder(context);
+
+  // 1. Create a computational graph 'C = 0.2 * A + B'.
+  const constant = builder.constant(descriptor, new Float32Array(4).fill(0.2));
+  const A = builder.input('A', descriptor);
+  const B = builder.input('B', descriptor);
+  const C = builder.add(builder.mul(A, constant), B);
+
+  // 2. Compile the graph.
+  const graph = await builder.build({'C': C});
+
+  // 3. Create reusable input and output tensors.
+  const [inputTensorA, inputTensorB, outputTensorC] =
+    await Promise.all([
+      context.createTensor({
+        dataType: A.dataType, shape: A.shape, writable: true
+      }),
+      context.createTensor({
+        dataType: B.dataType, shape: B.shape, writable: true
+      }),
+      context.createTensor({
+        dataType: C.dataType, shape: C.shape, readable: true
+      })
+    ]);
+
+  // 4. Initialize the inputs.
+  context.writeTensor(inputTensorA, new Float32Array(4).fill(1.0));
+  context.writeTensor(inputTensorB, new Float32Array(4).fill(0.8));
+
+  // 5. Execute the graph.
+  const inputs = {
+    'A': inputTensorA,
+    'B': inputTensorB
+  };
+  const outputs = {
+    'C': outputTensorC
+  };
+  context.dispatch(graph, inputs, outputs);
+    
+  // 6. Read back the computed result.
+  const result = await context.readTensor(outputTensorC);
+  return new Float32Array(result).toString();
+}
+
+document.querySelector("#run").addEventListener("click", async () => {
+  const output = document.querySelector("#output");
+  output.textContent = "Inferencing...";
+  try {
+    const result = await runWebNN();
+    output.textContent = 'Output value: ' + result;
+  } catch (error) {
+    output.textContent = 'Error: ' + error.message;
+  }
+});`
+      },
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebNN in Static HTML5</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <h1>WebNN in Static HTML5</h1>
+  <div>
+    <p>This example demonstrates a simple neural network computation using WebNN:</p>
+    <p>C = 0.2 * A + B</p>
+    <p>Where:</p>
+    <ul>
+      <li>A is initialized with all 1.0</li>
+      <li>B is initialized with all 0.8</li>
+    </ul>
+  </div>
+  <button id="run">Run WebNN</button>
+  <div id="output">Click "Run WebNN" to start</div>
+  <script src="/index.js"></script>
+</body>
+
+</html>` },
+      '/styles.css': {
+        code: `body {
+  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
+  padding: 0 1rem;
+}
+
+h1 {
+  color: #F7DF1E;
+}
+
+button {
+  margin: 0.5rem 0;
+}`}
+    },
+    "onnxruntime": {
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebNN / ONNX Runtime in Static HTML5</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <h1>WebNN / ONNX Runtime in Static HTML5</h1>
+  <div>
+    <p>This example demonstrates a simple neural network computation using WebNN:</p>
+    <p>C = 0.2 * A + B</p>
+    <p>Where:</p>
+    <ul>
+      <li>A is initialized with all 1.0</li>
+      <li>B is initialized with all 0.8</li>
+    </ul>
+  </div>
+  <button id="run">Run WebNN</button>
+  <div id="output">Click "Run WebNN" to start</div>
+  <script src="/index.js"></script>
+</body>
+
+</html>` },
+    },
+    "transformersjs": {
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebNN / Transformers.js in Static HTML5</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <h1>WebNN / Transformers.js in Static HTML5</h1>
+  <div>
+    <p>This example demonstrates a simple neural network computation using WebNN:</p>
+    <p>C = 0.2 * A + B</p>
+    <p>Where:</p>
+    <ul>
+      <li>A is initialized with all 1.0</li>
+      <li>B is initialized with all 0.8</li>
+    </ul>
+  </div>
+  <button id="run">Run WebNN</button>
+  <div id="output">Click "Run WebNN" to start</div>
+  <script src="/index.js"></script>
+</body>
+
+</html>` },
+    },
+    "litert": {
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebNN / Lite RT in Static HTML5</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <h1>WebNN / Lite RT in Static HTML5</h1>
+  <div>
+    <p>This example demonstrates a simple neural network computation using WebNN:</p>
+    <p>C = 0.2 * A + B</p>
+    <p>Where:</p>
+    <ul>
+      <li>A is initialized with all 1.0</li>
+      <li>B is initialized with all 0.8</li>
+    </ul>
+  </div>
+  <button id="run">Run WebNN</button>
+  <div id="output">Click "Run WebNN" to start</div>
+  <script src="/index.js"></script>
+</body>
+
+</html>` },
+    }
+  },
   "vanilla": {
     "webnn": {
       '/index.js': {
@@ -158,7 +349,8 @@ document.querySelector("#run").addEventListener("click", async () => {
 </body>
 
 </html>` },
-      '/styles.css': { code: `body {
+      '/styles.css': {
+        code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
 }
@@ -172,15 +364,18 @@ button {
 }`}
     },
     "onnxruntime": {
-      '/index.js': { code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';
+      '/index.js': {
+        code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';
 `}
     },
     "transformersjs": {
-      '/index.js': { code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
+      '/index.js': {
+        code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
 `}
     },
     "litert": {
-      '/index.js': { code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
+      '/index.js': {
+        code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
 ` },
     }
   },
@@ -279,7 +474,7 @@ button {
     {/if}
   </div>
 </main>` },
-'/styles.css': {
+      '/styles.css': {
         code: `main {
   padding: 0 1rem;
   font-family: 'Intel One Mono', 'Helvetica Neue', sans-serif;
@@ -294,7 +489,8 @@ button {
 }` },
     },
     "onnxruntime": {
-      '/App.svelte': { code: `<script>
+      '/App.svelte': {
+        code: `<script>
   let name = '// ONNX Runtime Web + Svelte';
 </script>
 
@@ -304,7 +500,8 @@ button {
 `}
     },
     "transformersjs": {
-      '/App.svelte': { code: `<script>
+      '/App.svelte': {
+        code: `<script>
   let name = '// Transformers.js + Svelte';
 </script>
 
@@ -314,7 +511,8 @@ button {
 `}
     },
     "litert": {
-      '/App.svelte': { code: `<script>
+      '/App.svelte': {
+        code: `<script>
   let name = '// LiteRT + Svelte';
 </script>
 
@@ -446,17 +644,20 @@ const styles = {
 };` }
     },
     "onnxruntime": {
-      '/App.js': { code: `export default function App() {
+      '/App.js': {
+        code: `export default function App() {
   return <div>// ONNX Runtime Web + React</div>
 }`},
     },
     "transformersjs": {
-      '/App.js': { code: `export default function App() {
+      '/App.js': {
+        code: `export default function App() {
   return <div>// Transformers.js + React</div>
 }`},
     },
     "litert": {
-      '/App.js': { code: `export default function App() {
+      '/App.js': {
+        code: `export default function App() {
   return <div>// LiteRT + React</div>
 }`},
     }
@@ -559,7 +760,8 @@ button {
 }`},
     },
     "onnxruntime": {
-      '/src/App.vue': { code: `<template>
+      '/src/App.vue': {
+        code: `<template>
   <div>{{ msg }}</div>
 </template>
 
@@ -570,7 +772,8 @@ const msg = ref('// ONNX Runtime Web + Vue');
 `},
     },
     "transformersjs": {
-      '/src/App.vue': { code: `<template>
+      '/src/App.vue': {
+        code: `<template>
   <div>{{ msg }}</div>
 </template>
 
@@ -581,7 +784,8 @@ const msg = ref('// Transformers.js + Vue');
 `},
     },
     "litert": {
-      '/src/App.vue': { code: `<template>
+      '/src/App.vue': {
+        code: `<template>
   <div>{{ msg }}</div>
 </template>
 

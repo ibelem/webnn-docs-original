@@ -99,7 +99,7 @@
   --n-3: #3a0ca3;
   --n-4: #4361ee;
   --n-6: #4cc9f0;
-  --n-7: #eb6424;
+  --n-7: #eb6424; 
   --n-border: rgba(229, 231, 235, 0.5);
   --shiny-cta-bg: #000000;
   --shiny-cta-bg-subtle: #1a1818;
@@ -109,6 +109,7 @@
   --webnn-005: hsla(193, 100%, 50%, 0.05);
   --onnx-005: rgba(0, 0, 0, 0.05);
   --transformersjs-005: rgba(255, 157, 11, 0.1);
+  --static-005: rgba(228, 77, 38, 0.1);
   --vanilla-005: rgba(247, 223, 30, 0.1);
   --svelte-005: rgba(255, 62, 0, 0.1);
   --react-005: rgba(97, 218, 251, 0.1);
@@ -248,6 +249,10 @@ article.nextra-body-typesetting-article h1 {
   background-color: var(--transformersjs-005);
 }
 
+.pg-js.static button.static {
+  background-color: var(--static-005);
+}
+
 .pg-js.vanilla button.vanilla {
   background-color: var(--vanilla-005);
 }
@@ -294,7 +299,7 @@ article.nextra-body-typesetting-article h1 {
 .pg-framework,
 .pg-js {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
