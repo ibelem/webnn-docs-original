@@ -247,7 +247,7 @@ async function runModel(preprocessedData) {
 
     // Configure WebNN.
     const executionProvider = "webnn"; // Other options: webgpu
-    const modelPath = "https://d3i5xkfad89fac.cloudfront.net/benchmark/mobilenetv2-10.onnx";
+    const modelPath = "https://huggingface.co/webml/models/resolve/main/mobilenetv2-10.onnx";
     const options = {
         executionProviders: [
             {
