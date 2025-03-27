@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from 'nextra-theme-docs';
 import { editorFiles, themeDark, themeLight } from './config.js';
-import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../_components/icons/js_frameworks.jsx'
-import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../_components/icons/editor.jsx'
+import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../../_components/icons/js_frameworks.jsx'
+import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../../_components/icons/editor.jsx'
 
 export default function Page() {
   const { theme, setTheme } = useTheme();
@@ -20,7 +20,7 @@ export default function Page() {
 
   const [framework, setFramework] = useState(() => {
     const saved = localStorage.getItem('selectedFramework');
-    return saved || 'webnn';
+    return 'onnxruntime';
   });
 
   useEffect(() => {
@@ -66,48 +66,6 @@ export default function Page() {
           </div>
         </div>
         <div className="self-center">
-          <div className={`pg-framework ${framework}`}>
-            <button
-              className="webnn hover:cursor-pointer"
-              onClick={() => handleFrameworkChange('webnn')}
-            >
-              <WebNNIcon className="webnn"/>
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'webnn' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                WebNN
-              </span>
-            </button>
-            <button
-              className="onnx hover:cursor-pointer"
-              onClick={() => handleFrameworkChange('onnxruntime')}
-            >
-              <OnnxIcon className="onnx" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'onnxruntime' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                ONNX Runtime
-              </span>
-            </button>
-            <button
-              className="transformersjs hover:cursor-pointer"
-              onClick={() => handleFrameworkChange('transformersjs')}
-            >
-              <TransformersjsIcon className="transformersjs" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'transformersjs' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                Transformers.js
-              </span>
-            </button>
-            <button
-              className="litert hover:cursor-pointer"
-              onClick={() => handleFrameworkChange('litert')}
-            >
-              <LiteRTIcon className="litert" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${framework === 'litert' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                LiteRT
-              </span>
-            </button>
-          </div>
           <div className={`pg-js ${js}`}>
             <button
               className="static hover:cursor-pointer"
