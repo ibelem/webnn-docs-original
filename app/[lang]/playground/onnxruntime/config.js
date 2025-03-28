@@ -135,7 +135,7 @@ async function loadImagefromPath(path, width = 224, height = 224) {
 function imageDataToTensor(image) {
   var imageBufferData = image.data;
   let pixelCount = image.width * image.height;
-  const float32Data = new Float32Array(
+  const float16Data = new Float16Array(
       3 * pixelCount);  // Allocate enough space for red/green/blue channels.
  
   const mean =  [0.485, 0.456, 0.406];
@@ -145,16 +145,16 @@ function imageDataToTensor(image) {
   // rearranging from packed channels to planar channels, and converting to
   // floating point.
   for (let i = 0; i < pixelCount; i++) {
-    float32Data[pixelCount * 0 + i] =
+    float16Data[pixelCount * 0 + i] =
         (imageBufferData[i * 4 + 0] / 255.0 - mean[0]) / std[0];  // Red
-    float32Data[pixelCount * 1 + i] =
+    float16Data[pixelCount * 1 + i] =
         (imageBufferData[i * 4 + 1] / 255.0 - mean[1]) / std[1];  // Green
-    float32Data[pixelCount * 2 + i] =
+    float16Data[pixelCount * 2 + i] =
         (imageBufferData[i * 4 + 2] / 255.0 - mean[2]) / std[2];  // Blue
     // Skip the unused alpha channel: imageBufferData[i * 4 + 3].
   }
   let dimensions = [1, 3, image.height, image.width];
-  const inputTensor = new ort.Tensor('float32', float32Data, dimensions);
+  const inputTensor = new ort.Tensor('float16', float16Data, dimensions);
   return inputTensor;
 }
 
@@ -163,7 +163,7 @@ let modelSession;
 async function runModel(preprocessedData) {
   if (typeof modelSession == 'undefined') {
     // Configure WebNN.
-    const modelPath = "https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/model_fp16.onnx";
+    const modelPath = "https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx";
     const devicePreference = "gpu"; // Other options include "npu" and "cpu".
     const options = {
       executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
