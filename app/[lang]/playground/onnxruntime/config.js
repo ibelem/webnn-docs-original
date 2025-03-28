@@ -132,20 +132,29 @@ async function loadImagefromPath(path, width = 224, height = 224) {
   return imageData.bitmap;
 }
 
-function imageDataToTensor(image, dims) {
+function imageDataToTensor(image) {
   var imageBufferData = image.data;
   let pixelCount = image.width * image.height;
-  const float32Data = new Float32Array(3 * pixelCount);
-
-  // Loop through the image buffer, extracting the (R, G, B) channels, rearranging from
-  // packed channels to planar channels, and converting to floating point.
+  const float32Data = new Float32Array(
+      3 * pixelCount);  // Allocate enough space for red/green/blue channels.
+ 
+  const mean =  [0.485, 0.456, 0.406];
+  const std = [0.229, 0.224, 0.225];
+ 
+  // Loop through the image buffer, extracting the (R, G, B) channels,
+  // rearranging from packed channels to planar channels, and converting to
+  // floating point.
   for (let i = 0; i < pixelCount; i++) {
-    float32Data[pixelCount * 0 + i] = imageBufferData[i * 4 + 0] / 255.0; // Red
-    float32Data[pixelCount * 1 + i] = imageBufferData[i * 4 + 1] / 255.0; // Green
-    float32Data[pixelCount * 2 + i] = imageBufferData[i * 4 + 2] / 255.0; // Blue
+    float32Data[pixelCount * 0 + i] =
+        (imageBufferData[i * 4 + 0] / 255.0 - mean[0]) / std[0];  // Red
+    float32Data[pixelCount * 1 + i] =
+        (imageBufferData[i * 4 + 1] / 255.0 - mean[1]) / std[1];  // Green
+    float32Data[pixelCount * 2 + i] =
+        (imageBufferData[i * 4 + 2] / 255.0 - mean[2]) / std[2];  // Blue
     // Skip the unused alpha channel: imageBufferData[i * 4 + 3].
   }
-  const inputTensor = new ort.Tensor("float32", float32Data, dims);
+  let dimensions = [1, 3, image.height, image.width];
+  const inputTensor = new ort.Tensor('float32', float32Data, dimensions);
   return inputTensor;
 }
 

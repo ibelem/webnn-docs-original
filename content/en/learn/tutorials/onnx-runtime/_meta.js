@@ -4,5 +4,8 @@ export default {
   },
   'free-dimension-overrides': {
     title: "Free Dimension Overrides"
+  },
+  'image-classification': {
+    title: "Image Classification"
   }
 };
