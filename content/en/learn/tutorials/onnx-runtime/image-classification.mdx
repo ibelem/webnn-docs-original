@@ -137,19 +137,17 @@ With image retrieval and tensor conversion complete, use the ONNX Runtime Web li
 ```js showLineNumbers
 let modelSession;
 
-async function runModel(preprocessedData) { 
-  if (typeof modelSession == 'undefined') {
-    // Configure WebNN.
-    const modelPath = "./mobilenetv2-10.onnx";
-    const devicePreference = "gpu"; // Other options include "npu" and "cpu".
-    const options = {
-      executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
-      // The key names in freeDimensionOverrides should map to the real input dim names in the model.
-      // For example, if a model's only key is batch_size, you only need to set
-      freeDimensionOverrides: {"batch_size": 1}
-    };
-    modelSession = await ort.InferenceSession.create(modelPath, options);
-  }
+async function runModel(preprocessedData) {
+  // Configure WebNN.
+  const modelPath = "./mobilenetv2-10.onnx";
+  const devicePreference = "gpu"; // Other options include "npu" and "cpu".
+  const options = {
+    executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
+    // The key names in freeDimensionOverrides should map to the real input dim names in the model.
+    // For example, if a model's only key is batch_size, you only need to set
+    freeDimensionOverrides: {"batch_size": 1}
+  };
+  modelSession = await ort.InferenceSession.create(modelPath, options);
 
   // Create feeds with the input name from model export and the preprocessed data. 
   const feeds = {}; 
@@ -215,3 +213,5 @@ function imagenetClassesTopK(classProbabilities, k = 5) {
 ```
 
 You've now implemented the complete script for WebNN-powered image classification. Use VS Code's Live Server extension to launch and test your web application.
+
+See also: [WebNN API Tutorial](https://learn.microsoft.com/en-us/windows/ai/directml/webnn-tutorial)

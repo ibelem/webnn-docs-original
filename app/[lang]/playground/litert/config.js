@@ -78,26 +78,17 @@ export const editorFiles = {
 <head>
   <title>WebNN / Lite RT in Static HTML5</title>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
-  <h1>WebNN / Lite RT in Static HTML5</h1>
-  <div>
-    <p>This example demonstrates a simple neural network computation using WebNN:</p>
-    <p>C = 0.2 * A + B</p>
-    <p>Where:</p>
-    <ul>
-      <li>A is initialized with all 1.0</li>
-      <li>B is initialized with all 0.8</li>
-    </ul>
-  </div>
-  <button id="run">Run WebNN</button>
-  <div id="output">Click "Run WebNN" to start</div>
+  <div id="app"></div>
   <script src="/index.js"></script>
 </body>
 
-</html>` },
+</html>`},
+      '/index.js': {
+        code: `document.getElementById("app").innerHTML = '// Lite RT + Static HTML5';
+`},
     }
   },
   "vanilla": {
