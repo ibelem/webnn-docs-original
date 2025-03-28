@@ -39,7 +39,7 @@
 </html>
 ```
 
-在 `index.html` 的 head 标签中包含 `Jimp` 和 `Lodash` 库源文件。
+在 `index.html` 的 `<head>` 标签中包含 `Jimp` 和 `Lodash` 库源文件。
 
 ```js showLineNumbers
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js" integrity="sha512-8xrUum7qKj8xbiUrOzDEJL5uLjpSIMxVevAM5pvBroaxJnxJGFsKaohQPmlzQP8rEoAxrAujWttTnx3AMgGIww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -138,24 +138,18 @@ function imageDataToTensor(image) {
 let modelSession;
 
 async function runModel(preprocessedData) { 
-  // 设置环境
-  // ort.env.wasm.numThreads = 1; 
-  // ort.env.wasm.simd = true; 
-  // 在调试版本中取消注释以获取额外信息：
-  // ort.env.wasm.proxy = true; 
-  // ort.env.logLevel = "verbose";  
-  // ort.env.debug = true; 
-
-  // 配置 WebNN
-  const modelPath = "./mobilenetv2-10.onnx";
-  const devicePreference = "gpu"; // 其他选项包括 "npu" 和 "cpu"
-  const options = {
-    executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
-    // freeDimensionOverrides 中的键名应映射到模型中的实际输入维度名称
-    // 例如，如果模型的唯一键是 batch_size，则只需设置
-    freeDimensionOverrides: {"batch_size": 1}
-  };
-  modelSession = await ort.InferenceSession.create(modelPath, options); 
+  if (typeof modelSession == 'undefined') {
+    // 配置 WebNN
+    const modelPath = "./mobilenetv2-10.onnx";
+    const devicePreference = "gpu"; // 其他选项包括 "npu" 和 "cpu"
+    const options = {
+      executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
+      // freeDimensionOverrides 中的键名应映射到模型中的实际输入维度名称
+      // 例如，如果模型的唯一键是 batch_size，则只需设置
+      freeDimensionOverrides: {"batch_size": 1}
+    };
+    modelSession = await ort.InferenceSession.create(modelPath, options);
+  }
 
   // 使用模型导出的输入名称和预处理数据创建输入 
   const feeds = {}; 

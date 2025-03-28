@@ -138,24 +138,18 @@ With image retrieval and tensor conversion complete, use the ONNX Runtime Web li
 let modelSession;
 
 async function runModel(preprocessedData) { 
-  // Set up environment.
-  // ort.env.wasm.numThreads = 1; 
-  // ort.env.wasm.simd = true; 
-  // Uncomment for additional information in debug builds:
-  // ort.env.wasm.proxy = true; 
-  // ort.env.logLevel = "verbose";  
-  // ort.env.debug = true; 
-
-  // Configure WebNN.
-  const modelPath = "./mobilenetv2-10.onnx";
-  const devicePreference = "gpu"; // Other options include "npu" and "cpu".
-  const options = {
-    executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
-    // The key names in freeDimensionOverrides should map to the real input dim names in the model.
-    // For example, if a model's only key is batch_size, you only need to set
-    freeDimensionOverrides: {"batch_size": 1}
-  };
-  modelSession = await ort.InferenceSession.create(modelPath, options); 
+  if (typeof modelSession == 'undefined') {
+    // Configure WebNN.
+    const modelPath = "./mobilenetv2-10.onnx";
+    const devicePreference = "gpu"; // Other options include "npu" and "cpu".
+    const options = {
+      executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
+      // The key names in freeDimensionOverrides should map to the real input dim names in the model.
+      // For example, if a model's only key is batch_size, you only need to set
+      freeDimensionOverrides: {"batch_size": 1}
+    };
+    modelSession = await ort.InferenceSession.create(modelPath, options);
+  }
 
   // Create feeds with the input name from model export and the preprocessed data. 
   const feeds = {}; 

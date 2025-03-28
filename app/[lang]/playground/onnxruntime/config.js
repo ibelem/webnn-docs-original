@@ -161,31 +161,20 @@ function imageDataToTensor(image) {
 let modelSession;
 
 async function runModel(preprocessedData) {
-  // Set up environment.
-  ort.env.wasm.numThreads = 1;
-  ort.env.wasm.simd = true;
-  ort.env.wasm.proxy = true;
-  ort.env.logLevel = "verbose";
-  ort.env.debug = true;
-
-  // Configure WebNN.
-  const executionProvider = "webnn"; // Other options: webgpu
-  const modelPath = "https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/model_fp16.onnx";
-  const options = {
-    executionProviders: [
-      {
-        name: executionProvider,
-        deviceType: "gpu",
-        powerPreference: "default",
-      },
-    ],
-    freeDimensionOverrides: {
-      "batch_size": 1
-    },
-  };
+  if (typeof modelSession == 'undefined') {
+    // Configure WebNN.
+    const modelPath = "https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/model_fp16.onnx";
+    const devicePreference = "gpu"; // Other options include "npu" and "cpu".
+    const options = {
+      executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
+      // The key names in freeDimensionOverrides should map to the real input dim names in the model.
+      // For example, if a model's only key is batch_size, you only need to set
+      freeDimensionOverrides: {"batch_size": 1}
+    };
+    modelSession = await ort.InferenceSession.create(modelPath, options);
+  }
 
   try {
-    modelSession = await ort.InferenceSession.create(modelPath, options);
     // Create feeds with the input name from model export and the preprocessed data.
     const feeds = {};
     feeds[modelSession.inputNames[0]] = preprocessedData;
