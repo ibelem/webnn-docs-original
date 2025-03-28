@@ -164,7 +164,7 @@ document.querySelector("#run").addEventListener("click", async () => {
 }
 
 h1 {
-  color: #F7DF1E;
+  color: #E44D26;
 }
 
 button {

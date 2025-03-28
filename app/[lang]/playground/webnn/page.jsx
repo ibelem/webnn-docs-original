@@ -15,7 +15,7 @@ export default function Page() {
 
   const [js, setJs] = useState(() => {
     const saved = localStorage.getItem('selectedJs');
-    return saved || 'vanilla';
+    return saved || 'static';
   });
 
   const [framework, setFramework] = useState(() => {
@@ -124,7 +124,7 @@ export default function Page() {
         template={js}
         theme={editorTheme}
         options={{
-          editorHeight: 532,
+          editorHeight: 538,
           showLineNumbers: true
         }}
         customSetup={{ 

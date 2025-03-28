@@ -20,7 +20,7 @@ export default function Page() {
 
   const [framework, setFramework] = useState(() => {
     const saved = localStorage.getItem('selectedFramework');
-    return 'onnxruntime';
+    return 'litert';
   });
 
   useEffect(() => {
