@@ -130,8 +130,6 @@ function imageDataToTensor(image) {
 }
 ```
 
-2.B Create the `imageDataToTensor` function to convert the loaded image into a tensor compatible with the ONNX model.
-
 ## Step 4: Call ONNX Runtime Web
 
 With image retrieval and tensor conversion complete, use the ONNX Runtime Web library to run your model. Enabling WebNN is straightforward - simply specify the `executionProvider` as "webnn".
