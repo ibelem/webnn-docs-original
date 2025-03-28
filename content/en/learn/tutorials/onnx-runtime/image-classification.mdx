@@ -9,13 +9,13 @@ This tutorial demonstrates how to implement an image classification system using
 Ensure your system meets the following prerequisites for WebNN API development:
 
 - Operating System: Windows (latest version recommended)
-- Browser: [Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+- Browser: [Microsoft Edge Dev](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
 - Hardware: GPU and NPU with up-to-date drivers supporting WebNN
 
-### Enable WebNN API in Edge Canary
+### Enable WebNN API in Edge Dev
 
-1. Download and install [Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
-2. Launch Edge Canary, and navigate to about:flags in the address bar
+1. Download and install [Microsoft Edge Dev](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+2. Launch Edge Dev, and navigate to about:flags in the address bar
 3. Search for `WebNN API`, click the dropdown, and set to `Enabled`
 4. Restart the browser when prompted
 
@@ -46,7 +46,7 @@ Include the `Jimp` and `Lodash` library source files in `index.html`'s head tag.
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 ```
 
-2. Verify your setup by clicking the Go Live button in the bottom-right corner of VSCode, which launches a local server in Edge Canary.
+2. Verify your setup by clicking the Go Live button in the bottom-right corner of VSCode, which launches a local server in Edge Dev.
 3. Create a new `main.js` file to contain your application's JavaScript code.
 4. Create an `images` subfolder in your project directory and add an image file (for this demo, name it `image.jpg`).
 5. Download the [`mobilenet2-10.onnx`](https://github.com/onnx/models/blob/main/validated/vision/classification/mobilenet/model/mobilenetv2-10.onnx) model from the ONNX Model Zoo and save it in your project's root folder.

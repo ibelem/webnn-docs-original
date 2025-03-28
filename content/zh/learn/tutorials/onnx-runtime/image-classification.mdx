@@ -9,13 +9,13 @@
 确保您的系统满足 WebNN API 开发的以下先决条件：
 
 - 操作系统：Windows（推荐最新版本）
-- 浏览器：[Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+- 浏览器：[Microsoft Edge Dev](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
 - 硬件：支持 WebNN 的 GPU 和 NPU，并安装最新的驱动程序
 
-### 在 Edge Canary 中启用 WebNN API
+### 在 Edge Dev 中启用 WebNN API
 
-1. 下载并安装 [Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
-2. 启动 Edge Canary，在地址栏中导航到 `about:flags`
+1. 下载并安装 [Microsoft Edge Dev](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+2. 启动 Edge Dev，在地址栏中导航到 `about:flags`
 3. 搜索 `WebNN API`，点击下拉菜单，并设置为 `启用`
 4. 在提示时重新启动浏览器
 
@@ -46,7 +46,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 ```
 
-2. 通过点击 VSCode 右下角的 Go Live 按钮验证设置，这将在 Edge Canary 中启动本地服务器。
+2. 通过点击 VSCode 右下角的 Go Live 按钮验证设置，这将在 Edge Dev 中启动本地服务器。
 3. 创建一个新的 `main.js` 文件，用于存放应用的 JavaScript 代码。
 4. 在项目目录中创建 `images` 子文件夹，并添加一个图像文件（在本演示中，将其命名为 `image.jpg`）。
 5. 从 ONNX 模型仓库下载 [`mobilenet2-10.onnx`](https://github.com/onnx/models/blob/main/validated/vision/classification/mobilenet/model/mobilenetv2-10.onnx) 模型，并将其保存在项目的根文件夹中。
