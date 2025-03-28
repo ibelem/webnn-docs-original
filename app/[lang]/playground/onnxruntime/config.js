@@ -110,9 +110,7 @@ export const editorFiles = {
   </body>
 </html>` },
       '/main.js': {
-        code: `let modelSession;
-
-async function classifyImage(pathToImage) {
+        code: `async function classifyImage(pathToImage) {
   var imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
   var predictions = await runModel(imageTensor); // Run inference on the tensor
   console.log(predictions); // Print predictions to console
@@ -159,6 +157,8 @@ function imageDataToTensor(image) {
   const inputTensor = new ort.Tensor('float32', float32Data, dimensions);
   return inputTensor;
 }
+
+let modelSession;
 
 async function runModel(preprocessedData) {
   // Set up environment.
