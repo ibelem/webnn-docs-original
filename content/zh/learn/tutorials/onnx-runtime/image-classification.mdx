@@ -2,6 +2,23 @@
 
 本教程演示如何使用 WebNN 和 ONNX Runtime Web 实现图像分类，利用 GPU 和 NPU 加速。您将使用来自 Hugging Face 的 MobileNetV2 开源模型，以高性能对图像进行分类。
 
+## 步骤 0：WebNN API 设置要求
+
+### 系统要求
+
+确保您的系统满足 WebNN API 开发的以下先决条件：
+
+- 操作系统：Windows（推荐最新版本）
+- 浏览器：[Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+- 硬件：支持 WebNN 的 GPU 和 NPU，并具有最新的驱动程序
+
+### 在 Edge Canary 中启用 WebNN API
+
+1. 下载并安装 [Microsoft Edge Canary](https://www.microsoft.com/en-us/edge/download/insider?form=MA13FJ)
+2. 启动 Edge Canary，在地址栏中导航到 `about:flags`
+3. 搜索 `WebNN API`，点击下拉菜单，并设置为 `启用`
+4. 在提示时重新启动浏览器
+
 ## 步骤 1：初始化 Web 应用
 
 1. 创建一个新的 `index.html` 文件，并添加标准的 HTML 模板代码。
@@ -20,6 +37,13 @@
     </main>
   </body>
 </html>
+```
+
+在 `index.html` 的 head 标签中包含 `Jimp` 和 `Lodash` 库源文件。
+
+```js showLineNumbers
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js" integrity="sha512-8xrUum7qKj8xbiUrOzDEJL5uLjpSIMxVevAM5pvBroaxJnxJGFsKaohQPmlzQP8rEoAxrAujWttTnx3AMgGIww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 ```
 
 2. 通过点击 VSCode 右下角的 Go Live 按钮验证设置，这将在 Edge Canary 中启动本地服务器。
@@ -111,10 +135,12 @@ function imageDataToTensor(image) {
 图像检索和张量转换完成后，使用 ONNX Runtime Web 库运行模型。启用 WebNN 很简单 - 只需将 `executionProvider` 指定为 "webnn"。
 
 ```js showLineNumbers
+let modelSession;
+
 async function runModel(preprocessedData) { 
   // 设置环境
-  ort.env.wasm.numThreads = 1; 
-  ort.env.wasm.simd = true; 
+  // ort.env.wasm.numThreads = 1; 
+  // ort.env.wasm.simd = true; 
   // 在调试版本中取消注释以获取额外信息：
   // ort.env.wasm.proxy = true; 
   // ort.env.logLevel = "verbose";  
@@ -125,7 +151,6 @@ async function runModel(preprocessedData) {
   const devicePreference = "gpu"; // 其他选项包括 "npu" 和 "cpu"
   const options = {
     executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
-    // freeDimensionOverrides: {"batch": 1, "channels": 3, "height": 224, "width": 224}
     // freeDimensionOverrides 中的键名应映射到模型中的实际输入维度名称
     // 例如，如果模型的唯一键是 batch_size，则只需设置
     freeDimensionOverrides: {"batch_size": 1}
@@ -150,16 +175,7 @@ async function runModel(preprocessedData) {
 
 ## 步骤 5：后处理数据
 
-添加 softmax 函数，将模型输出转换为 0 到 1 之间的概率值。实现一个最终函数来确定最可能的图像分类。
-
-首先，在 `main.js` 的 head 标签中包含 `Jimp` 和 `Lodash` 库源文件。
-
-```js showLineNumbers
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js" integrity="sha512-8xrUum7qKj8xbiUrOzDEJL5uLjpSIMxVevAM5pvBroaxJnxJGFsKaohQPmlzQP8rEoAxrAujWttTnx3AMgGIww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-```
-
-然后，在 `main.js` 中添加必要的函数。
+添加 softmax 函数，将模型输出转换为 0 到 1 之间的概率值。实现一个最终函数来确定最可能的图像分类。在 `main.js` 中添加必要的函数。
 
 ```js showLineNumbers
 // Softmax 将值转换为 0 到 1 之间
