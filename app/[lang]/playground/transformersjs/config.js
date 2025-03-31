@@ -135,7 +135,7 @@ async function classifyImage() {
 }
 
 document.querySelector('#classify').addEventListener('click', classifyImage, false);`},
-'/index.js': {
+'/styles.css': {
   code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
