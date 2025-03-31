@@ -74,21 +74,106 @@ export const editorFiles = {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html>
-
-<head>
-  <title>WebNN / Transformers.js in Static HTML5</title>
-  <meta charset="UTF-8" />
-</head>
-
-<body>
-  <div id="app"></div>
-  <script src="/index.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebNN / Transformers.js in Static HTML5</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h2>Image Classification - WebNN / Transformers.js in HTML5</h2>     
+      <select id="imageSelector" onchange="updateImage()">
+        <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+        <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+        <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+        <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+      </select>
+      <div>
+        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+      </div>
+      <button id="classify" type="button">Click Me to Classify Image!</button>
+      <div id="outputText">This image displayed is: </div>
+    </main>
+    <script type="module" src="./index.js"></script>
+    <script>
+      function updateImage() {
+        const selector = document.querySelector('#imageSelector');
+        const image = document.querySelector('#selectedImage');
+        image.src = selector.value;
+      }
+    </script>
+  </body>
 </html>`},
       '/index.js': {
-        code: `document.getElementById("app").innerHTML = '// Transformers.js + Static HTML5';
-      `},
+        code: `import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
+
+async function classifyImage() {
+  const options = {
+      dtype: 'fp16',
+      device: 'webnn-gpu', // 'webnn-cpu' and upcoming 'webnn-npu'
+      session_options: {
+        freeDimensionOverrides: {
+          batch_size: 1,
+        }
+      },
+    };
+  const url = document.querySelector('#selectedImage').src;
+  const classifier = await pipeline('image-classification', 'webnn/mobilenet-v2', options);
+  const output = await classifier(url, { top_k: 3 });
+  console.log(output); // Print predictions to console
+
+  const outputElement = document.querySelector("#outputText");
+  outputElement.innerHTML = ""; // Clear previous content
+  // Display prediction in HTML
+  output.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "result";
+      div.innerHTML = "<strong>" + item.label + "</strong>: " + (item.score * 100).toFixed(2) + "%";
+      outputElement.appendChild(div);
+  });
+}
+
+document.querySelector('#classify').addEventListener('click', classifyImage, false);`},
+'/index.js': {
+  code: `body {
+  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  color: #eb6424; 
+}
+
+select {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
+}
+
+select option {
+  padding: 0.2rem 0.5rem;
+}
+
+img {
+  width: 40%;
+  height: auto;
+}
+
+#outputText {
+  color: #eb6424; 
+}
+
+button {
+  padding: 0.2rem 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+  
+#result {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}`},
     },
   },
   "vanilla": {

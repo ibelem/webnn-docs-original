@@ -50,7 +50,7 @@ Include the `Jimp` and `Lodash` library source files in `index.html`'s `<head>` 
 2. Verify your setup by clicking the `Go Live` button in the bottom-right corner of VSCode, which launches a local server in Edge Dev.
 3. Create a new `main.js` file to contain your application's JavaScript code.
 4. Create an `images` subfolder in your project directory and add an image file (for this demo, name it `image.jpg`).
-5. Download the [`mobilenetv2-10_fp16.onnx`](https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx?download=true) model from the ONNX Model Zoo and save it in your project's root folder. Users in the PRC can download the model [here](https://hf-mirror.com/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx?download=true).
+5. Download the [`mobilenetv2-10_fp16.onnx`](https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx?download=true) model and save it in your project's root folder. Users in the PRC can download the model [here](https://hf-mirror.com/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx?download=true).
 6. Download the [`imagenetClasses.js`](https://github.com/microsoft/webnn-developer-preview/blob/33a497a6747eb7a0a9146a78335f15ed1bea57be/Get%20Started/WebNN%20Tutorial/imagenetClasses.js) file, which provides 1000 standard image classifications for your model.
 
 ## Step 2: Add UI Elements and Parent Function
@@ -146,7 +146,7 @@ async function runModel(preprocessedData) {
     executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
     // The key names in freeDimensionOverrides should map to the real input dim names in the model.
     // For example, if a model's only key is batch_size, you only need to set
-    freeDimensionOverrides: {"batch_size": 1}
+    freeDimensionOverrides: { "batch_size": 1 }
   };
   modelSession = await ort.InferenceSession.create(modelPath, options);
 
