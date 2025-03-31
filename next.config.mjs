@@ -10,6 +10,20 @@ const withNextra = nextra({
  
 // You can include other Next.js configuration options here, in addition to Nextra settings:
 export default withNextra({
+  redirects: async () => {
+    return [
+      {
+        source: '/:locale(en|zh)/playground',
+        destination: '/:locale/playground/webnn',
+        permanent: true,
+      },
+      {
+        source: '/playground',
+        destination: '/playground/webnn',
+        permanent: true, 
+      },
+    ]
+  },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
