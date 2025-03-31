@@ -111,20 +111,20 @@ export const editorFiles = {
 </html>` },
       '/main.js': {
         code: `async function classifyImage(pathToImage) {
-  var imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
-  var predictions = await runModel(imageTensor); // Run inference on the tensor
+  const imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
+  const predictions = await runModel(imageTensor); // Run inference on the tensor
   console.log(predictions); // Print predictions to console
   document.getElementById("outputText").innerHTML = predictions[0].name; // Display prediction in HTML
 }
 
 async function getImageTensorFromPath(path, dims = [1, 3, 224, 224]) {
-  var image = await loadImagefromPath(path, dims[2], dims[3]); // 1. load the image
-  var imageTensor = imageDataToTensor(image, dims); // 2. convert to tensor
+  const image = await loadImagefromPath(path, dims[2], dims[3]); // 1. load the image
+  const imageTensor = imageDataToTensor(image, dims); // 2. convert to tensor
   return imageTensor; // 3. return the tensor
 }
 
 async function loadImagefromPath(path, width = 224, height = 224) {
-  var imageData = await Jimp.read(path).then(imageBuffer => {
+  const imageData = await Jimp.read(path).then(imageBuffer => {
     // Use Jimp to load the image and resize it.
     return imageBuffer.resize(width, height);
   });
@@ -133,7 +133,7 @@ async function loadImagefromPath(path, width = 224, height = 224) {
 }
 
 function imageDataToTensor(image) {
-  var imageBufferData = image.data;
+  const imageBufferData = image.data;
   let pixelCount = image.width * image.height;
   const float16Data = new Float16Array(
       3 * pixelCount);  // Allocate enough space for red/green/blue channels.
@@ -183,9 +183,9 @@ async function runModel(preprocessedData) {
     // Get output results with the output name from the model export.
     const output = outputData[modelSession.outputNames[0]];
     // Get the softmax of the output data. The softmax transforms values to be between 0 and 1
-    var outputSoftmax = softmax(Array.prototype.slice.call(output.data));
+    const outputSoftmax = softmax(Array.prototype.slice.call(output.data));
     // Get the top 5 results.
-    var results = imagenetClassesTopK(outputSoftmax, 5);
+    const results = imagenetClassesTopK(outputSoftmax, 5);
     return results;
   } catch (ex) {
     document.getElementById("outputText").innerHTML = ex.message;
@@ -1243,8 +1243,9 @@ h1, h2 {
 }
 
 select {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
 }
 
 select option {
@@ -1261,8 +1262,9 @@ img {
 }
 
 button {
-  padding: 0.5rem;
+  padding: 0.2rem 0.5rem;
   margin: 0.5rem 0;
+  font-size: 1rem;
 }`},
     },
   },
