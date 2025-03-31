@@ -69,8 +69,8 @@ export const themeDark = {
 }
 
 export const editorFiles = {
-  "static": {
-    "transformersjs": {
+  "transformersjs": {
+    "static": {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html>
@@ -134,8 +134,8 @@ async function classifyImage() {
 }
 
 document.querySelector('#classify').addEventListener('click', classifyImage, false);`},
-'/styles.css': {
-  code: `body {
+      '/styles.css': {
+        code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
 }
@@ -170,16 +170,12 @@ button {
   font-size: 1rem;
 }`},
     },
-  },
-  "vanilla": {
-    "transformersjs": {
+    "vanilla": {
       '/index.js': {
         code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
 `}
     },
-  },
-  "svelte": {
-    "transformersjs": {
+    "svelte": {
       '/App.svelte': {
         code: `<script>
   let name = '// Transformers.js + Svelte';
@@ -187,20 +183,15 @@ button {
 
 <main>
   {name}
-</main>
-`}
+</main>`}
     },
-  },
-  "react": {
-    "transformersjs": {
+    "react": {
       '/App.js': {
         code: `export default function App() {
   return <div>// Transformers.js + React</div>
 }`},
     },
-  },
-  "vue": {
-    "transformersjs": {
+    "vue": {
       '/src/App.vue': {
         code: `<template>
   <div>{{ msg }}</div>
@@ -212,5 +203,5 @@ const msg = ref('// Transformers.js + Vue');
 </script>
 `},
     },
-  },
+  }
 }

@@ -69,8 +69,8 @@ export const themeDark = {
 }
 
 export const editorFiles = {
-  "static": {
-    "webnn": {
+  "webnn": {
+    "static": {
       '/index.js': {
         code: `async function runWebNN() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
@@ -171,9 +171,7 @@ button {
   margin: 0.5rem 0;
 }`}
     },
-  },
-  "vanilla": {
-    "webnn": {
+    "vanilla": {
       '/index.js': {
         code: `import "./styles.css";
 
@@ -275,9 +273,7 @@ button {
   margin: 0.5rem 0;
 }`}
     },
-  },
-  "svelte": {
-    "webnn": {
+    "svelte": {
       '/webnn.js': {
         code: `export async function runWebNN() {
   try {
@@ -385,9 +381,7 @@ button {
   margin: 0.5rem 0;
 }` },
     },
-  },
-  "react": {
-    "webnn": {
+    "react": {
       '/webnn.js': {
         code: `export async function runWebNN() {
   try {
@@ -506,10 +500,8 @@ const styles = {
     margin: '0.5rem 0',
   }
 };` }
-    }
-  },
-  "vue": {
-    "webnn": {
+    },
+    "vue": {
       '/src/App.vue': {
         code: `<template>
   <div>
@@ -604,6 +596,6 @@ h1 {
 button {
   margin: 0.5rem 0;
 }`},
-    }
-  },
+    },
+  }
 }

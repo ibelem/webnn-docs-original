@@ -31,7 +31,7 @@ export default function Page() {
     localStorage.setItem('selectedFramework', framework);
   }, [framework]);
 
-  let files = editorFiles[js][framework];
+  let files = editorFiles[framework][js];
 
   const isSelected = (type, value) => {
     return type === 'js' ? js === value : framework === value;

@@ -69,8 +69,8 @@ export const themeDark = {
 }
 
 export const editorFiles = {
-  "static": {
-    "litert": {
+  "litert": {
+    "static": {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html>
@@ -89,17 +89,13 @@ export const editorFiles = {
       '/index.js': {
         code: `document.getElementById("app").innerHTML = '// Lite RT + Static HTML5';
 `},
-    }
-  },
-  "vanilla": {
-    "litert": {
+    },
+    "vanilla": {
       '/index.js': {
         code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
 ` },
-    }
-  },
-  "svelte": {
-    "litert": {
+    },
+    "svelte": {
       '/App.svelte': {
         code: `<script>
   let name = '// LiteRT + Svelte';
@@ -109,18 +105,14 @@ export const editorFiles = {
   {name}
 </main>
 `}
-    }
-  },
-  "react": {
-    "litert": {
+    },
+    "react": {
       '/App.js': {
         code: `export default function App() {
   return <div>// LiteRT + React</div>
 }`},
-    }
-  },
-  "vue": {
-    "litert": {
+    },
+    "vue": {
       '/src/App.vue': {
         code: `<template>
   <div>{{ msg }}</div>
@@ -132,5 +124,5 @@ const msg = ref('// LiteRT + Vue');
 </script>
 `},
     }
-  },
+  }
 }

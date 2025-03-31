@@ -69,8 +69,8 @@ export const themeDark = {
 }
 
 export const editorFiles = {
-  "static": {
-    "onnxruntime": {
+  "onnxruntime": {
+    "static": {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html>
@@ -1267,16 +1267,12 @@ button {
   font-size: 1rem;
 }`},
     },
-  },
-  "vanilla": {
-    "onnxruntime": {
+    "vanilla": {
       '/index.js': {
-        code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';
-`}
+        code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';`
+      }
     },
-  },
-  "svelte": {
-    "onnxruntime": {
+    "svelte": {
       '/App.svelte': {
         code: `<script>
   let name = '// ONNX Runtime Web + Svelte';
@@ -1284,20 +1280,15 @@ button {
 
 <main>
   {name}
-</main>
-`}
+</main>`}
     },
-  },
-  "react": {
-    "onnxruntime": {
+    "react": {
       '/App.js': {
         code: `export default function App() {
   return <div>// ONNX Runtime Web + React</div>
 }`},
     },
-  },
-  "vue": {
-    "onnxruntime": {
+    "vue": {
       '/src/App.vue': {
         code: `<template>
   <div>{{ msg }}</div>
@@ -1309,5 +1300,5 @@ const msg = ref('// ONNX Runtime Web + Vue');
 </script>
 `},
     },
-  },
+  }
 }
