@@ -111,7 +111,7 @@ export const editorFiles = {
 async function classifyImage() {
   const options = {
       dtype: 'fp16',
-      device: 'webnn-gpu', // 'webnn-cpu' and upcoming 'webnn-npu'
+      device: 'webnn-gpu', // 'webnn-cpu' and 'webnn-npu'
       session_options: {
         freeDimensionOverrides: {
           batch_size: 1,
@@ -128,7 +128,6 @@ async function classifyImage() {
   // Display prediction in HTML
   output.forEach(item => {
       const div = document.createElement("div");
-      div.className = "result";
       div.innerHTML = "<strong>" + item.label + "</strong>: " + (item.score * 100).toFixed(2) + "%";
       outputElement.appendChild(div);
   });
@@ -161,18 +160,14 @@ img {
 }
 
 #outputText {
-  color: #eb6424; 
+  margin: 0.5rem 0;
+  padding: 0.5rem;
 }
 
 button {
   padding: 0.2rem 0.5rem;
   margin: 0.5rem 0;
   font-size: 1rem;
-}
-  
-#result {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
 }`},
     },
   },
