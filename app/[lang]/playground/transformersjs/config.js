@@ -128,7 +128,7 @@ async function classifyImage() {
   // Display prediction in HTML
   output.forEach(item => {
       const div = document.createElement("div");
-      div.innerHTML = "<strong>" + item.label + "</strong>: " + (item.score * 100).toFixed(2) + "%";
+      div.innerHTML = item.label + ": " + (item.score * 100).toFixed(2) + "%";
       outputElement.appendChild(div);
   });
 }
@@ -161,7 +161,7 @@ img {
 
 #outputText {
   margin: 0.5rem 0;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 button {
