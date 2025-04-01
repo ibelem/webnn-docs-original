@@ -43,6 +43,7 @@ export const onnxruntimeEditorFiles = {
   </body>
 </html>` },
       '/main.js': {
+        active: true,
         code: `async function classifyImage(pathToImage) {
   const imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
   const predictions = await runModel(imageTensor); // Run inference on the tensor
@@ -1202,11 +1203,13 @@ button {
     },
     "vanilla": {
       '/index.js': {
+        active: true,
         code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';`
       }
     },
     "svelte": {
       '/App.svelte': {
+        active: true,
         code: `<script>
   let name = '// ONNX Runtime Web + Svelte';
 </script>
@@ -1217,12 +1220,14 @@ button {
     },
     "react": {
       '/App.js': {
+        active: true,
         code: `export default function App() {
   return <div>// ONNX Runtime Web + React</div>
 }`},
     },
     "vue": {
       '/src/App.vue': {
+        active: true,
         code: `<template>
   <div>{{ msg }}</div>
 </template>

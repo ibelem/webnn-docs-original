@@ -39,6 +39,7 @@ export const transformersjsEditorFiles = {
   </body>
 </html>`},
       '/index.js': {
+        active: true,
         code: `import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
 
 async function classifyImage() {
@@ -105,11 +106,13 @@ button {
     },
     "vanilla": {
       '/index.js': {
+        active: true,
         code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
 `}
     },
     "svelte": {
       '/App.svelte': {
+        active: true,
         code: `<script>
   let name = '// Transformers.js + Svelte';
 </script>
@@ -120,12 +123,14 @@ button {
     },
     "react": {
       '/App.js': {
+        active: true,
         code: `export default function App() {
   return <div>// Transformers.js + React</div>
 }`},
     },
     "vue": {
       '/src/App.vue': {
+        active: true,
         code: `<template>
   <div>{{ msg }}</div>
 </template>

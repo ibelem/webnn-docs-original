@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from 'nextra-theme-docs';
 import { themeDark, themeLight } from '../../config.js';
-import { webnnEditorFiles  } from '../../editor-files-webnn.js';
+import { webnnEditorFiles } from '../../editor-files-webnn.js';
 import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../../../_components/icons/js_frameworks.jsx'
 import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../../../_components/icons/editor.jsx'
 import { extractIdFromWebNNPath } from '../../utils.js';
@@ -36,9 +36,11 @@ export default function Page() {
   const id = extractIdFromWebNNPath();
 
   let files;
+  let title;
   try {
     if (webnnEditorFiles[id] && webnnEditorFiles[id][js]) {
       files = webnnEditorFiles[id][js];
+      title = webnnEditorFiles[id].title;
       console.log(`Successfully loaded files for ${id}/${js}`);
     } else {
       console.error(`Requested combination of ${id}/${js} does not exist`);
@@ -61,24 +63,53 @@ export default function Page() {
     setFramework(newFramework);
   };
 
+  const [selectedItem, setSelectedItem] = useState('');
+  const handleChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedItem(selectedValue);
+    if (selectedValue) {
+      window.location.href = `./${selectedValue}`;
+    }
+  };
+
   return (
     <div className="md:px-8 xl:px-8 mb-8">
       <div className="mx-1 md:mx-0 playground-nav">
-        <div className="self-center flex flex-row">
-          <h2 className="pl-4 text-xl md:text-2xl font-title light-color py-1">
-            Playground
-          </h2>
-          <div className="selected-framework-js ml-4 self-center">
-            {/* Only show currently selected icons */}
-            {framework === 'webnn' && <WebNNIcon />}
-            {framework === 'onnxruntime' && <OnnxIcon />}
-            {framework === 'transformersjs' && <TransformersjsIcon />}
-            {framework === 'litert' && <LiteRTIcon />}
-            {js === 'static' && <Html5Icon />}
-            {js === 'vanilla' && <VanillaIcon />}
-            {js === 'svelte' && <SvelteIcon />}
-            {js === 'react' && <ReactIcon />}
-            {js === 'vue' && <VueIcon />}
+        <div className='self-center playground-nav-12'>
+          <div className="flex flex-row">
+            <h2 className="pl-4 text-xl md:text-2xl font-title light-color py-1">
+              Playground
+            </h2>
+            <div className="selected-framework-js ml-4 self-center">
+              {/* Only show currently selected icons */}
+              {framework === 'webnn' && <WebNNIcon />}
+              {framework === 'onnxruntime' && <OnnxIcon />}
+              {framework === 'transformersjs' && <TransformersjsIcon />}
+              {framework === 'litert' && <LiteRTIcon />}
+              {js === 'static' && <Html5Icon />}
+              {js === 'vanilla' && <VanillaIcon />}
+              {js === 'svelte' && <SvelteIcon />}
+              {js === 'react' && <ReactIcon />}
+              {js === 'vue' && <VueIcon />}
+            </div>
+          </div>
+          <div className="flex flex-row gap-4 justify-end text-sm self-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
+            <div className='self-center'>{title}</div>
+            <div className="dropdown-container pr-4">
+              <select
+                id="webnn-select"
+                value={selectedItem}
+                onChange={handleChange}
+                className="p-2"
+              >
+                <option value="">-- Examples --</option>
+                {Object.entries(webnnEditorFiles).map(([id, data]) => (
+                  <option key={id} value={id}>
+                    {data.title}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
         <div className="self-center">
@@ -87,7 +118,7 @@ export default function Page() {
               className="static hover:cursor-pointer"
               onClick={() => handleJsChange('static')}
             >
-              <Html5Icon className="static"/>
+              <Html5Icon className="static" />
               <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''
                 }`}>
                 HTML5
@@ -97,7 +128,7 @@ export default function Page() {
               className="vanilla hover:cursor-pointer"
               onClick={() => handleJsChange('vanilla')}
             >
-              <VanillaIcon className="vanilla"/>
+              <VanillaIcon className="vanilla" />
               <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vanilla' ? 'text-gray-800 dark:text-gray-200' : ''
                 }`}>
                 Vanilla
@@ -143,8 +174,8 @@ export default function Page() {
           editorHeight: 538,
           showLineNumbers: true
         }}
-        customSetup={{ 
-          dependencies: { 
+        customSetup={{
+          dependencies: {
             // "svelte": "^5.22.6",
             // "@huggingface/transformers": "^3.4.0"
           }

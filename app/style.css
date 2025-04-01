@@ -233,6 +233,20 @@ article.nextra-body-typesetting-article h1 {
   grid-row-gap: 0px;
 }
 
+.playground-nav-12 {
+  border-left: 1px solid rgb(239, 239, 239);
+  border-right: 1px solid rgb(239, 239, 239);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.playground-nav select:hover {
+  cursor: pointer;
+}
+
 .pg-framework {
   border-bottom: 1px solid #efefef;
 }

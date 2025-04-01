@@ -5,6 +5,7 @@ export const webnnEditorFiles = {
     "description": "Compute the element-wise binary addition and multiplication of the two input tensors",
     "static": {
       '/index.js': {
+        active: true,
         code: `async function runWebNN() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
   const context = await navigator.ml.createContext();
@@ -106,6 +107,7 @@ button {
     },
     "vanilla": {
       '/index.js': {
+        active: true,
         code: `import "./styles.css";
 
 async function runWebNN() {
@@ -208,6 +210,7 @@ button {
     },
     "svelte": {
       '/webnn.js': {
+        active: true,
         code: `export async function runWebNN() {
   try {
     const descriptor = { dataType: 'float32', shape: [2, 2] };
@@ -316,6 +319,7 @@ button {
     },
     "react": {
       '/webnn.js': {
+        active: true,
         code: `export async function runWebNN() {
   try {
     const descriptor = { dataType: 'float32', shape: [2, 2] };
@@ -436,6 +440,7 @@ const styles = {
     },
     "vue": {
       '/src/App.vue': {
+        active: true,
         code: `<template>
   <div>
       <h1>WebNN in Vue.js</h1>
@@ -531,5 +536,4 @@ button {
 }`},
     },
   }
-
 }

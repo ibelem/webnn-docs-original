@@ -20,16 +20,19 @@ export const liteRTEditorFiles = {
 
 </html>`},
       '/index.js': {
+        active: true,
         code: `document.getElementById("app").innerHTML = '// Lite RT + Static HTML5';
 `},
     },
     "vanilla": {
       '/index.js': {
+        active: true,
         code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
 ` },
     },
     "svelte": {
       '/App.svelte': {
+        active: true,
         code: `<script>
   let name = '// LiteRT + Svelte';
 </script>
@@ -41,12 +44,14 @@ export const liteRTEditorFiles = {
     },
     "react": {
       '/App.js': {
+        active: true,
         code: `export default function App() {
   return <div>// LiteRT + React</div>
 }`},
     },
     "vue": {
       '/src/App.vue': {
+        active: true,
         code: `<template>
   <div>{{ msg }}</div>
 </template>
