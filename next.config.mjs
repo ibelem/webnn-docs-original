@@ -18,7 +18,7 @@ export default withNextra({
         permanent: true,
       },
       {
-        source: '/playground',
+        source: '/playground/',
         destination: '/playground/webnn',
         permanent: true, 
       },
