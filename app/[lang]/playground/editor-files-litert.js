@@ -63,5 +63,4 @@ const msg = ref('// LiteRT + Vue');
 `},
     }
   }
-
 }

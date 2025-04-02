@@ -4,12 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from 'nextra-theme-docs';
 import { themeDark, themeLight } from '../../config.js';
-import { onnxruntimeEditorFiles  } from '../../editor-files-onnxruntime.js';
+import { onnxruntimeEditorFiles } from '../../editor-files-onnxruntime.js';
 import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../../../_components/icons/js_frameworks.jsx'
 import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../../../_components/icons/editor.jsx'
 import { extractIdFromOnnxRuntimePath } from '../../utils.js';
+import { Playground } from '../../../../_components/playground.jsx';
 
 export default function Page() {
+  const framework = 'onnxruntime';
   const { theme, setTheme } = useTheme();
   let editorTheme = themeLight;
   console.log(`theme: ${theme}`);
@@ -20,18 +22,24 @@ export default function Page() {
     return saved || 'static';
   });
 
-  const [framework, setFramework] = useState(() => {
-    const saved = localStorage.getItem('selectedFramework');
-    return 'webnn';
-  });
+  // Add state for menu overlay
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('selectedJs', js);
   }, [js]);
 
+  // Add effect to disable body scroll when menu is open
   useEffect(() => {
-    localStorage.setItem('selectedFramework', framework);
-  }, [framework]);
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [menuOpen]);
 
   const id = extractIdFromOnnxRuntimePath();
 
@@ -44,144 +52,150 @@ export default function Page() {
       console.log(`Successfully loaded files for ${id}/${js}`);
     } else {
       console.error(`Requested combination of ${id}/${js} does not exist`);
-      window.location.href = './image-classification-mobilenet-v2';
+      window.location.href = './add-mul';
     }
   } catch (error) {
     console.error("Error accessing files:", error);
-    window.location.href = './image-classification-mobilenet-v2';
+    window.location.href = './add-mul';
   }
-
-  const isSelected = (type, value) => {
-    return type === 'js' ? js === value : framework === value;
-  };
 
   const handleJsChange = (newJs) => {
     setJs(newJs);
   };
 
-  const handleFrameworkChange = (newFramework) => {
-    setFramework(newFramework);
-  };
-
-  const [selectedItem, setSelectedItem] = useState('');
-  const handleChange = (e) => {
-    const selectedValue = e.target.value;
-    setSelectedItem(selectedValue);
-    if (selectedValue) {
-      window.location.href = `./${selectedValue}`;
-    }
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
-    <div className="md:px-8 xl:px-8 mb-8">
-      <div className="mx-1 md:mx-0 playground-nav">
-        <div className='self-center playground-nav-12'>
-          <div className="flex flex-row">
-            <h2 className="pl-4 text-xl md:text-2xl font-title light-color py-1">
-              Playground
-            </h2>
-            <div className="selected-framework-js ml-4 self-center">
-              {/* Only show currently selected icons */}
-              {framework === 'webnn' && <WebNNIcon />}
-              {framework === 'onnxruntime' && <OnnxIcon />}
-              {framework === 'transformersjs' && <TransformersjsIcon />}
-              {framework === 'litert' && <LiteRTIcon />}
-              {js === 'static' && <Html5Icon />}
-              {js === 'vanilla' && <VanillaIcon />}
-              {js === 'svelte' && <SvelteIcon />}
-              {js === 'react' && <ReactIcon />}
-              {js === 'vue' && <VueIcon />}
+    <div>
+      <div className="md:px-8 xl:px-8 mb-8">
+        <div className="mx-1 md:mx-0 playground-nav">
+          <div className='self-center playground-nav-12'>
+            <div className="flex flex-row">
+              <h2 className="pl-4 text-xl md:text-2xl font-title light-color py-1">
+                Playground
+              </h2>
+              <div className="selected-framework-js ml-4 self-center">
+                {/* Only show currently selected icons */}
+                {framework === 'webnn' && <WebNNIcon />}
+                {framework === 'onnxruntime' && <OnnxIcon />}
+                {framework === 'transformersjs' && <TransformersjsIcon />}
+                {framework === 'litert' && <LiteRTIcon />}
+                {js === 'static' && <Html5Icon />}
+                {js === 'vanilla' && <VanillaIcon />}
+                {js === 'svelte' && <SvelteIcon />}
+                {js === 'react' && <ReactIcon />}
+                {js === 'vue' && <VueIcon />}
+              </div>
+            </div>
+            <div className="flex flex-row gap-4 justify-end self-end justify-items-end text-sm lg:self-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
+              <div className='self-center'>{title}</div>
+              <div className="pg-menu-wrap">
+                {/* Hamburger Menu Button */}
+                <button 
+                  onClick={toggleMenu}
+                  className="flex flex-col justify-center items-center w-8 h-8 mr-4 space-y-1.5 cursor-pointer focus:outline-none"
+                  aria-label="Menu"
+                >
+                  <span className={`block w-6 h-0.5 bg-gray-600 dark:bg-gray-400 transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                  <span className={`block w-6 h-0.5 bg-gray-600 dark:bg-gray-400 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                  <span className={`block w-6 h-0.5 bg-gray-600 dark:bg-gray-400 transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                </button>
+                
+                {/* Full-screen Overlay Menu */}
+                {menuOpen && (
+                  <div className="fixed inset-0 bg-white dark:bg-black bg-opacity-95 dark:bg-opacity-95 z-30 flex flex-col items-center justify-center">
+                    <div className="absolute pg-menu-close">
+                      <a
+                        onClick={toggleMenu}
+                        className="!text-4xl hover:cursor-pointer block focus:outline-none"
+                        aria-label="Close menu"
+                      >
+                        &times;
+                      </a>
+                    </div>
+                    
+                    <div className="text-center">
+                      <h2 className="text-2xl font-bold mb-8 text-[#00c8ff] dark:text-gray-200">Playgound</h2>
+                      <Playground isEditorPage={true} />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex flex-row gap-4 justify-end text-sm self-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-            <div className='self-center'>{title}</div>
-            <div className="dropdown-container pr-4">
-              <select
-                id="webnn-select"
-                value={selectedItem}
-                onChange={handleChange}
-                className="p-2"
+          <div className="self-center">
+            <div className={`pg-js ${js}`}>
+              <button
+                className="static hover:cursor-pointer"
+                onClick={() => handleJsChange('static')}
               >
-                <option value="">-- Examples --</option>
-                {Object.entries(onnxruntimeEditorFiles).map(([id, data]) => (
-                  <option key={id} value={id}>
-                    {data.title}
-                  </option>
-                ))}
-              </select>
+                <Html5Icon className="static" />
+                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''
+                  }`}>
+                  HTML5
+                </span>
+              </button>
+              <button
+                className="vanilla hover:cursor-pointer"
+                onClick={() => handleJsChange('vanilla')}
+              >
+                <VanillaIcon className="vanilla" />
+                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vanilla' ? 'text-gray-800 dark:text-gray-200' : ''
+                  }`}>
+                  Vanilla
+                </span>
+              </button>
+              <button
+                className="svelte hover:cursor-pointer"
+                onClick={() => handleJsChange('svelte')}
+              >
+                <SvelteIcon className="svelte" />
+                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'svelte' ? 'text-gray-800 dark:text-gray-200' : ''
+                  }`}>
+                  Svelte
+                </span>
+              </button>
+              <button
+                className="react hover:cursor-pointer"
+                onClick={() => handleJsChange('react')}
+              >
+                <ReactIcon className="react" />
+                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'react' ? 'text-gray-800 dark:text-gray-200' : ''
+                  }`}>
+                  React
+                </span>
+              </button>
+              <button
+                className="vue hover:cursor-pointer"
+                onClick={() => handleJsChange('vue')}
+              >
+                <VueIcon className="vue" />
+                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vue' ? 'text-gray-800 dark:text-gray-200' : ''
+                  }`}>
+                  Vue
+                </span>
+              </button>
             </div>
           </div>
         </div>
-        <div className="self-center">
-          <div className={`pg-js ${js}`}>
-            <button
-              className="static hover:cursor-pointer"
-              onClick={() => handleJsChange('static')}
-            >
-              <Html5Icon className="static" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                HTML5
-              </span>
-            </button>
-            <button
-              className="vanilla hover:cursor-pointer"
-              onClick={() => handleJsChange('vanilla')}
-            >
-              <VanillaIcon className="vanilla" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vanilla' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                Vanilla
-              </span>
-            </button>
-            <button
-              className="svelte hover:cursor-pointer"
-              onClick={() => handleJsChange('svelte')}
-            >
-              <SvelteIcon className="svelte" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'svelte' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                Svelte
-              </span>
-            </button>
-            <button
-              className="react hover:cursor-pointer"
-              onClick={() => handleJsChange('react')}
-            >
-              <ReactIcon className="react" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'react' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                React
-              </span>
-            </button>
-            <button
-              className="vue hover:cursor-pointer"
-              onClick={() => handleJsChange('vue')}
-            >
-              <VueIcon className="vue" />
-              <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vue' ? 'text-gray-800 dark:text-gray-200' : ''
-                }`}>
-                Vue
-              </span>
-            </button>
-          </div>
-        </div>
+        <Sandpack className="!mx-1 md:!mx-0 editor"
+          template={js}
+          theme={editorTheme}
+          options={{
+            editorHeight: 538,
+            showLineNumbers: true
+          }}
+          customSetup={{
+            dependencies: {
+              // "svelte": "^5.22.6",
+              // "@huggingface/transformers": "^3.4.0"
+            }
+          }}
+          files={files}
+        />
       </div>
-      <Sandpack className="!mx-1 md:!mx-0"
-        template={js}
-        theme={editorTheme}
-        options={{
-          editorHeight: 538,
-          showLineNumbers: true
-        }}
-        customSetup={{
-          dependencies: {
-            // "svelte": "^5.22.6",
-            // "@huggingface/transformers": "^3.4.0"
-          }
-        }}
-        files={files}
-      />
     </div>
   )
 }

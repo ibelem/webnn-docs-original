@@ -302,6 +302,15 @@ article.nextra-body-typesetting-article h1 {
   border-left: 0px solid rgb(37, 37, 37);
 }
 
+.pg-menu-close {
+  right: 18px;
+  top: 18px;
+}
+
+.pg-menu-close a {
+  margin-top: -12px;
+}
+
 * {
   outline: none !important;
 }
@@ -693,7 +702,7 @@ article.nextra-body-typesetting-article a:hover {
 }
 
 @media (max-width: 1024px) {
-  .playground-nav {
+  .playground-nav, .playground-nav-12 {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     display: flex;

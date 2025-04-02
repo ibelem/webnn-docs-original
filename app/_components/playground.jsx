@@ -1,12 +1,11 @@
-import { webnnEditorFiles } from '../editor-files-webnn.js';
-import { onnxruntimeEditorFiles } from '../editor-files-onnxruntime.js';
-import { transformersjsEditorFiles } from '../editor-files-transformersjs.js';
-import { liteRTEditorFiles } from '../editor-files-litert.js';
+import { webnnEditorFiles } from '../../app/[lang]/playground/editor-files-webnn.js';
+import { onnxruntimeEditorFiles } from '../../app/[lang]/playground/editor-files-onnxruntime.js';
+import { transformersjsEditorFiles } from '../../app/[lang]/playground/editor-files-transformersjs.js';
+import { liteRTEditorFiles } from '../../app/[lang]/playground/editor-files-litert.js';
 import { Cards } from 'nextra/components'
-import { Html5Icon, VanillaIcon, SvelteIcon, ReactIcon, VueIcon } from '../../../_components/icons/js_frameworks.jsx'
-import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from '../../../_components/icons/editor.jsx'
+import { TransformersjsIcon, OnnxIcon, WebNNIcon, LiteRTIcon } from './icons/editor.jsx'
 
-export default function Page() {
+export function Playground({isEditorPage}) {
   // Function to generate cards from editorFiles
   const generateCards = (j, files) => {
     const cards = [];
@@ -16,6 +15,11 @@ export default function Page() {
     Object.entries(files).forEach(([exampleId, exampleData]) => {
       // Check if the example has at least one of the specified frameworks
       const hasJs = js.some(framework => framework in exampleData);
+
+      let path = `./playground/${j}/${exampleId}`;
+      if (isEditorPage) {
+        path = `../../playground/${j}/${exampleId}`;
+      }
       
       // Only add card if it has title, description, and at least one framework
       if (exampleData.title && exampleData.description && hasJs) {
@@ -24,7 +28,7 @@ export default function Page() {
           exampleId: exampleId,
           title: exampleData.title,
           description: exampleData.description,
-          href: `./${j}/${exampleId}`
+          href: path
         });
       }
     });
@@ -38,11 +42,11 @@ export default function Page() {
   const litertCards = generateCards("litert", liteRTEditorFiles);
 
   return (
-    <div className="min-h-screen md:px-8 xl:px-8">
-      <h2 className="text-4xl font-title light-color !text-center pt-4 mt-4">Playground</h2>
-      <h3 className="text-2xl font-title light-color px-4">WebNN</h3>
+    <div className="min-h-screen overflow-y-auto md:px-8 xl:px-8">
+      <h2 className="text-4xl font-title light-color !text-center pt-4 my-4">Playground</h2>
+      <h3 id="webnn" className="text-2xl font-title light-color px-4 text-left">WebNN</h3>
       <div className="container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:lg:grid-cols-4 gap-4">
           {webnnCards.map((card) => (
             <Cards.Card
               key={card.id}
@@ -54,9 +58,9 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <h3 className="text-2xl font-title light-color px-4">Transformers.js</h3>
+      <h3 id="transformersjs" className="text-2xl font-title light-color px-4 text-left">Transformers.js</h3>
       <div className="container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:lg:grid-cols-4 gap-4">
           {transformersjsCards.map((card) => (
             <Cards.Card
               key={card.id}
@@ -68,9 +72,9 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <h3 className="text-2xl font-title light-color px-4">ONNX Runtime Web</h3>
+      <h3 id="onnx" className="text-2xl font-title light-color px-4 text-left">ONNX Runtime Web</h3>
       <div className="container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:lg:grid-cols-4 gap-4">
           {onnxruntimeCards.map((card) => (
             <Cards.Card
               key={card.id}
@@ -82,9 +86,9 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <h3 className="text-2xl font-title light-color px-4">LiteRT</h3>
+      <h3 id="litert" className="text-2xl font-title light-color px-4 text-left">LiteRT</h3>
       <div className="container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:lg:grid-cols-4 gap-4">
           {litertCards.map((card) => (
             <Cards.Card
               key={card.id}

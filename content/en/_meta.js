@@ -33,19 +33,19 @@ export default {
     items: {
       webnn: {
         title: 'WebNN API',
-        href: '/playground/webnn'
+        href: '/playground'
       },
       ort: {
         title: 'Transformers.js',
-        href: '/playground/transformersjs'
+        href: '/playground#transformersjs'
       },
       transformersjs: {
         title: 'ONNX Runtime',
-        href: '/playground/onnxruntime'
+        href: '/playground#onnxruntime'
       },
       litert: {
         title: 'Lite RT',
-        href: '/playground/litert'
+        href: '/playground#litert'
       }
     }
   },
