@@ -15,22 +15,27 @@ export const liteRTEditorFiles = {
 
 <body>
   <div id="app"></div>
-  <script src="/index.js"></script>
+  <script src="./webnn.js"></script>
 </body>
 
 </html>`},
-      '/index.js': {
+      '/webnn.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// Lite RT + Static HTML5';
-`},
+`},  '/styles.css': {
+        code: `body {
+}
+`}
     },
     "vanilla": {
-      '/index.js': {
+      '/index.html': { code: ``},
+      '/webnn.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
-` },
+` }, '/styles.css': { code: ``},
     },
     "svelte": {
+      '/webnn.js': { code: ``},
       '/App.svelte': {
         active: true,
         code: `<script>
@@ -40,9 +45,11 @@ export const liteRTEditorFiles = {
 <main>
   {name}
 </main>
-`}
+`}, 
+'/styles.css': { code: ``},
     },
     "react": {
+      '/webnn.js': { code: ``},
       '/App.js': {
         active: true,
         code: `export default function App() {
@@ -50,6 +57,7 @@ export const liteRTEditorFiles = {
 }`},
     },
     "vue": {
+      '/src/webnn.js': { code: ``},
       '/src/App.vue': {
         active: true,
         code: `<template>

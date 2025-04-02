@@ -11,7 +11,7 @@ export const transformersjsEditorFiles = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebNN / Transformers.js in Static HTML5</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main>
@@ -28,7 +28,7 @@ export const transformersjsEditorFiles = {
       <button id="classify" type="button">Click Me to Classify Image!</button>
       <div id="outputText">This image displayed is: </div>
     </main>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./webnn.js"></script>
     <script>
       function updateImage() {
         const selector = document.querySelector('#imageSelector');
@@ -38,7 +38,7 @@ export const transformersjsEditorFiles = {
     </script>
   </body>
 </html>`},
-      '/index.js': {
+      '/webnn.js': {
         active: true,
         code: `import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
 
@@ -105,12 +105,15 @@ button {
 }`},
     },
     "vanilla": {
-      '/index.js': {
+      '/index.html': { code: ``},
+      '/webnn.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
-`}
+`},
+'/styles.css': { code: ``},
     },
     "svelte": {
+      '/webnn.js': { code: ``},
       '/App.svelte': {
         active: true,
         code: `<script>
@@ -119,9 +122,11 @@ button {
 
 <main>
   {name}
-</main>`}
+</main>`},
+'/styles.css': { code: ``},
     },
     "react": {
+      '/webnn.js': { code: ``},
       '/App.js': {
         active: true,
         code: `export default function App() {
@@ -129,6 +134,7 @@ button {
 }`},
     },
     "vue": {
+      '/src/webnn.js': { code: ``},
       '/src/App.vue': {
         active: true,
         code: `<template>

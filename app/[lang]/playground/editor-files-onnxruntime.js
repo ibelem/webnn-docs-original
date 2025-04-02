@@ -12,7 +12,7 @@ export const onnxruntimeEditorFiles = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebNN / ONNX Runtime in Static HTML5</title>
     <link rel="stylesheet" href="/styles.css" />
-    <script src="./main.js"></script>
+    <script src="./webnn.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.22.12/jimp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
@@ -42,7 +42,7 @@ export const onnxruntimeEditorFiles = {
     </main>
   </body>
 </html>` },
-      '/main.js': {
+      '/webnn.js': {
         active: true,
         code: `async function classifyImage(pathToImage) {
   const imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
@@ -1202,12 +1202,15 @@ button {
 }`},
     },
     "vanilla": {
-      '/index.js': {
+      '/index.html': { code: ``},
+      '/webnn.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';`
-      }
+      },
+      '/styles.css': { code: ``},
     },
     "svelte": {
+      '/webnn.js': { code: ``},
       '/App.svelte': {
         active: true,
         code: `<script>
@@ -1216,9 +1219,11 @@ button {
 
 <main>
   {name}
-</main>`}
+</main>`},
+'/styles.css': { code: ``},
     },
     "react": {
+      '/webnn.js': { code: ``},
       '/App.js': {
         active: true,
         code: `export default function App() {
@@ -1226,6 +1231,7 @@ button {
 }`},
     },
     "vue": {
+      '/src/webnn.js': { code: ``},
       '/src/App.vue': {
         active: true,
         code: `<template>

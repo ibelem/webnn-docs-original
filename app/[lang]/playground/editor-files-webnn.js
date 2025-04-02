@@ -4,7 +4,7 @@ export const webnnEditorFiles = {
     "title": "C = 0.2 * A + B",
     "description": "Compute the element-wise binary addition and multiplication of the two input tensors",
     "static": {
-      '/index.js': {
+      '/webnn.js': {
         active: true,
         code: `async function runWebNN() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
@@ -71,7 +71,7 @@ document.querySelector("#run").addEventListener("click", async () => {
 <head>
   <title>WebNN in Static HTML5</title>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
@@ -87,7 +87,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   </div>
   <button id="run">Run WebNN</button>
   <div id="output">Click "Run WebNN" to start</div>
-  <script src="/index.js"></script>
+  <script src="./webnn.js"></script>
 </body>
 
 </html>` },
@@ -106,7 +106,7 @@ button {
 }`}
     },
     "vanilla": {
-      '/index.js': {
+      '/webnn.js': {
         active: true,
         code: `import "./styles.css";
 
@@ -190,7 +190,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   </div>
   <button id="run">Run WebNN</button>
   <div id="output">Click "Run WebNN" to start</div>
-  <script src="./index.js"></script>
+  <script src="./webnn.js"></script>
 </body>
 
 </html>` },
@@ -439,6 +439,7 @@ const styles = {
 };` }
     },
     "vue": {
+      '/src/webnn.js': { code: ``},
       '/src/App.vue': {
         active: true,
         code: `<template>
