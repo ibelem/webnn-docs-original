@@ -536,5 +536,197 @@ button {
   margin: 0.5rem 0;
 }`},
     },
+  },
+  "conv2d": {
+    "title": "conv2d",
+    "description": "Compute a 2-D convolution given 4-D input and filter tensors",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `// Simple WebNN Conv2D Example
+async function runSimpleConv2dExample() {
+  // Check if WebNN is supported
+  if (!('ml' in navigator)) {
+    console.error('WebNN API is not supported in this browser');
+    return;
+  }
+
+  try {
+    // Get the WebNN context
+    const context = await navigator.ml.createContext({deviceType: 'gpu'});
+    const builder = new MLGraphBuilder(context);
+
+    // Use a simple 4x4 input with 1 channel
+    const inputShape = [1, 4, 4, 1]; // [batch, height, width, channels]
+    
+    // Create a simple 4x4 input matrix
+    const inputData = new Float32Array([
+      1, 2, 3, 4,   // First row
+      5, 6, 7, 8,   // Second row
+      9, 10, 11, 12, // Third row
+      13, 14, 15, 16 // Fourth row
+    ]);
+    
+    // Define the input operand
+    const input = builder.input('input', {dataType: 'float32', shape: inputShape});
+    
+    // Simple 3x3 filter with 1 output channel
+    const filterShape = [1, 3, 3, 1]; // [outputChannels, filterHeight, filterWidth, inputChannels]
+    
+    // Create a simple filter kernel for edge detection
+    const filterData = new Float32Array([
+      1, 0, -1, 
+      2, 0, -2, 
+      1, 0, -1
+    ]);
+    
+    // Define the filter operand
+    const filter = builder.constant({dataType: 'float32', shape: filterShape}, filterData);
+    
+    // Define a simple bias (one value per output channel)
+    const biasShape = [1]; // One bias for one output channel
+    const biasData = new Float32Array([0]); // Zero bias
+    const bias = builder.constant({dataType: 'float32', shape: biasShape}, biasData);
+    
+    // Define Conv2D options with 'same' padding
+    const options = {
+      padding: [1, 1, 1, 1], // [top, right, bottom, left]
+      strides: [1, 1],       // [y, x]
+      dilations: [1, 1],     // [y, x]
+      groups: 1              // Standard convolution
+    };
+    
+    // Create the Conv2D operation
+    const conv = builder.conv2d(input, filter, bias, options);
+    
+    // Build the computation graph
+    const graph = await builder.build({conv});
+    
+    // Create input tensor
+    const inputTensor = new MLTensor(inputData, {dataType: 'float32', shape: inputShape});
+    
+    // Run the graph with the input tensor
+    const outputs = await context.dispatch(graph, {'input': inputTensor});
+    
+    // Get the output tensor
+    const outputTensor = outputs.values().next().value;
+    const outputData = await outputTensor.data();
+    const outputShape = outputTensor.shape;
+    
+    console.log('Input shape:', inputShape);
+    console.log('Input data:', Array.from(inputData));
+    console.log('Filter data (edge detection):', Array.from(filterData));
+    console.log('Output shape:', outputShape);
+    console.log('Output data:', Array.from(outputData));
+    
+    // Return the results for display
+    return {
+      input: {
+        shape: inputShape,
+        data: Array.from(inputData)
+      },
+      filter: Array.from(filterData),
+      output: {
+        shape: outputShape,
+        data: Array.from(outputData)
+      }
+    };
+  } catch (error) {
+    console.error('WebNN error:', error);
+  }
+}
+
+// Display the results in a friendly format
+function displayResults(results) {
+  const resultDiv = document.getElementById('result');
+  if (!resultDiv) return;
+  
+  // Format the input as a grid
+  let inputGrid = '';
+  const inputSize = Math.sqrt(results.input.data.length);
+  for (let i = 0; i < inputSize; i++) {
+    const row = [];
+    for (let j = 0; j < inputSize; j++) {
+      row.push(results.input.data[i * inputSize + j]);
+    }
+    inputGrid += row.join(' ') + '<br>';
+  }
+  
+  // Format the filter as a grid
+  let filterGrid = '';
+  const filterSize = Math.sqrt(results.filter.length);
+  for (let i = 0; i < filterSize; i++) {
+    const row = [];
+    for (let j = 0; j < filterSize; j++) {
+      row.push(results.filter[i * filterSize + j]);
+    }
+    filterGrid += row.join(' ') + '<br>';
+  }
+  
+  // Format the output as a grid
+  let outputGrid = '';
+  const outputSize = Math.sqrt(results.output.data.length);
+  for (let i = 0; i < outputSize; i++) {
+    const row = [];
+    for (let j = 0; j < outputSize; j++) {
+      row.push(results.output.data[i * outputSize + j].toFixed(1));
+    }
+    outputGrid += row.join(' ') + '<br>';
+  }
+  
+  resultDiv.innerHTML = '<h3>Conv2D Results</h3><div class="grid-container"><div class="grid-item"><h4>Input (4x4)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (3x3 Edge Detection)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Output (4x4)</h4><div class="grid">'+ inputGrid + '</div></div></div>';
+}
+
+// Run the example when the page loads
+window.addEventListener('DOMContentLoaded', async () => {
+  const statusDiv = document.getElementById('status');
+  if (statusDiv) {
+    statusDiv.textContent = 'Running simple Conv2D with WebNN...';
+  }
+  
+  try {
+    const results = await runSimpleConv2dExample();
+    if (results) {
+      displayResults(results);
+      if (statusDiv) {
+        statusDiv.textContent = 'Conv2D completed successfully!';
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    if (statusDiv) {
+      statusDiv.textContent = 'Error: ' + error.message;
+    }
+  }
+});`
+      },
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>conv2d op - WebNN</title>
+  <style>
+    .grid-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .grid {
+      font-family: monospace;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebNN Conv2D</h1>
+  <div id="status"></div>
+  <div id="result"></div>
+  <script src="./webnn.js"></script>
+</body>
+</html>` },
+      '/styles.css': {
+        code: ``}
+    },
   }
 }
