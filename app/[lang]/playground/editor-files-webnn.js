@@ -590,6 +590,8 @@ async function runSimpleConv2dExample() {
     
     // Define Conv2D options with 'same' padding
     const options = {
+      inputLayout: 'nhwc',
+      filterLayout: 'ihwo',
       padding: [1, 1, 1, 1], // [top, right, bottom, left]
       strides: [1, 1],       // [y, x]
       dilations: [1, 1],     // [y, x]
