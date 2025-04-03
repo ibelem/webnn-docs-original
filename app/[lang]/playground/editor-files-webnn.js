@@ -80,40 +80,40 @@ webnn()`},
       '/App.svelte': {
         active: true,
         code: `<script>
-	import { onMount } from 'svelte';
-	import { webnn } from './webnn.js';
+  import { onMount } from 'svelte';
+  import { webnn } from './webnn.js';
 
-	let message = '';
-	onMount(async () => {
-		message = await webnn();
+  let message = '';
+  onMount(async () => {
+    message = await webnn();
     console.log(message);
-	});
+  });
 </script>
 
 <h1>Hello WebNN</h1>
 <div>{message}</div>
 
 <style>
-  body {
+  div {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
   }
 </style>`},
       '/webnn.js': {
         code: `export async function webnn() {
-	let message;
-	if (!('ml' in navigator)) {
-		message = 'ml in navigator: false; ';
-	}
-	try {
-		const context = await navigator.ml.createContext();
-		const builder = new MLGraphBuilder(context);
-		message = 'WebNN API is supported in this browser';
-	 } catch (error) {
-		message += error.message + '; ';
-		message += 'WebNN API is not supported in this browser';
-	}
-	return message;
+  let message;
+  if (!('ml' in navigator)) {
+    message = 'ml in navigator: false; ';
+  }
+  try {
+    const context = await navigator.ml.createContext();
+    const builder = new MLGraphBuilder(context);
+    message = 'WebNN API is supported in this browser';
+  } catch (error) {
+    message += error.message + '; ';
+    message += 'WebNN API is not supported in this browser';
+  }
+  return message;
 }`},
     },
   },
@@ -390,7 +390,7 @@ button {
       '/App.svelte': {
         code: `<script>
   import { webnn } from './webnn.js';
-  let result = "";
+  let result = $state("");
   async function run() {
     try {
       result = "Computing...";
