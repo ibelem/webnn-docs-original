@@ -175,8 +175,10 @@ document.querySelector("#run").addEventListener("click", async () => {
   output.textContent = "Inferencing...";
   try {
     const result = await webnn();
+    console.log(result);
     output.textContent = 'Output value: ' + result;
   } catch (error) {
+    console.log(error.message);
     output.textContent = 'Error: ' + error.message;
   }
 });`
@@ -381,9 +383,10 @@ button {
     
     // 6. Read back the computed result.
     const result = await context.readTensor(outputTensorC);
+    console.log(result);
     return new Float32Array(result).toString();
   } catch (error) {
-    console.error("WebNN error:", error);
+    console.log(error.message);
     throw error;
   }
 }` },
