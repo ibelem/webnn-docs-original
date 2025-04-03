@@ -116,7 +116,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css" />
-  <title>Hello WebNN</title>
+  <title>C = 0.2 * A + B</title>
 </head>
 
 <body>
