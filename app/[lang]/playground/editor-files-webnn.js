@@ -8,18 +8,20 @@ export const webnnEditorFiles = {
         active: true,
         code: `async function webnn() {
   const status = document.querySelector('#status');
-  const notSupport = 'WebNN API is not supported in this browser.';
+  let errorMessage = '';
   
   if (!('ml' in navigator)) {
-    status.innerHTML = notSupport;
+    errorMessage += 'ml in navigator: false<br/>';
   }
 
   try {
     const context = await navigator.ml.createContext();
     const builder = new MLGraphBuilder(context);
-    status.innerHTML = 'WebNN API is supported in this browser.';
+    errorMessage += 'WebNN API is supported in this browser<br/>';
    } catch (error) {
-    status.innerHTML = notSupport + ' ' + error.message;
+    errorMessage += error.message + '<br/>';
+    errorMessage += 'WebNN API is not supported in this browser';
+    status.innerHTML = errorMessage;
   }
 }
 
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', webnn, false);`},
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css" />
     <title>Hello WebNN</title>
 </head>
 <body>
@@ -770,30 +773,29 @@ window.addEventListener('DOMContentLoaded', async () => {
       '/index.html': {
         code: `<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>conv2d op - WebNN</title>
-  <style>
-    .grid-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .grid {
-      font-family: monospace;
-      line-height: 1.5;
-    }
-  </style>
-</head>
-<body>
-  <h1>WebNN Conv2D</h1>
-  <div id="status"></div>
-  <div id="result"></div>
-  <script src="./webnn.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebNN - Conv2d</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1>WebNN Conv2D</h1>
+    <div id="status"></div>
+    <div id="result"></div>
+    <script src="./webnn.js"></script>
+  </body>
 </html>` },
       '/styles.css': {
-        code: ``}
+        code: `.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.grid {
+  font-family: monospace;
+  line-height: 1.5;
+}`}
     },
   },
 }
