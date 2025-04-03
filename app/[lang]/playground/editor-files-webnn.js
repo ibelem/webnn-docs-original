@@ -390,7 +390,7 @@ button {
       '/App.svelte': {
         code: `<script>
   import { webnn } from './webnn.js';
-  let result = $state("");
+  let result = "";
   async function run() {
     try {
       result = "Computing...";
