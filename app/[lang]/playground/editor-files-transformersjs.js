@@ -106,7 +106,7 @@ button {
     },
     "vanilla": {
       '/index.html': { code: ``},
-      '/webnn.js': {
+      '/index.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
 `},
