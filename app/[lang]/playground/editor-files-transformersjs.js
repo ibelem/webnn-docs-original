@@ -2,7 +2,7 @@
 export const transformersjsEditorFiles = {
   "image-classification-mobilenet-v2": {
     "title": "Image Classification (MobileNet v2)",
-    "description": "An image classification demo using WebNN and ONNX Runtime Web",
+    "description": "An image classification demo using WebNN and Transformers.js based on ONNX Runtime Web",
     "static": {
       '/index.html': {
         code: `<!DOCTYPE html>
