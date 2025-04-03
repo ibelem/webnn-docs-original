@@ -21,6 +21,7 @@ export const webnnEditorFiles = {
     message += 'WebNN API is not supported in this browser';
   }
   status.innerHTML = message;
+  console.log(message);
 }
 
 document.addEventListener('DOMContentLoaded', webnn, false);`},
@@ -65,14 +66,55 @@ async function webnn() {
   }
   message = '<h1>Hello WebNN</h1>' + message;
   document.getElementById("app").innerHTML = message;
+  console.log(message);
 }
 
-document.addEventListener('DOMContentLoaded', webnn, false);`},
+webnn()`},
       '/styles.css': {
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }`}
+    },
+    "svelte": {
+      '/App.svelte': {
+        active: true,
+        code: `<script>
+	import { onMount } from 'svelte';
+	import { webnn } from './webnn.js';
+
+	let message = '';
+	onMount(async () => {
+		message = await webnn();
+    console.log(message);
+	});
+</script>
+
+<h1>Hello WebNN</h1>
+<div>{message}</div>
+
+<style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+  }
+</style>`},
+      '/webnn.js': {
+        code: `export async function webnn() {
+	let message;
+	if (!('ml' in navigator)) {
+		message = 'ml in navigator: false; ';
+	}
+	try {
+		const context = await navigator.ml.createContext();
+		const builder = new MLGraphBuilder(context);
+		message = 'WebNN API is supported in this browser';
+	 } catch (error) {
+		message += error.message + '; ';
+		message += 'WebNN API is not supported in this browser';
+	}
+	return message;
+}`},
     },
   },
   "add-mul": {
