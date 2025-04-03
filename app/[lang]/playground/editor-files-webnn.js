@@ -8,20 +8,20 @@ export const webnnEditorFiles = {
         active: true,
         code: `async function webnn() {
   const status = document.querySelector('#status');
-  let errorMessage = '';
+  let message = '';
   
   if (!('ml' in navigator)) {
-    errorMessage += 'ml in navigator: false<br/>';
+    message = 'ml in navigator: false<br/>';
   }
 
   try {
     const context = await navigator.ml.createContext();
     const builder = new MLGraphBuilder(context);
-    errorMessage += 'WebNN API is supported in this browser<br/>';
+    message = 'WebNN API is supported in this browser<br/>';
    } catch (error) {
-    errorMessage += error.message + '<br/>';
-    errorMessage += 'WebNN API is not supported in this browser';
-    status.innerHTML = errorMessage;
+    message += error.message + '<br/>';
+    message += 'WebNN API is not supported in this browser';
+    status.innerHTML = message;
   }
 }
 
@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', webnn, false);`},
     <script src="./webnn.js"></script>
 </body>
 </html>`},
-      '/styles.css': { code: ``}
+      '/styles.css': { code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}`}
     }
   },
   "add-mul": {
@@ -239,8 +242,8 @@ document.querySelector("#run").addEventListener("click", async () => {
 </html>` },
       '/styles.css': {
         code: `body {
-  font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
-  padding: 0 1rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 
 h1 {
@@ -787,7 +790,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   </body>
 </html>` },
       '/styles.css': {
-        code: `.grid-container {
+        code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}
+.grid-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
