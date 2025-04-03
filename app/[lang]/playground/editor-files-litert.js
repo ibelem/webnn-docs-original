@@ -29,7 +29,7 @@ export const liteRTEditorFiles = {
     },
     "vanilla": {
       '/index.html': { code: ``},
-      '/webnn.js': {
+      '/index.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// LiteRT + Vanilla JavaScript';
 ` }, '/styles.css': { code: ``},
