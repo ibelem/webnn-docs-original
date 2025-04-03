@@ -1,5 +1,45 @@
 
 export const webnnEditorFiles = {
+  "hello-world": {
+    "title": "Hello WebNN",
+    "description": "Hello WebNN",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `async function webnn() {
+  const status = document.querySelector('#status');
+  const notSupport = 'WebNN API is not supported in this browser.';
+  
+  if (!('ml' in navigator)) {
+    status.innerHTML = notSupport;
+  }
+
+  try {
+    const context = await navigator.ml.createContext();
+    const builder = new MLGraphBuilder(context);
+    status.innerHTML = 'WebNN API is supported in this browser.';
+   } catch (error) {
+    status.innerHTML = notSupport + ' ' + error.message;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', webnn, false);`},
+      '/index.html': { code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello WebNN</title>
+</head>
+<body>
+    <h1>Hello WebNN</h1>
+    <p id="status"></p>
+    <script src="./webnn.js"></script>
+</body>
+</html>`},
+      '/styles.css': { code: ``}
+    }
+  },
   "add-mul": {
     "title": "C = 0.2 * A + B",
     "description": "Compute the element-wise binary addition and multiplication of the two input tensors",
@@ -756,44 +796,4 @@ window.addEventListener('DOMContentLoaded', async () => {
         code: ``}
     },
   },
-  "hello-world": {
-    "title": "Hello WebNN",
-    "description": "Hello WebNN",
-    "static": {
-      '/webnn.js': {
-        active: true,
-        code: `async function webnn() {
-  const status = document.querySelector('#status');
-  const notSupport = 'WebNN API is not supported in this browser.';
-  
-  if (!('ml' in navigator)) {
-    status.innerHTML = notSupport;
-  }
-
-  try {
-    const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
-    status.innerHTML = 'WebNN API is supported in this browser.';
-   } catch (error) {
-    status.innerHTML = notSupport + ' ' + error.message;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', webnn, false);`},
-      '/index.html': { code: `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello WebNN</title>
-</head>
-<body>
-    <h1>Hello WebNN</h1>
-    <p id="status"></p>
-    <script src="./webnn.js"></script>
-</body>
-</html>`},
-      '/styles.css': { code: ``}
-    }
-  }
 }
