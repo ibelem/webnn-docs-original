@@ -24,7 +24,8 @@ export const webnnEditorFiles = {
 }
 
 document.addEventListener('DOMContentLoaded', webnn, false);`},
-      '/index.html': { code: `<!DOCTYPE html>
+      '/index.html': {
+        code: `<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Hello WebNN</title>
@@ -38,11 +39,41 @@ document.addEventListener('DOMContentLoaded', webnn, false);`},
     <script src="./webnn.js"></script>
 </body>
 </html>`},
-      '/styles.css': { code: `body {
+      '/styles.css': {
+        code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }`}
-    }
+    },
+    "vanilla": {
+      '/index.js': {
+        active: true,
+        code: `import "./styles.css";
+
+async function webnn() {
+  let message = '';
+  if (!('ml' in navigator)) {
+    message = 'ml in navigator: false<br/>';
+  }
+  try {
+    const context = await navigator.ml.createContext();
+    const builder = new MLGraphBuilder(context);
+    message = 'WebNN API is supported in this browser<br/>';
+   } catch (error) {
+    message += error.message + '<br/>';
+    message += 'WebNN API is not supported in this browser';
+  }
+  message = '<h1>Hello WebNN</h1>' + message;
+  document.getElementById("app").innerHTML = message;
+}
+
+document.addEventListener('DOMContentLoaded', webnn, false);`},
+      '/styles.css': {
+        code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}`}
+    },
   },
   "add-mul": {
     "title": "C = 0.2 * A + B",
@@ -486,7 +517,7 @@ const styles = {
 };` }
     },
     "vue": {
-      '/src/webnn.js': { code: ``},
+      '/src/webnn.js': { code: `` },
       '/src/App.vue': {
         active: true,
         code: `<template>
