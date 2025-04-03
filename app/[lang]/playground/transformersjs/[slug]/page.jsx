@@ -108,7 +108,7 @@ export default function Page() {
                       </a>
                     </div>
 
-                    <div className="text-center">
+                    <div className="text-center" id="playground-menu">
                       <h2 className="text-2xl font-bold mb-8 text-[#00c8ff] dark:text-gray-200">Playgound</h2>
                       <Playground isEditorPage={true} />
                     </div>
@@ -182,7 +182,9 @@ export default function Page() {
           theme={editorTheme}
           options={{
             editorHeight: 538,
-            showLineNumbers: true
+            showLineNumbers: true,
+            showConsole: true,
+            showConsoleButton: true
           }}
           customSetup={{
             dependencies: {

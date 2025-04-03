@@ -45,7 +45,7 @@ export function Playground({ isEditorPage }) {
       <h2 className="text-4xl font-title light-color !text-center pt-4 my-4">Playground</h2>
       <h3 id="webnn" className="text-2xl font-title light-color px-4 text-left mt-4 md:mt-8"><WebNNIcon /> WebNN</h3>
       <div className="container mx-auto m-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-y-0 gap-x-2 md:gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 gap-y-0 gap-x-2 md:gap-2">
           {webnnCards.map((card) => (
             <a className="p-2 md:rounded-sm text-sm x:text-gray-700 x:hover:text-gray-900 x:dark:text-neutral-200 x:dark:hover:text-neutral-50 x:group x:focus-visible:nextra-focus nextra-card x:overflow-hidden x:border x:border-gray-200 x:text-current x:no-underline x:dark:shadow-none x:hover:shadow-gray-100 x:dark:hover:shadow-none x:shadow-gray-100 x:active:shadow-sm x:active:shadow-gray-200 x:transition-all x:duration-200 x:hover:border-gray-300 x:bg-transparent x:shadow-sm x:dark:border-neutral-800 x:hover:bg-slate-50 x:hover:shadow-md x:dark:hover:border-neutral-700 x:dark:hover:bg-neutral-900"
               id={card.id}
@@ -57,7 +57,7 @@ export function Playground({ isEditorPage }) {
       </div>
       <h3 id="transformersjs" className="text-2xl font-title light-color px-4 text-left mt-4 md:mt-8"><TransformersjsIcon /> Transformers.js</h3>
       <div className="container mx-auto m-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 gap-y-0 gap-x-2 md:gap-2">
           {transformersjsCards.map((card) => (
             <a className="p-2 md:rounded-sm text-sm x:text-gray-700 x:hover:text-gray-900 x:dark:text-neutral-200 x:dark:hover:text-neutral-50 x:group x:focus-visible:nextra-focus nextra-card x:overflow-hidden x:border x:border-gray-200 x:text-current x:no-underline x:dark:shadow-none x:hover:shadow-gray-100 x:dark:hover:shadow-none x:shadow-gray-100 x:active:shadow-sm x:active:shadow-gray-200 x:transition-all x:duration-200 x:hover:border-gray-300 x:bg-transparent x:shadow-sm x:dark:border-neutral-800 x:hover:bg-slate-50 x:hover:shadow-md x:dark:hover:border-neutral-700 x:dark:hover:bg-neutral-900"
             id={card.id}
@@ -69,7 +69,7 @@ export function Playground({ isEditorPage }) {
       </div>
       <h3 id="onnx" className="text-2xl font-title light-color px-4 text-left mt-4 md:mt-8"><OnnxIcon /> ONNX Runtime Web</h3>
       <div className="container mx-auto m-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 gap-y-0 gap-x-2 md:gap-2">
           {onnxruntimeCards.map((card) => (
             <a className="p-2 md:rounded-sm text-sm x:text-gray-700 x:hover:text-gray-900 x:dark:text-neutral-200 x:dark:hover:text-neutral-50 x:group x:focus-visible:nextra-focus nextra-card x:overflow-hidden x:border x:border-gray-200 x:text-current x:no-underline x:dark:shadow-none x:hover:shadow-gray-100 x:dark:hover:shadow-none x:shadow-gray-100 x:active:shadow-sm x:active:shadow-gray-200 x:transition-all x:duration-200 x:hover:border-gray-300 x:bg-transparent x:shadow-sm x:dark:border-neutral-800 x:hover:bg-slate-50 x:hover:shadow-md x:dark:hover:border-neutral-700 x:dark:hover:bg-neutral-900"
             id={card.id}
@@ -81,7 +81,7 @@ export function Playground({ isEditorPage }) {
       </div>
       <h3 id="litert" className="text-2xl font-title light-color px-4 text-left mt-4 md:mt-8"><LiteRTIcon /> LiteRT</h3>
       <div className="container mx-auto m-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 gap-y-0 gap-x-2 md:gap-2">
           {litertCards.map((card) => (
             <a className="p-2 md:rounded-sm text-sm x:text-gray-700 x:hover:text-gray-900 x:dark:text-neutral-200 x:dark:hover:text-neutral-50 x:group x:focus-visible:nextra-focus nextra-card x:overflow-hidden x:border x:border-gray-200 x:text-current x:no-underline x:dark:shadow-none x:hover:shadow-gray-100 x:dark:hover:shadow-none x:shadow-gray-100 x:active:shadow-sm x:active:shadow-gray-200 x:transition-all x:duration-200 x:hover:border-gray-300 x:bg-transparent x:shadow-sm x:dark:border-neutral-800 x:hover:bg-slate-50 x:hover:shadow-md x:dark:hover:border-neutral-700 x:dark:hover:bg-neutral-900"
             id={card.id}
