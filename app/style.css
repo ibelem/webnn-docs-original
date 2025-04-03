@@ -311,6 +311,14 @@ article.nextra-body-typesetting-article h1 {
   margin-top: -12px;
 }
 
+.pg-com svg {
+  display: inline-block;
+}
+
+.pg-com .container a:not(:first-child) {
+  margin-top: -1px;
+}
+
 * {
   outline: none !important;
 }

@@ -17,17 +17,10 @@ export default function Page() {
   console.log(`theme: ${theme}`);
   (theme === 'dark') ? editorTheme = themeDark : editorTheme = themeLight;
 
-  const [js, setJs] = useState(() => {
-    const saved = localStorage.getItem('selectedJs');
-    return saved || 'static';
-  });
+  const [js, setJs] = useState('static');
 
   // Add state for menu overlay
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem('selectedJs', js);
-  }, [js]);
 
   // Add effect to disable body scroll when menu is open
   useEffect(() => {
@@ -45,6 +38,7 @@ export default function Page() {
 
   let files;
   let title;
+
   try {
     if (webnnEditorFiles[id] && webnnEditorFiles[id][js]) {
       files = webnnEditorFiles[id][js];
@@ -52,11 +46,9 @@ export default function Page() {
       console.log(`Successfully loaded files for ${id}/${js}`);
     } else {
       console.error(`Requested combination of ${id}/${js} does not exist`);
-      window.location.href = './add-mul';
     }
   } catch (error) {
     console.error("Error accessing files:", error);
-    window.location.href = './add-mul';
   }
 
   const handleJsChange = (newJs) => {
@@ -93,7 +85,7 @@ export default function Page() {
               <div className='self-center'>{title}</div>
               <div className="pg-menu-wrap">
                 {/* Hamburger Menu Button */}
-                <button 
+                <button
                   onClick={toggleMenu}
                   className="flex flex-col justify-center items-center w-8 h-8 mr-4 space-y-1.5 cursor-pointer focus:outline-none"
                   aria-label="Menu"
@@ -102,7 +94,7 @@ export default function Page() {
                   <span className={`block w-5 h-0.5 bg-gray-600 dark:bg-gray-400 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
                   <span className={`block w-5 h-0.5 bg-gray-600 dark:bg-gray-400 transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
                 </button>
-                
+
                 {/* Full-screen Overlay Menu */}
                 {menuOpen && (
                   <div className="absolute inset-0 bg-white dark:bg-black bg-opacity-95 dark:bg-opacity-95 z-30 flex flex-col items-center justify-center">
@@ -115,7 +107,7 @@ export default function Page() {
                         &times;
                       </a>
                     </div>
-                    
+
                     <div className="text-center">
                       <h2 className="text-2xl font-bold mb-8 text-[#00c8ff] dark:text-gray-200">Playgound</h2>
                       <Playground isEditorPage={true} />

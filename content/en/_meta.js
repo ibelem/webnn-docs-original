@@ -28,26 +28,9 @@ export default {
     href: '/showcase'
   },
   playground: {
-    type: 'menu',
     title: 'Playground',
-    items: {
-      webnn: {
-        title: 'WebNN API',
-        href: '/playground'
-      },
-      ort: {
-        title: 'Transformers.js',
-        href: '/playground#transformersjs'
-      },
-      transformersjs: {
-        title: 'ONNX Runtime',
-        href: '/playground#onnxruntime'
-      },
-      litert: {
-        title: 'Lite RT',
-        href: '/playground#litert'
-      }
-    }
+    type: 'page',
+    href: '/playground'
   },
   spec: {
     title: 'Spec',

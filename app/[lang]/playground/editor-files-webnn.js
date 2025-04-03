@@ -6,7 +6,7 @@ export const webnnEditorFiles = {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `async function runWebNN() {
+        code: `async function webnn() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
   const context = await navigator.ml.createContext();
   const builder = new MLGraphBuilder(context);
@@ -57,7 +57,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   const output = document.querySelector("#output");
   output.textContent = "Inferencing...";
   try {
-    const result = await runWebNN();
+    const result = await webnn();
     output.textContent = 'Output value: ' + result;
   } catch (error) {
     output.textContent = 'Error: ' + error.message;
@@ -110,7 +110,7 @@ button {
         active: true,
         code: `import "./styles.css";
 
-async function runWebNN() {
+async function webnn() {
   const descriptor = {dataType: 'float32', shape: [2, 2]};
   const context = await navigator.ml.createContext();
   const builder = new MLGraphBuilder(context);
@@ -161,7 +161,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   const output = document.querySelector("#output");
   output.textContent = "Inferencing...";
   try {
-    const result = await runWebNN();
+    const result = await webnn();
     output.textContent = 'Output value: ' + result;
   } catch (error) {
     output.textContent = 'Error: ' + error.message;
@@ -211,7 +211,7 @@ button {
     "svelte": {
       '/webnn.js': {
         active: true,
-        code: `export async function runWebNN() {
+        code: `export async function webnn() {
   try {
     const descriptor = { dataType: 'float32', shape: [2, 2] };
     const context = await navigator.ml.createContext();
@@ -269,12 +269,12 @@ button {
 }` },
       '/App.svelte': {
         code: `<script>
-  import { runWebNN } from './webnn.js';
+  import { webnn } from './webnn.js';
   let result = $state("");
   async function run() {
     try {
       result = "Computing...";
-      result = await runWebNN();
+      result = await webnn();
     } catch (error) {
       result = 'Error: ' + error.message;
     }
@@ -320,7 +320,7 @@ button {
     "react": {
       '/webnn.js': {
         active: true,
-        code: `export async function runWebNN() {
+        code: `export async function webnn() {
   try {
     const descriptor = { dataType: 'float32', shape: [2, 2] };
     const context = await navigator.ml.createContext();
@@ -378,20 +378,20 @@ button {
 }` },
       '/App.js': {
         code: `import React, { useState } from 'react';
-import { runWebNN } from './webnn.js';
+import { webnn } from './webnn.js';
 
 export default function App() {
   const [result, setResult] = useState('Click "Run WebNN" to start');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleRunWebNN() {
+  async function handlewebnn() {
     setLoading(true);
     setError(null);
     setResult("");
 
     try {
-      const webNNResult = await runWebNN();
+      const webNNResult = await webnn();
       setResult(webNNResult);
     } catch (err) {
       setError(err.message);
@@ -413,7 +413,7 @@ export default function App() {
         </ul>
       </div>
 
-      <button style={styles.button} onClick={handleRunWebNN} disabled={loading}>
+      <button style={styles.button} onClick={handlewebnn} disabled={loading}>
         {loading ? "Computing..." : "Run WebNN"}
       </button>
 
@@ -454,7 +454,7 @@ const styles = {
           <li>B is initialized with all 0.8</li>
         </ul>
       </div>
-    <button @click="runWebNN">Run WebNN</button>
+    <button @click="webnn">Run WebNN</button>
     <div id="output">{{ outputText }}</div>
   </div>
 </template>
@@ -468,7 +468,7 @@ export default {
     }
   },
   methods: {
-    async runWebNN() {
+    async webnn() {
       try {
         const descriptor = {dataType: 'float32', shape: [2, 2]};
         const context = await navigator.ml.createContext();
@@ -543,8 +543,7 @@ button {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `// Simple WebNN Conv2D Example
-async function runSimpleConv2dExample() {
+        code: `async function runSimpleConv2dExample() {
   // Check if WebNN is supported
   if (!('ml' in navigator)) {
     console.error('WebNN API is not supported in this browser');
@@ -553,31 +552,31 @@ async function runSimpleConv2dExample() {
 
   try {
     // Get the WebNN context
-    const context = await navigator.ml.createContext({deviceType: 'gpu'});
+    const context = await navigator.ml.createContext({deviceType: 'cpu'});
     const builder = new MLGraphBuilder(context);
 
     // Use a simple 4x4 input with 1 channel
-    const inputShape = [1, 4, 4, 1]; // [batch, height, width, channels]
+    const inputShape = [1, 1, 4, 4]; // [batch, channels, height, width]
     
     // Create a simple 4x4 input matrix
     const inputData = new Float32Array([
-      1, 2, 3, 4,   // First row
-      5, 6, 7, 8,   // Second row
-      9, 10, 11, 12, // Third row
-      13, 14, 15, 16 // Fourth row
+      1, 1, 1, 1,   // First row
+      2, 2, 2, 2,   // Second row
+      3, 3, 3, 3, // Third row
+      4, 4, 4, 4 // Fourth row
     ]);
     
     // Define the input operand
     const input = builder.input('input', {dataType: 'float32', shape: inputShape});
     
     // Simple 3x3 filter with 1 output channel
-    const filterShape = [1, 3, 3, 1]; // [outputChannels, filterHeight, filterWidth, inputChannels]
+    const filterShape = [1, 1, 3, 3]; // [outputChannels, inputChannels/groups, height, width]
     
     // Create a simple filter kernel for edge detection
     const filterData = new Float32Array([
-      1, 0, -1, 
-      2, 0, -2, 
-      1, 0, -1
+      1, 1, 1, 
+      1, 1, 1, 
+      1, 1, 1
     ]);
     
     // Define the filter operand
@@ -590,8 +589,9 @@ async function runSimpleConv2dExample() {
     
     // Define Conv2D options with 'same' padding
     const options = {
-      inputLayout: 'nhwc',
-      filterLayout: 'ihwo',
+      inputLayout: 'nchw',
+      filterLayout: 'oihw',
+      bias,
       padding: [1, 1, 1, 1], // [top, right, bottom, left]
       strides: [1, 1],       // [y, x]
       dilations: [1, 1],     // [y, x]
@@ -599,21 +599,45 @@ async function runSimpleConv2dExample() {
     };
     
     // Create the Conv2D operation
-    const conv = builder.conv2d(input, filter, bias, options);
+    const conv = builder.conv2d(input, filter, options);
     
-    // Build the computation graph
-    const graph = await builder.build({conv});
+    // Build the computation graph with named output
+    const graph = await builder.build({'output': conv});
     
-    // Create input tensor
-    const inputTensor = new MLTensor(inputData, {dataType: 'float32', shape: inputShape});
+    // Create input and output tensors
+    const inputTensor = await context.createTensor({
+      dataType: 'float32', 
+      shape: inputShape,
+      writable: true
+    });
     
-    // Run the graph with the input tensor
-    const outputs = await context.dispatch(graph, {'input': inputTensor});
+    // Determine output shape - should be the same as input due to 'same' padding
+    const outputShape = inputShape;
     
-    // Get the output tensor
-    const outputTensor = outputs.values().next().value;
-    const outputData = await outputTensor.data();
-    const outputShape = outputTensor.shape;
+    // Create output tensor
+    const outputTensor = await context.createTensor({
+      dataType: 'float32', 
+      shape: outputShape,
+      readable: true
+    });
+    
+    // Initialize the input tensor with data
+    await context.writeTensor(inputTensor, inputData);
+    
+    // Execute the graph with proper input and output tensors
+    const inputs = {
+      'input': inputTensor
+    };
+    
+    const outputs = {
+      'output': outputTensor
+    };
+    
+    // Dispatch with all three required arguments
+    await context.dispatch(graph, inputs, outputs);
+    
+    // Read back the computed result
+    const outputData = await context.readTensor(outputTensor);
     
     console.log('Input shape:', inputShape);
     console.log('Input data:', Array.from(inputData));
@@ -630,11 +654,12 @@ async function runSimpleConv2dExample() {
       filter: Array.from(filterData),
       output: {
         shape: outputShape,
-        data: Array.from(outputData)
+        data: Array.from(new Float32Array(outputData))
       }
     };
   } catch (error) {
     console.error('WebNN error:', error);
+    throw error;
   }
 }
 
@@ -676,7 +701,7 @@ function displayResults(results) {
     outputGrid += row.join(' ') + '<br>';
   }
   
-  resultDiv.innerHTML = '<h3>Conv2D Results</h3><div class="grid-container"><div class="grid-item"><h4>Input (4x4)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (3x3 Edge Detection)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Output (4x4)</h4><div class="grid">'+ inputGrid + '</div></div></div>';
+  resultDiv.innerHTML = '<div class="grid-container"><div class="grid-item"><h4>Input (4x4)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (3x3 Edge Detection)</h4><div class="grid">'+ filterGrid + '</div></div><div class="grid-item"><h4>Output (4x4)</h4><div class="grid">'+ outputGrid + '</div></div></div>';
 }
 
 // Run the example when the page loads
@@ -730,5 +755,45 @@ window.addEventListener('DOMContentLoaded', async () => {
       '/styles.css': {
         code: ``}
     },
+  },
+  "hello-world": {
+    "title": "Hello WebNN",
+    "description": "Hello WebNN",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `async function webnn() {
+  const status = document.querySelector('#status');
+  const notSupport = 'WebNN API is not supported in this browser.';
+  
+  if (!('ml' in navigator)) {
+    status.innerHTML = notSupport;
+  }
+
+  try {
+    const context = await navigator.ml.createContext();
+    const builder = new MLGraphBuilder(context);
+    status.innerHTML = 'WebNN API is supported in this browser.';
+   } catch (error) {
+    status.innerHTML = notSupport + ' ' + error.message;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', webnn, false);`},
+      '/index.html': { code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello WebNN</title>
+</head>
+<body>
+    <h1>Hello WebNN</h1>
+    <p id="status"></p>
+    <script src="./webnn.js"></script>
+</body>
+</html>`},
+      '/styles.css': { code: ``}
+    }
   }
 }
