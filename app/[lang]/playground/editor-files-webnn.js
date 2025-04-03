@@ -15,7 +15,7 @@ export const webnnEditorFiles = {
   try {
     const context = await navigator.ml.createContext();
     const builder = new MLGraphBuilder(context);
-    message = 'WebNN API is supported in this browser<br/>';
+    message = 'WebNN API is supported in this browser';
    } catch (error) {
     message += error.message + '<br/>';
     message += 'WebNN API is not supported in this browser';
@@ -59,7 +59,7 @@ async function webnn() {
   try {
     const context = await navigator.ml.createContext();
     const builder = new MLGraphBuilder(context);
-    message = 'WebNN API is supported in this browser<br/>';
+    message = 'WebNN API is supported in this browser';
    } catch (error) {
     message += error.message + '<br/>';
     message += 'WebNN API is not supported in this browser';
@@ -761,9 +761,10 @@ button {
     
     console.log('Input shape:', inputShape);
     console.log('Input data:', Array.from(inputData));
+    console.log('Filter shape:', filterShape);
     console.log('Filter data (edge detection):', Array.from(filterData));
     console.log('Output shape:', outputShape);
-    console.log('Output data:', Array.from(outputData));
+    console.log('Output data:', new Float32Array(outputData));
     
     // Return the results for display
     return {
