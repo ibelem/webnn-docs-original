@@ -118,56 +118,61 @@ export default function Page() {
           </div>
           <div className="self-center">
             <div className={`pg-js ${js}`}>
-              <button
-                className="static hover:cursor-pointer"
-                onClick={() => handleJsChange('static')}
-              >
-                <Html5Icon className="static" />
-                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''
-                  }`}>
-                  HTML5
-                </span>
-              </button>
-              <button
-                className="vanilla hover:cursor-pointer"
-                onClick={() => handleJsChange('vanilla')}
-              >
-                <VanillaIcon className="vanilla" />
-                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vanilla' ? 'text-gray-800 dark:text-gray-200' : ''
-                  }`}>
-                  Vanilla
-                </span>
-              </button>
-              <button
-                className="svelte hover:cursor-pointer"
-                onClick={() => handleJsChange('svelte')}
-              >
-                <SvelteIcon className="svelte" />
-                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'svelte' ? 'text-gray-800 dark:text-gray-200' : ''
-                  }`}>
-                  Svelte
-                </span>
-              </button>
-              <button
-                className="react hover:cursor-pointer"
-                onClick={() => handleJsChange('react')}
-              >
-                <ReactIcon className="react" />
-                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'react' ? 'text-gray-800 dark:text-gray-200' : ''
-                  }`}>
-                  React
-                </span>
-              </button>
-              <button
-                className="vue hover:cursor-pointer"
-                onClick={() => handleJsChange('vue')}
-              >
-                <VueIcon className="vue" />
-                <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vue' ? 'text-gray-800 dark:text-gray-200' : ''
-                  }`}>
-                  Vue
-                </span>
-              </button>
+              {onnxruntimeEditorFiles[id]?.static && (
+                <button
+                  className="static hover:cursor-pointer"
+                  onClick={() => handleJsChange('static')}
+                >
+                  <Html5Icon className="static" />
+                  <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
+                    HTML5
+                  </span>
+                </button>
+              )}
+              {onnxruntimeEditorFiles[id]?.vanilla && (
+                <button
+                  className="vanilla hover:cursor-pointer"
+                  onClick={() => handleJsChange('vanilla')}
+                >
+                  <VanillaIcon className="vanilla" />
+                  <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vanilla' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
+                    Vanilla
+                  </span>
+                </button>
+              )}
+              {onnxruntimeEditorFiles[id]?.svelte && (
+                <button
+                  className="svelte hover:cursor-pointer"
+                  onClick={() => handleJsChange('svelte')}
+                >
+                  <SvelteIcon className="svelte" />
+                  <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'svelte' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
+                    Svelte
+                  </span>
+                </button>
+              )}
+              {onnxruntimeEditorFiles[id]?.react && (
+                <button
+                  className="react hover:cursor-pointer"
+                  onClick={() => handleJsChange('react')}
+                >
+                  <ReactIcon className="react" />
+                  <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'react' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
+                    React
+                  </span>
+                </button>
+              )}
+              {onnxruntimeEditorFiles[id]?.vue && (
+                <button
+                  className="vue hover:cursor-pointer"
+                  onClick={() => handleJsChange('vue')}
+                >
+                  <VueIcon className="vue" />
+                  <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'vue' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
+                    Vue
+                  </span>
+                </button>
+              )}
             </div>
           </div>
         </div>

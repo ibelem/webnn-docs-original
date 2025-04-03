@@ -1201,49 +1201,5 @@ button {
   font-size: 1rem;
 }`},
     },
-    "vanilla": {
-      '/index.html': { code: ``},
-      '/webnn.js': {
-        active: true,
-        code: `document.getElementById("app").innerHTML = '// ONNX Runtime Web + Vanilla JavaScript';`
-      },
-      '/styles.css': { code: ``},
-    },
-    "svelte": {
-      '/webnn.js': { code: ``},
-      '/App.svelte': {
-        active: true,
-        code: `<script>
-  let name = '// ONNX Runtime Web + Svelte';
-</script>
-
-<main>
-  {name}
-</main>`},
-'/styles.css': { code: ``},
-    },
-    "react": {
-      '/webnn.js': { code: ``},
-      '/App.js': {
-        active: true,
-        code: `export default function App() {
-  return <div>// ONNX Runtime Web + React</div>
-}`},
-    },
-    "vue": {
-      '/src/webnn.js': { code: ``},
-      '/src/App.vue': {
-        active: true,
-        code: `<template>
-  <div>{{ msg }}</div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-const msg = ref('// ONNX Runtime Web + Vue');
-</script>
-`},
-    },
   }
-
 }

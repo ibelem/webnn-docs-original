@@ -9,11 +9,9 @@ export const webnnEditorFiles = {
         code: `async function webnn() {
   const status = document.querySelector('#status');
   let message = '';
-  
   if (!('ml' in navigator)) {
     message = 'ml in navigator: false<br/>';
   }
-
   try {
     const context = await navigator.ml.createContext();
     const builder = new MLGraphBuilder(context);
@@ -21,18 +19,18 @@ export const webnnEditorFiles = {
    } catch (error) {
     message += error.message + '<br/>';
     message += 'WebNN API is not supported in this browser';
-    status.innerHTML = message;
   }
+  status.innerHTML = message;
 }
 
 document.addEventListener('DOMContentLoaded', webnn, false);`},
       '/index.html': { code: `<!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Hello WebNN</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css" />
-    <title>Hello WebNN</title>
 </head>
 <body>
     <h1>Hello WebNN</h1>
@@ -115,13 +113,14 @@ document.querySelector("#run").addEventListener("click", async () => {
 <html>
 
 <head>
-  <title>WebNN in Static HTML5</title>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css" />
+  <title>Hello WebNN</title>
 </head>
 
 <body>
-  <h1>WebNN in Static HTML5</h1>
+  <h1>C = 0.2 * A + B</h1>
   <div>
     <p>This example demonstrates a simple neural network computation using WebNN:</p>
     <p>C = 0.2 * A + B</p>
@@ -152,7 +151,7 @@ button {
 }`}
     },
     "vanilla": {
-      '/webnn.js': {
+      '/index.js': {
         active: true,
         code: `import "./styles.css";
 
@@ -219,12 +218,14 @@ document.querySelector("#run").addEventListener("click", async () => {
 <html>
 
 <head>
-  <title>WebNN in Vanilla JavaScript</title>
+  <title>C = 0.2 * A + B</title>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <h1>WebNN in Vanilla JavaScript</h1>
+  <h1>C = 0.2 * A + B</h1>
   <div>
     <p>This example demonstrates a simple neural network computation using WebNN:</p>
     <p>C = 0.2 * A + B</p>
@@ -236,7 +237,7 @@ document.querySelector("#run").addEventListener("click", async () => {
   </div>
   <button id="run">Run WebNN</button>
   <div id="output">Click "Run WebNN" to start</div>
-  <script src="./webnn.js"></script>
+  <script src="./index.js"></script>
 </body>
 
 </html>` },
@@ -328,7 +329,7 @@ button {
 </script>
 
 <main>
-  <h1>WebNN in Svelte</h1>
+  <h1>C = 0.2 * A + B</h1>
   <div>
     <p>This example demonstrates a simple neural network computation using WebNN:</p>
     <p>C = 0.2 * A + B</p>
@@ -448,7 +449,7 @@ export default function App() {
 
   return (
     <div className="App" style={styles.container}>
-      <h1 style={styles.heading}>WebNN in React.js</h1>
+      <h1 style={styles.heading}>C = 0.2 * A + B</h1>
       <div>
         <p>This example demonstrates a simple neural network computation using WebNN:</p>
         <p>C = 0.2 * A + B</p>
@@ -490,7 +491,7 @@ const styles = {
         active: true,
         code: `<template>
   <div>
-      <h1>WebNN in Vue.js</h1>
+      <h1>C = 0.2 * A + B</h1>
       <div>
         <p>This example demonstrates a simple neural network computation using WebNN:</p>
         <p>C = 0.2 * A + B</p>
@@ -777,9 +778,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         code: `<!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>WebNN Conv2d</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebNN - Conv2d</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
