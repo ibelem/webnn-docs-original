@@ -734,8 +734,8 @@ button {
       writable: true
     });
     
-    // Determine output shape - should be the same as input due to 'same' padding
-    const outputShape = inputShape;
+    // Determine output shape
+    const outputShape = [1, 1, 4, 4];
     
     // Create output tensor
     const outputTensor = await context.createTensor({
