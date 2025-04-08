@@ -775,7 +775,10 @@ button {
         shape: inputShape,
         data: Array.from(inputData)
       },
-      filter: Array.from(filterData),
+      filter: {
+        shape: filterShape,
+        data: Array.from(filterData)
+      },
       output: {
         shape: outputShape,
         data: Array.from(new Float32Array(outputData))
@@ -805,11 +808,11 @@ function displayResults(results) {
   
   // Format the filter as a grid
   let filterGrid = '';
-  const filterSize = Math.sqrt(results.filter.length);
+  const filterSize = Math.sqrt(results.filter.data.length);
   for (let i = 0; i < filterSize; i++) {
     const row = [];
     for (let j = 0; j < filterSize; j++) {
-      row.push(results.filter[i * filterSize + j]);
+      row.push(results.filter.data[i * filterSize + j]);
     }
     filterGrid += row.join(' ') + '<br>';
   }
@@ -824,8 +827,8 @@ function displayResults(results) {
     }
     outputGrid += row.join(' ') + '<br>';
   }
-  
-  resultDiv.innerHTML = '<div class="grid-container"><div class="grid-item"><h4>Input (4x4)</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (3x3 Edge Detection)</h4><div class="grid">'+ filterGrid + '</div></div><div class="grid-item"><h4>Output (4x4)</h4><div class="grid">'+ outputGrid + '</div></div></div>';
+
+  resultDiv.innerHTML = '<div class="grid-container"><div class="grid-item"><h4>Input ('+ results.input.shape[2] + ' x ' + results.input.shape[3] + ')</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (' + results.filter.shape[2] + ' x ' + results.filter.shape[3] + ')</h4><div class="grid">'+ filterGrid + '</div></div><div class="grid-item"><h4>Output (' + results.output.shape[2] + ' x ' + results.output.shape[3] +')</h4><div class="grid">'+ outputGrid + '</div></div></div>';
 }
 
 // Run the example when the page loads
