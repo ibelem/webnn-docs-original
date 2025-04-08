@@ -683,10 +683,10 @@ button {
     
     // Create a simple 4x4 input matrix
     const inputData = new Float32Array([
-      1, 1, 1, 1,   // First row
-      2, 2, 2, 2,   // Second row
-      3, 3, 3, 3, // Third row
-      4, 4, 4, 4 // Fourth row
+      1, 1, 1, 1, // First row
+      1, 1, 1, 1, // Second row
+      1, 1, 1, 1, // Third row
+      1, 1, 1, 1  // Fourth row
     ]);
     
     // Define the input operand
@@ -775,6 +775,7 @@ button {
         shape: inputShape,
         data: Array.from(inputData)
       },
+      options: options,
       filter: {
         shape: filterShape,
         data: Array.from(filterData)
@@ -843,7 +844,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (results) {
       displayResults(results);
       if (statusDiv) {
-        statusDiv.textContent = 'Conv2D completed successfully!';
+        let status = JSON.stringify(results.options);
+        statusDiv.textContent = status;
       }
     }
   } catch (error) {
