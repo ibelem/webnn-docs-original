@@ -679,7 +679,7 @@ button {
     const builder = new MLGraphBuilder(context);
 
     // Use a simple 4x4 input with 1 channel
-    const inputShape = [1, 1, 4, 4]; // [batch, channels, height, width]
+    const inputShape = [1, 1, 4, 4]; // [batches, inputChannels, height, width]
     
     // Create a simple 4x4 input matrix
     const inputData = new Float32Array([
@@ -705,7 +705,7 @@ button {
     // Define the filter operand
     const filter = builder.constant({dataType: 'float32', shape: filterShape}, filterData);
     
-    // Define a simple bias (one value per output channel)
+    // An 1-D tensor with the shape of [outputChannels] whose values are to be added to the convolution result
     const biasShape = [1]; // One bias for one output channel
     const biasData = new Float32Array([0]); // Zero bias
     const bias = builder.constant({dataType: 'float32', shape: biasShape}, biasData);
@@ -715,10 +715,10 @@ button {
       inputLayout: 'nchw',
       filterLayout: 'oihw',
       bias,
-      padding: [1, 1, 1, 1], // [top, right, bottom, left]
-      strides: [1, 1],       // [y, x]
-      dilations: [1, 1],     // [y, x]
-      groups: 1              // Standard convolution
+      padding: [1, 1, 1, 1], // [beginningHeight, endingHeight, beginningWidth, endingWidth]
+      strides: [1, 1],       // [strideHeight, strideWidth]
+      dilations: [1, 1],     // [dilationHeight, dilationWidth]
+      groups: 1              // The number of groups that input channels and output channels are divided into
     };
     
     // Create the Conv2D operation
@@ -735,7 +735,7 @@ button {
     });
     
     // Determine output shape
-    const outputShape = [1, 1, 4, 4];
+    const outputShape = [1, 1, 4, 4]; // [batches, outputChannels, height, width]
     
     // Create output tensor
     const outputTensor = await context.createTensor({
