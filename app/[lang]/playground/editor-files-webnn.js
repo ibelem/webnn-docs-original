@@ -1324,4 +1324,450 @@ th {
 }`}
     },
   },
+  "pooling": {
+  "title": "pooling (average, l2, max)",
+  "description": "Compute a pooling operation across all the elements within the moving window over the input tensor",
+  "static": {
+    '/webnn.js': {
+      active: true,
+      code: `// Create WebNN context
+async function createWebNNContext() {
+  if (!('ml' in navigator)) {
+    throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
+  }
+  try {
+    return await navigator.ml.createContext({ deviceType: 'cpu' });
+  } catch (e) {
+    throw new Error('Failed to create WebNN context: ' + e.message);
+  }
+}
+
+// Create input tensor
+function createInputTensor(builder, shape) {
+  return builder.input('input', { dataType: 'float32', shape });
+}
+
+// Execute pooling operation
+async function runPooling(context, builder, input, poolingType, options, inputData, outputShape) {
+  let poolOperation;
+  
+  // Select the appropriate pooling operation based on the type
+  switch(poolingType) {
+    case 'averagePool2d':
+      poolOperation = builder.averagePool2d(input, options);
+      break;
+    case 'maxPool2d':
+      poolOperation = builder.maxPool2d(input, options);
+      break;
+    case 'l2Pool2d':
+      // L2Pool2d implementation - since WebNN doesn't have a direct l2Pool2d operation
+      // We'll implement it as: sqrt(averagePool2d(input^2))
+      const squared = builder.pow(input, builder.constant({dataType: 'float32'}, 2));
+      const avgPooled = builder.averagePool2d(squared, options);
+      poolOperation = builder.sqrt(avgPooled);
+      break;
+    default:
+      throw new Error('Unsupported pooling type: ' + poolingType);
+  }
+  
+  const graph = await builder.build({ 'output': poolOperation });
+
+  const inputTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: input.shape,
+    writable: true
+  });
+  await context.writeTensor(inputTensor, inputData);
+
+  const outputTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: outputShape,
+    readable: true
+  });
+
+  const inputs = { 'input': inputTensor };
+  const outputs = { 'output': outputTensor };
+ 
+  await context.dispatch(graph, inputs, outputs);
+  return await context.readTensor(outputTensor);
+}
+
+async function run(poolingType = 'maxPool2d') {
+  try {
+    const context = await createWebNNContext();
+    const builder = new MLGraphBuilder(context);
+
+    const inputShape = [1, 1, 4, 4]; // [batches, channels, height, width]
+    const inputData = new Float32Array([
+      1, 2, 3, 4,    // First row
+      5, 6, 7, 8,    // Second row
+      9, 10, 11, 12, // Third row
+      13, 14, 15, 16 // Fourth row
+    ]);
+    const input = createInputTensor(builder, inputShape);
+
+    const options = {
+      windowDimensions: [2, 2],     // Size of the pooling window [height, width]
+      padding: [0, 0, 0, 0],        // [top, bottom, left, right]
+      strides: [2, 2],              // [height, width]
+      layout: 'nchw',               // [batch, channels, height, width]
+      // For averagePool2d, we can specify whether to include padding:
+      autoPad: 'explicit',          // How padding is handled (explicitly specified)
+      // Optional for averagePool2d - whether to include or exclude zero padding in the averaging
+      countIncludePad: false        // Don't include padding in the average calculation
+    };
+
+    const outputShape = [1, 1, 2, 2]; // [batches, channels, height, width]
+    const outputData = await runPooling(context, builder, input, poolingType, options, inputData, outputShape);
+    console.log('Output Shape:', outputShape);
+    console.log('Output:', Array.from(new Float32Array(outputData)));
+    
+    return {
+      poolingType,
+      input: { shape: inputShape, data: Array.from(inputData) },
+      options,
+      output: { shape: outputShape, data: Array.from(new Float32Array(outputData)) }
+    };
+    
+  } catch (error) {
+    console.error('WebNN error:', error);
+    throw error;
+  }
+}`},
+    '/ui.js': { code:`function createOptionsTable(element, options) {
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
+
+  const headerRow = document.createElement('tr');
+  const headers = ['Option', 'Value', 'Option', 'Value'];
+  headers.forEach(text => {
+    const th = document.createElement('th');
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  const entries = Object.entries(options);
+  const halfLength = Math.ceil(entries.length / 2);
+  const leftColumn = entries.slice(0, halfLength);
+  const rightColumn = entries.slice(halfLength);
+
+  for (let i = 0; i < halfLength; i++) {
+    const row = document.createElement('tr');
+
+    const leftKeyCell = document.createElement('td');
+    const leftValueCell = document.createElement('td');
+    if (leftColumn[i]) {
+      leftKeyCell.textContent = leftColumn[i][0];
+      const value = leftColumn[i][1];
+      if (value && value.dataType && value.shape) {
+        leftValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+      } else if (Array.isArray(value)) {
+        leftValueCell.textContent = '[' + value.join(', ') + ']';
+      } else {
+        leftValueCell.textContent = String(value);
+      }
+    }
+
+    const rightKeyCell = document.createElement('td');
+    const rightValueCell = document.createElement('td');
+    if (rightColumn[i]) {
+      rightKeyCell.textContent = rightColumn[i][0];
+      const value = rightColumn[i][1];
+      if (value && value.dataType && value.shape) {
+        rightValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+      } else if (Array.isArray(value)) {
+        rightValueCell.textContent = '[' + value.join(', ') + ']';
+      } else {
+        rightValueCell.textContent = String(value);
+      }
+    }
+
+    row.appendChild(leftKeyCell);
+    row.appendChild(leftValueCell);
+    row.appendChild(rightKeyCell);
+    row.appendChild(rightValueCell);
+    tbody.appendChild(row);
+  }
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  element.innerHTML = '';
+  element.appendChild(table);
+}
+
+function displayResults(results) {
+  const resultDiv = document.getElementById('result');
+  if (!resultDiv) return;
+
+  // Input grid
+  const inputHeight = results.input.shape[2];
+  const inputWidth = results.input.shape[3];
+  let inputGrid = '';
+  for (let i = 0; i < inputHeight; i++) {
+    const row = results.input.data.slice(i * inputWidth, (i + 1) * inputWidth);
+    inputGrid += row.join(' ') + '<br>';
+  }
+  
+  // Output grid
+  const outputHeight = results.output.shape[2];
+  const outputWidth = results.output.shape[3];
+  let outputGrid = '';
+  for (let i = 0; i < outputHeight; i++) {
+    const row = results.output.data.slice(i * outputWidth, (i + 1) * outputWidth)
+      .map(x => x.toFixed(2));
+    outputGrid += row.join(' ') + '<br>';
+  }
+
+  resultDiv.innerHTML = 
+    '<div class="pooling-type">' +
+      '<h3>Pooling Type: ' + results.poolingType + '</h3>' +
+    '</div>' +
+    '<div class="grid-container">' +
+      '<div class="grid-item">' +
+        '<h4>Input (' + inputHeight + 'x' + inputWidth + ')</h4>' +
+        '<div class="grid">' + inputGrid + '</div>' +
+      '</div>' +
+      '<div class="grid-item">' +
+        '<h4>Output (' + outputHeight + ' x ' + outputWidth + ')</h4>' +
+        '<div class="grid">' + outputGrid + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+// Add explanation of the pooling operations
+function displayExplanations() {
+  const explanationDiv = document.createElement('div');
+  explanationDiv.className = 'explanation';
+  
+  // Using single quotes instead of backticks
+  explanationDiv.innerHTML = 
+    '<h3>Pooling Operations Explained</h3>' +
+    '<div class="explanation-grid">' +
+      '<div class="explanation-item">' +
+        '<h4>MaxPool2d</h4>' +
+        '<p>Takes the maximum value from the region of the input tensor covered by the filter. ' +
+        'Often used to reduce spatial dimensions while preserving important features.</p>' +
+      '</div>' +
+      '<div class="explanation-item">' +
+        '<h4>AveragePool2d</h4>' +
+        '<p>Calculates the average of all values from the region of the input tensor covered by the filter. ' +
+        'Helps in reducing spatial dimensions while maintaining overall feature distribution.</p>' +
+      '</div>' +
+      '<div class="explanation-item">' +
+        '<h4>L2Pool2d</h4>' +
+        '<p>Calculates the L2 norm (square root of sum of squares) of values in the filter region. ' +
+        'Implemented as sqrt(averagePool2d(input^2)). Useful for feature extraction with magnitude preservation.</p>' +
+      '</div>' +
+    '</div>';
+  
+  const controlsDiv = document.getElementById('controls');
+  if (controlsDiv) {
+    controlsDiv.appendChild(explanationDiv);
+  } else {
+    document.body.appendChild(explanationDiv);
+  }
+}
+
+// Create pooling type selection UI
+function createPoolingControls() {
+  const controlsDiv = document.createElement('div');
+  controlsDiv.id = 'controls';
+  controlsDiv.className = 'controls';
+  
+  // Using single quotes instead of backticks
+  const controlsHtml = 
+    '<div class="control-group">' +
+      '<label for="poolingType">Select Pooling Type:</label>' +
+      '<select id="poolingType">' +
+        '<option value="maxPool2d">Max Pooling</option>' +
+        '<option value="averagePool2d">Average Pooling</option>' +
+        '<option value="l2Pool2d">L2 Pooling</option>' +
+      '</select>' +
+      '<button id="runPooling">Run Pooling</button>' +
+    '</div>';
+  
+  controlsDiv.innerHTML = controlsHtml;
+  document.body.appendChild(controlsDiv);
+  
+  // Add event listener for the button
+  document.getElementById('runPooling').addEventListener('click', () => {
+    const poolingType = document.getElementById('poolingType').value;
+    runPoolingOperation(poolingType);
+  });
+}
+
+async function runPoolingOperation(poolingType) {
+  const statusDiv = document.getElementById('status');
+  if (statusDiv) {
+    statusDiv.textContent = 'Running ' + poolingType + ' with WebNN...';
+  }
+  
+  try {
+    const results = await run(poolingType);
+    if (results) {
+      if (statusDiv) {
+        createOptionsTable(statusDiv, results.options);
+      }
+      displayResults(results);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    if (statusDiv) {
+      statusDiv.textContent = 'Error: ' + error.message;
+    }
+  }
+}
+
+async function initialize() {
+  const controlsDiv = document.getElementById('controls');
+  if (!controlsDiv) {
+    createPoolingControls();
+  }
+  
+  const statusDiv = document.getElementById('status');
+  if (!statusDiv) {
+    const statusDiv = document.createElement('div');
+    statusDiv.id = 'status';
+    document.body.appendChild(statusDiv);
+  }
+  
+  const resultDiv = document.getElementById('result');
+  if (!resultDiv) {
+    const resultDiv = document.createElement('div');
+    resultDiv.id = 'result';
+    document.body.appendChild(resultDiv);
+  }
+
+  displayExplanations();
+  
+  // Run with default pooling type (maxPool2d)
+  await runPoolingOperation('maxPool2d');
+}
+
+document.addEventListener('DOMContentLoaded', initialize, false);` },
+    '/index.html': {
+      code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebNN Pooling</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <h1>WebNN Pooling</h1>
+  <div id="status"></div>
+  <div id="result"></div>
+  <script src="./webnn.js"></script>
+  <script src="./ui.js"></script>
+</body>
+</html>` },
+    '/styles.css': {
+      code: `body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    .controls {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    select, button {
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #result {
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .grid-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .grid-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .grid {
+      font-family: monospace;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .pooling-type {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f0f7ff;
+      border-left: 5px solid #007bff;
+    }
+    .explanation {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .explanation-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .explanation-item {
+      flex: 1;
+      min-width: 250px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      border: 1px solid #eee;
+    }`}
+  },
+},
 }
