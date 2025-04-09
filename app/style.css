@@ -99,7 +99,7 @@
   --n-3: #3a0ca3;
   --n-4: #4361ee;
   --n-6: #4cc9f0;
-  --n-7: #eb6424; 
+  --n-7: #eb6424;
   --n-border: rgba(229, 231, 235, 0.5);
   --shiny-cta-bg: #000000;
   --shiny-cta-bg-subtle: #1a1818;
@@ -703,6 +703,7 @@ article.nextra-body-typesetting-article a:hover {
 }
 
 @media (max-width: 640px) {
+
   .pg-framework button span,
   .pg-js button span {
     display: none;
@@ -710,7 +711,9 @@ article.nextra-body-typesetting-article a:hover {
 }
 
 @media (max-width: 1024px) {
-  .playground-nav, .playground-nav-12 {
+
+  .playground-nav,
+  .playground-nav-12 {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     display: flex;

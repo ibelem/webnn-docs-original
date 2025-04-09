@@ -1536,40 +1536,6 @@ function displayResults(results) {
     '</div>';
 }
 
-// Add explanation of the pooling operations
-function displayExplanations() {
-  const explanationDiv = document.createElement('div');
-  explanationDiv.className = 'explanation';
-  
-  // Using single quotes instead of backticks
-  explanationDiv.innerHTML = 
-    '<h3>Pooling Operations Explained</h3>' +
-    '<div class="explanation-grid">' +
-      '<div class="explanation-item">' +
-        '<h4>MaxPool2d</h4>' +
-        '<p>Takes the maximum value from the region of the input tensor covered by the filter. ' +
-        'Often used to reduce spatial dimensions while preserving important features.</p>' +
-      '</div>' +
-      '<div class="explanation-item">' +
-        '<h4>AveragePool2d</h4>' +
-        '<p>Calculates the average of all values from the region of the input tensor covered by the filter. ' +
-        'Helps in reducing spatial dimensions while maintaining overall feature distribution.</p>' +
-      '</div>' +
-      '<div class="explanation-item">' +
-        '<h4>L2Pool2d</h4>' +
-        '<p>Calculates the L2 norm (square root of sum of squares) of values in the filter region. ' +
-        'Implemented as sqrt(averagePool2d(input^2)). Useful for feature extraction with magnitude preservation.</p>' +
-      '</div>' +
-    '</div>';
-  
-  const controlsDiv = document.getElementById('controls');
-  if (controlsDiv) {
-    controlsDiv.appendChild(explanationDiv);
-  } else {
-    document.body.appendChild(explanationDiv);
-  }
-}
-
 // Create pooling type selection UI
 function createPoolingControls() {
   const controlsDiv = document.createElement('div');
@@ -1640,8 +1606,6 @@ async function initialize() {
     document.body.appendChild(resultDiv);
   }
 
-  displayExplanations();
-  
   // Run with default pooling type (maxPool2d)
   await runPoolingOperation('maxPool2d');
 }
@@ -1665,109 +1629,86 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
 </body>
 </html>` },
     '/styles.css': {
-      code: `body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 20px;
-      background-color: #f7f7f7;
-    }
-    .controls {
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    select, button {
-      padding: 8px 12px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #status {
-      margin: 20px 0;
-      padding: 15px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    #result {
-      padding: 15px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .grid-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .grid-item {
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-    }
-    .grid {
-      font-family: monospace;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    .pooling-type {
-      margin-bottom: 20px;
-      padding: 10px;
-      background-color: #f0f7ff;
-      border-left: 5px solid #007bff;
-    }
-    .explanation {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .explanation-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 10px;
-    }
-    .explanation-item {
-      flex: 1;
-      min-width: 250px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 5px;
-      border: 1px solid #eee;
-    }`}
+      code: `
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0 10px;
+  font-size: 0.8rem;
+}
+
+.controls {
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h4 { margin: 0; }
+
+select,
+button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#status {
+  margin: 0;
+  background-color: #fff;
+}
+
+#result {
+  padding: 10px 0;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.grid-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.grid {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}`}
   },
 },
 }
