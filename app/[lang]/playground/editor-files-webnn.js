@@ -799,6 +799,8 @@ async function run() {
 
     const outputShape = [1, 1, 4, 4]; // [batches, outputChannels, height, width]
     const outputData = await runConv2d(context, builder, input, filter, options, inputData, outputShape);
+    console.log('Input:', inputData);
+    console.log('Output:', outputData);
     return {
       input: { shape: inputShape, data: Array.from(inputData) },
       options,
@@ -810,9 +812,8 @@ async function run() {
     console.error('WebNN error:', error);
     throw error;
   }
-}
-
-function createOptionsTable(element, options) {
+}`},
+      '/ui.js': { code:`function createOptionsTable(element, options) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
@@ -946,7 +947,7 @@ async function initialize() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initialize, false);`},
+document.addEventListener('DOMContentLoaded', initialize, false);` },
       '/index.html': {
         code: `<!DOCTYPE html>
 <html lang="en">
@@ -961,6 +962,7 @@ document.addEventListener('DOMContentLoaded', initialize, false);`},
     <div id="status"></div>
     <div id="result"></div>
     <script src="./webnn.js"></script>
+    <script src="./ui.js"></script>
   </body>
 </html>` },
       '/styles.css': {
