@@ -666,187 +666,231 @@ button {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `async function runSimpleConv2dExample() {
-  // Check if WebNN is supported
+        code: `// Create WebNN context
+async function createWebNNContext() {
   if (!('ml' in navigator)) {
-    console.error('WebNN API is not supported in this browser');
-    return;
+    throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
   }
-
   try {
-    // Get the WebNN context
-    const context = await navigator.ml.createContext({deviceType: 'cpu'});
+    return await navigator.ml.createContext({ deviceType: 'cpu' });
+  } catch (e) {
+    throw new Error('Failed to create WebNN context: ' + e.message);
+  }
+}
+
+// Create input tensor
+function createInputTensor(builder, shape, data) {
+  return builder.input('input', { dataType: 'float32', shape });
+}
+
+// Create filter tensor
+function createFilterTensor(builder, shape, data) {
+  return builder.constant({ dataType: 'float32', shape }, data);
+}
+
+// Create bias tensor
+function createBiasTensor(builder, shape, data) {
+  return builder.constant({ dataType: 'float32', shape }, data);
+}
+
+// Execute Conv2D operation
+async function runConv2d(context, builder, input, filter, options, inputData, outputShape) {
+  const conv = builder.conv2d(input, filter, options);
+  const graph = await builder.build({ 'output': conv });
+
+  const inputTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: input.shape,
+    writable: true
+  });
+  await context.writeTensor(inputTensor, inputData);
+
+  const outputTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: outputShape,
+    readable: true
+  });
+
+  const inputs = {
+    'input': inputTensor
+  };
+    
+  const outputs = {
+    'output': outputTensor
+  };
+ 
+  await context.dispatch(graph, inputs, outputs);
+  return await context.readTensor(outputTensor);
+}
+
+async function run() {
+  try {
+    const context = await createWebNNContext();
     const builder = new MLGraphBuilder(context);
 
-    // Use a simple 4x4 input with 1 channel
     const inputShape = [1, 1, 4, 4]; // [batches, inputChannels, height, width]
-    
-    // Create a simple 4x4 input matrix
-    const inputData = new Float32Array([
-      1, 1, 1, 1, // First row
-      1, 1, 1, 1, // Second row
-      1, 1, 1, 1, // Third row
-      1, 1, 1, 1  // Fourth row
-    ]);
-    
-    // Define the input operand
-    const input = builder.input('input', {dataType: 'float32', shape: inputShape});
-    
-    // Simple 3x3 filter with 1 output channel
+    const inputData = new Float32Array(16).fill(1); // Simplified 4x4 of ones
+    const input = createInputTensor(builder, inputShape, inputData);
+
     const filterShape = [1, 1, 3, 3]; // [outputChannels, inputChannels/groups, height, width]
-    
-    // Create a simple filter kernel for edge detection
-    const filterData = new Float32Array([
-      1, 1, 1, 
-      1, 1, 1, 
-      1, 1, 1
-    ]);
-    
-    // Define the filter operand
-    const filter = builder.constant({dataType: 'float32', shape: filterShape}, filterData);
-    
+    const filterData = new Float32Array(9).fill(1); // 3x3 of ones
+    const filter = createFilterTensor(builder, filterShape, filterData);
+
     // An 1-D tensor with the shape of [outputChannels] whose values are to be added to the convolution result
-    const biasShape = [1]; // One bias for one output channel
+    const biasShape = [1]; // 1 bias for 1 output channel
     const biasData = new Float32Array([0]); // Zero bias
-    const bias = builder.constant({dataType: 'float32', shape: biasShape}, biasData);
-    
-    // Define Conv2D options with 'same' padding
+    const bias = createBiasTensor(builder, biasShape, biasData);
+
     const options = {
-      inputLayout: 'nchw',
-      filterLayout: 'oihw',
+      inputLayout: 'nchw',  // [batch, channels, height, width]
+      filterLayout: 'oihw', // [outputChannels, inputChannels, height, width]
       bias,
       padding: [1, 1, 1, 1], // [beginningHeight, endingHeight, beginningWidth, endingWidth]
-      strides: [1, 1],       // [strideHeight, strideWidth]
-      dilations: [1, 1],     // [dilationHeight, dilationWidth]
-      groups: 1              // The number of groups that input channels and output channels are divided into
+      strides: [1, 1],       // [height, width]
+      dilations: [1, 1],     // [height, width]
+      groups: 1              // number of groups that input channels and output channels are divided into
     };
-    
-    // Create the Conv2D operation
-    const conv = builder.conv2d(input, filter, options);
-    
-    // Build the computation graph with named output
-    const graph = await builder.build({'output': conv});
-    
-    // Create input and output tensors
-    const inputTensor = await context.createTensor({
-      dataType: 'float32', 
-      shape: inputShape,
-      writable: true
-    });
-    
-    // Determine output shape
+
     const outputShape = [1, 1, 4, 4]; // [batches, outputChannels, height, width]
-    
-    // Create output tensor
-    const outputTensor = await context.createTensor({
-      dataType: 'float32', 
-      shape: outputShape,
-      readable: true
-    });
-    
-    // Initialize the input tensor with data
-    await context.writeTensor(inputTensor, inputData);
-    
-    // Execute the graph with proper input and output tensors
-    const inputs = {
-      'input': inputTensor
-    };
-    
-    const outputs = {
-      'output': outputTensor
-    };
-    
-    // Dispatch with all three required arguments
-    await context.dispatch(graph, inputs, outputs);
-    
-    // Read back the computed result
-    const outputData = await context.readTensor(outputTensor);
-    
-    console.log('Input shape:', inputShape);
-    console.log('Input data:', Array.from(inputData));
-    console.log('Filter shape:', filterShape);
-    console.log('Filter data (edge detection):', Array.from(filterData));
-    console.log('Output shape:', outputShape);
-    console.log('Output data:', new Float32Array(outputData));
-    
-    // Return the results for display
+    const outputData = await runConv2d(context, builder, input, filter, options, inputData, outputShape);
     return {
-      input: {
-        shape: inputShape,
-        data: Array.from(inputData)
-      },
-      options: options,
-      filter: {
-        shape: filterShape,
-        data: Array.from(filterData)
-      },
-      output: {
-        shape: outputShape,
-        data: Array.from(new Float32Array(outputData))
-      }
+      input: { shape: inputShape, data: Array.from(inputData) },
+      options,
+      filter: { shape: filterShape, data: Array.from(filterData) },
+      output: { shape: outputShape, data: Array.from(new Float32Array(outputData)) }
     };
+    
   } catch (error) {
     console.error('WebNN error:', error);
     throw error;
   }
 }
 
-// Display the results in a friendly format
+function createOptionsTable(element, options) {
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
+
+  const headerRow = document.createElement('tr');
+  const headers = ['Option', 'Value', 'Option', 'Value'];
+  headers.forEach(text => {
+    const th = document.createElement('th');
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  const entries = Object.entries(options);
+  const halfLength = Math.ceil(entries.length / 2);
+  const leftColumn = entries.slice(0, halfLength);
+  const rightColumn = entries.slice(halfLength);
+
+  for (let i = 0; i < halfLength; i++) {
+    const row = document.createElement('tr');
+
+    const leftKeyCell = document.createElement('td');
+    const leftValueCell = document.createElement('td');
+    if (leftColumn[i]) {
+      leftKeyCell.textContent = leftColumn[i][0];
+      const value = leftColumn[i][1];
+      if (value && value.dataType && value.shape) {
+        leftValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+      } else if (Array.isArray(value)) {
+        leftValueCell.textContent = '[' + value.join(', ') + ']';
+      } else {
+        leftValueCell.textContent = String(value);
+      }
+    }
+
+    const rightKeyCell = document.createElement('td');
+    const rightValueCell = document.createElement('td');
+    if (rightColumn[i]) {
+      rightKeyCell.textContent = rightColumn[i][0];
+      const value = rightColumn[i][1];
+      if (value && value.dataType && value.shape) {
+        rightValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+      } else if (Array.isArray(value)) {
+        rightValueCell.textContent = '[' + value.join(', ') + ']';
+      } else {
+        rightValueCell.textContent = String(value);
+      }
+    }
+
+    row.appendChild(leftKeyCell);
+    row.appendChild(leftValueCell);
+    row.appendChild(rightKeyCell);
+    row.appendChild(rightValueCell);
+    tbody.appendChild(row);
+  }
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  element.innerHTML = '';
+  element.appendChild(table);
+}
+
 function displayResults(results) {
   const resultDiv = document.getElementById('result');
   if (!resultDiv) return;
-  
-  // Format the input as a grid
+
+  // Input grid
+  const inputHeight = results.input.shape[2];
+  const inputWidth = results.input.shape[3];
   let inputGrid = '';
-  const inputSize = Math.sqrt(results.input.data.length);
-  for (let i = 0; i < inputSize; i++) {
-    const row = [];
-    for (let j = 0; j < inputSize; j++) {
-      row.push(results.input.data[i * inputSize + j]);
-    }
+  for (let i = 0; i < inputHeight; i++) {
+    const row = results.input.data.slice(i * inputWidth, (i + 1) * inputWidth);
     inputGrid += row.join(' ') + '<br>';
   }
-  
-  // Format the filter as a grid
+
+  // Filter grid
+  const filterHeight = results.filter.shape[2];
+  const filterWidth = results.filter.shape[3];
   let filterGrid = '';
-  const filterSize = Math.sqrt(results.filter.data.length);
-  for (let i = 0; i < filterSize; i++) {
-    const row = [];
-    for (let j = 0; j < filterSize; j++) {
-      row.push(results.filter.data[i * filterSize + j]);
-    }
+  for (let i = 0; i < filterHeight; i++) {
+    const row = results.filter.data.slice(i * filterWidth, (i + 1) * filterWidth);
     filterGrid += row.join(' ') + '<br>';
   }
   
-  // Format the output as a grid
+  // Output grid
+  const outputHeight = results.output.shape[2];
+  const outputWidth = results.output.shape[3];
   let outputGrid = '';
-  const outputSize = Math.sqrt(results.output.data.length);
-  for (let i = 0; i < outputSize; i++) {
-    const row = [];
-    for (let j = 0; j < outputSize; j++) {
-      row.push(results.output.data[i * outputSize + j].toFixed(1));
-    }
+  for (let i = 0; i < outputHeight; i++) {
+    const row = results.output.data.slice(i * outputWidth, (i + 1) * outputWidth)
+      .map(x => x.toFixed(1));
     outputGrid += row.join(' ') + '<br>';
   }
 
-  resultDiv.innerHTML = '<div class="grid-container"><div class="grid-item"><h4>Input ('+ results.input.shape[2] + ' x ' + results.input.shape[3] + ')</h4><div class="grid">'+ inputGrid + '</div></div><div class="grid-item"><h4>Filter (' + results.filter.shape[2] + ' x ' + results.filter.shape[3] + ')</h4><div class="grid">'+ filterGrid + '</div></div><div class="grid-item"><h4>Output (' + results.output.shape[2] + ' x ' + results.output.shape[3] +')</h4><div class="grid">'+ outputGrid + '</div></div></div>';
+  resultDiv.innerHTML = 
+    '<div class="grid-container">' +
+      '<div class="grid-item">' +
+        '<h4>Input (' + inputHeight + ' x ' + inputWidth + ')</h4>' +
+        '<div class="grid">' + inputGrid + '</div>' +
+      '</div>' +
+      '<div class="grid-item">' +
+        '<h4>Filter (' + filterHeight + ' x ' + filterWidth + ')</h4>' +
+        '<div class="grid">' + filterGrid + '</div>' +
+      '</div>' +
+      '<div class="grid-item">' +
+        '<h4>Output (' + outputHeight + ' x ' + outputWidth + ')</h4>' +
+        '<div class="grid">' + outputGrid + '</div>' +
+      '</div>' +
+    '</div>';
 }
 
-// Run the example when the page loads
-window.addEventListener('DOMContentLoaded', async () => {
+async function initialize() {
   const statusDiv = document.getElementById('status');
   if (statusDiv) {
-    statusDiv.textContent = 'Running simple Conv2D with WebNN...';
+    statusDiv.textContent = 'Running Conv2D with WebNN...';
   }
   
   try {
-    const results = await runSimpleConv2dExample();
+    const results = await run();
     if (results) {
-      displayResults(results);
       if (statusDiv) {
-        let status = JSON.stringify(results.options);
-        statusDiv.textContent = status;
+        createOptionsTable(statusDiv, results.options);
       }
+      displayResults(results);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -854,7 +898,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       statusDiv.textContent = 'Error: ' + error.message;
     }
   }
-});`
+}
+
+document.addEventListener('DOMContentLoaded', initialize, false);`
       },
       '/index.html': {
         code: `<!DOCTYPE html>
