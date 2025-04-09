@@ -1072,8 +1072,8 @@ async function run() {
     // For ConvTranspose2d, the input is typically smaller than the output
     const inputShape = [1, 1, 2, 2]; // [batches, inputChannels, height, width]
     const inputData = new Float32Array([
-      1, 1, // First row
-      1, 1  // Second row
+      1, 2, // First row
+      3, 4  // Second row
     ]);
     const input = createInputTensor(builder, inputShape);
 
