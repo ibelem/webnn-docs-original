@@ -1542,13 +1542,12 @@ function createPoolingControls() {
   // Using single quotes instead of backticks
   const controlsHtml = 
     '<div class="control-group">' +
-      '<label for="poolingType">Select Pooling Type:</label>' +
       '<select id="poolingType">' +
         '<option value="maxPool2d">Max Pooling</option>' +
         '<option value="averagePool2d">Average Pooling</option>' +
         '<option value="l2Pool2d">L2 Pooling</option>' +
       '</select>' +
-      '<button id="runPooling">Run Pooling</button>' +
+      '<button id="runPooling">Run</button>' +
     '</div>';
   
   controlsDiv.innerHTML = controlsHtml;
