@@ -1325,7 +1325,7 @@ th {
     },
   },
   "pooling": {
-  "title": "pooling (average, l2, max)",
+  "title": "pooling",
   "description": "Compute a pooling operation (average, l2, max) across all the elements within the moving window over the input tensor",
   "static": {
     '/webnn.js': {
@@ -1406,21 +1406,18 @@ async function run(poolingType = 'maxPool2d') {
     ]);
     const input = createInputTensor(builder, inputShape);
 
+    // Updated options according to the WebNN spec
     const options = {
       windowDimensions: [2, 2],     // Size of the pooling window [height, width]
       padding: [0, 0, 0, 0],        // [top, bottom, left, right]
       strides: [2, 2],              // [height, width]
       layout: 'nchw',               // [batch, channels, height, width]
-      // For averagePool2d, we can specify whether to include padding:
-      autoPad: 'explicit',          // How padding is handled (explicitly specified)
-      // Optional for averagePool2d - whether to include or exclude zero padding in the averaging
-      countIncludePad: false        // Don't include padding in the average calculation
+      // dilations property is valid for maxPool but not averagePool in WebNN spec
+      ...(poolingType === 'maxPool2d' ? { dilations: [1, 1] } : {})
     };
 
     const outputShape = [1, 1, 2, 2]; // [batches, channels, height, width]
     const outputData = await runPooling(context, builder, input, poolingType, options, inputData, outputShape);
-    console.log('Output Shape:', outputShape);
-    console.log('Output:', Array.from(new Float32Array(outputData)));
     
     return {
       poolingType,
@@ -1530,7 +1527,7 @@ function displayResults(results) {
         '<div class="grid">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Output (' + outputHeight + ' x ' + outputWidth + ')</h4>' +
+        '<h4>Output (' + outputHeight + 'x' + outputWidth + ')</h4>' +
         '<div class="grid">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
@@ -1629,8 +1626,7 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
 </body>
 </html>` },
     '/styles.css': {
-      code: `
-body {
+      code: `body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0 10px;
@@ -1638,8 +1634,7 @@ body {
 }
 
 .controls {
-  margin-bottom: 20px;
-  padding: 15px;
+  padding: 10px 0;
 }
 
 .control-group {
@@ -1683,31 +1678,30 @@ button:hover {
   gap: 10px;
 }
 
-.grid-item {
-  border: 1px solid #ddd;
-  padding: 10px;
+.grid-item h4 {
+  text-align: center;
+  margin-bottom: 6px;
 }
 
 .grid {
   font-family: monospace;
-  font-size: 14px;
-  line-height: 1.5;
+  padding: 10px;
+  border: 1px solid #ddd;
 }
 
 table {
   border-collapse: collapse;
-  width: 100%;
 }
 
 th,
 td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+  border: 1px solid #f2f2f2;
+  padding: 4px 8px;
+  text-align: center;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #fafafa;
 }`}
   },
 },
