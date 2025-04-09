@@ -1519,7 +1519,7 @@ function displayResults(results) {
 
   resultDiv.innerHTML = 
     '<div class="pooling-type">' +
-      '<h3>Pooling Type: ' + results.poolingType + '</h3>' +
+      '<h3>' + results.poolingType + '</h3>' +
     '</div>' +
     '<div class="grid-container">' +
       '<div class="grid-item">' +
@@ -1626,7 +1626,8 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
 </html>` },
     '/styles.css': {
       code: `body {
-  font-family: Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
   margin: 0;
   padding: 0 10px;
   font-size: 0.8rem;
@@ -1641,6 +1642,8 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   align-items: center;
   gap: 10px;
 }
+
+h1 { margin: 10px 0; }
 
 h4 { margin: 0; }
 
