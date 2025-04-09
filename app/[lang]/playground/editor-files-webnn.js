@@ -985,7 +985,7 @@ async function createWebNNContext() {
 }
 
 // Create input tensor
-function createInputTensor(builder, shape, data) {
+function createInputTensor(builder, shape) {
   return builder.input('input', { dataType: 'float32', shape });
 }
 
@@ -999,21 +999,10 @@ function createBiasTensor(builder, shape, data) {
   return builder.constant({ dataType: 'float32', shape }, data);
 }
 
-// Execute convTranspose2d operation
+// Execute ConvTranspose2D operation
 async function runConvTranspose2d(context, builder, input, filter, options, inputData, outputShape) {
-  const strides = options.strides;
-  const resized_input = builder.resize(input, { scales: [strides[0], strides[1]], interpolation: 'nearest' });
-  const con_options = {
-    inputLayout: 'nchw',
-    filterLayout: 'oihw',
-    bias: options.bias,
-    padding: options.padding,
-    strides: [1, 1], // Post-resize, typically set to 1
-    dilations: options.dilations,
-    groups: options.groups
-  };
-  const con = builder.conv2d(resized_input, filter, con_options);
-  const graph = await builder.build({ 'output': con });
+  const convTranspose = builder.convTranspose2d(input, filter, options);
+  const graph = await builder.build({ 'output': convTranspose });
 
   const inputTensor = await context.createTensor({
     dataType: 'float32',
@@ -1028,58 +1017,66 @@ async function runConvTranspose2d(context, builder, input, filter, options, inpu
     readable: true
   });
 
-  const inputs = { 'input': inputTensor };
-  const outputs = { 'output': outputTensor };
+  const inputs = {
+    'input': inputTensor
+  };
+    
+  const outputs = {
+    'output': outputTensor
+  };
+ 
   await context.dispatch(graph, inputs, outputs);
   return await context.readTensor(outputTensor);
 }
 
-// Run function
 async function run() {
   try {
     const context = await createWebNNContext();
     const builder = new MLGraphBuilder(context);
 
-    const inputShape = [1, 1, 4, 4]; // [batches, inputChannels, height, width]
+    // For ConvTranspose2d, the input is typically smaller than the output
+    const inputShape = [1, 1, 2, 2]; // [batches, inputChannels, height, width]
     const inputData = new Float32Array([
-      1, 1, 1, 1, // First row
-      1, 1, 1, 1, // Second row
-      1, 1, 1, 1, // Third row
-      1, 1, 1, 1  // Fourth row
+      1, 1, // First row
+      1, 1  // Second row
     ]);
-    const input = createInputTensor(builder, inputShape, inputData);
+    const input = createInputTensor(builder, inputShape);
 
-    const filterShape = [1, 1, 3, 3]; // [outputChannels, inputChannels/groups, height, width]
+    // For ConvTranspose2d, the filter is flipped compared to Conv2d
+    const filterShape = [1, 1, 3, 3]; // [inputChannels, outputChannels/groups, height, width]
     const filterData = new Float32Array([
-      1, 1, 1,
-      1, 1, 1,
+      1, 1, 1, 
+      1, 1, 1, 
       1, 1, 1
     ]);
     const filter = createFilterTensor(builder, filterShape, filterData);
 
+    // Bias is similar to Conv2d
     const biasShape = [1]; // 1 bias for 1 output channel
     const biasData = new Float32Array([0]); // Zero bias
     const bias = createBiasTensor(builder, biasShape, biasData);
 
     const options = {
-      inputLayout: 'nchw',  // [batch, channels, height, width]
-      filterLayout: 'oihw', // [outputChannels, inputChannels, height, width]
-      bias: bias,
-      padding: [1, 1, 1, 1], // [beginningHeight, endingHeight, beginningWidth, endingWidth]
-      strides: [2, 2],       // [height, width]
-      dilations: [1, 1],     // [height, width]
-      groups: 1              // number of groups
+      inputLayout: 'nchw',    // [batch, channels, height, width]
+      filterLayout: 'iohw',   // [inputChannels, outputChannels, height, width] - note the change from 'oihw'
+      bias,
+      padding: [0, 0, 0, 0],  // [beginningHeight, endingHeight, beginningWidth, endingWidth]
+      strides: [3, 3],        // [height, width] - using stride 2 for upsampling
+      outputPadding: [0, 0],  // Additional padding for output
+      dilations: [1, 1],      // [height, width]
+      groups: 1               // number of groups that input channels and output channels are divided into
     };
 
-    // Approximate output shape for stride=2, adjust based on calculation
-    const outputShape = [1, 1, 9, 9]; // Example, calculate based on (H-1)*S - 2*P + K
+    // The output shape will be larger due to the upsampling nature of ConvTranspose2d
+    const outputShape = [1, 1, 6, 6]; // [batches, outputChannels, height, width]
     const outputData = await runConvTranspose2d(context, builder, input, filter, options, inputData, outputShape);
     return {
       input: { shape: inputShape, data: Array.from(inputData) },
-      options: options,
+      options,
       filter: { shape: filterShape, data: Array.from(filterData) },
       output: { shape: outputShape, data: Array.from(new Float32Array(outputData)) }
     };
+    
   } catch (error) {
     console.error('WebNN error:', error);
     throw error;
@@ -1200,9 +1197,23 @@ function displayResults(results) {
 
 async function initialize() {
   const statusDiv = document.getElementById('status');
-  if (statusDiv) {
-    statusDiv.textContent = 'Running convTranspose2d with WebNN...';
+  if (!statusDiv) {
+    const statusDiv = document.createElement('div');
+    statusDiv.id = 'status';
+    document.body.appendChild(statusDiv);
   }
+  
+  const resultDiv = document.getElementById('result');
+  if (!resultDiv) {
+    const resultDiv = document.createElement('div');
+    resultDiv.id = 'result';
+    document.body.appendChild(resultDiv);
+  }
+
+  if (statusDiv) {
+    statusDiv.textContent = 'Running ConvTranspose2D with WebNN...';
+  }
+  
   try {
     const results = await run();
     if (results) {
