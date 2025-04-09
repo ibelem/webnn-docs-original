@@ -729,11 +729,22 @@ async function run() {
     const builder = new MLGraphBuilder(context);
 
     const inputShape = [1, 1, 4, 4]; // [batches, inputChannels, height, width]
-    const inputData = new Float32Array(16).fill(1); // Simplified 4x4 of ones
+    // const inputData = new Float32Array(16).fill(1);
+    const inputData = new Float32Array([
+      1, 1, 1, 1, // First row
+      1, 1, 1, 1, // Second row
+      1, 1, 1, 1, // Third row
+      1, 1, 1, 1  // Fourth row
+    ]);
     const input = createInputTensor(builder, inputShape, inputData);
 
     const filterShape = [1, 1, 3, 3]; // [outputChannels, inputChannels/groups, height, width]
-    const filterData = new Float32Array(9).fill(1); // 3x3 of ones
+    // const filterData = new Float32Array(9).fill(1); // 3x3 of ones
+    const filterData = new Float32Array([
+      1, 1, 1, 
+      1, 1, 1, 
+      1, 1, 1
+    ]);
     const filter = createFilterTensor(builder, filterShape, filterData);
 
     // An 1-D tensor with the shape of [outputChannels] whose values are to be added to the convolution result
@@ -900,8 +911,7 @@ async function initialize() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initialize, false);`
-      },
+document.addEventListener('DOMContentLoaded', initialize, false);`},
       '/index.html': {
         code: `<!DOCTYPE html>
 <html lang="en">
@@ -922,15 +932,37 @@ document.addEventListener('DOMContentLoaded', initialize, false);`
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  font-size: 0.8rem;
+}
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
 }
 .grid-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: start;
+  margin: 0;
+  gap: 2rem;
+}
+.grid-item {
+  text-align: center;
+}
+.grid-item h4 {
+  margin: 0.5rem 0;
 }
 .grid {
   font-family: monospace;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  padding: 10px;
+  border: 1px solid #ccc;
 }`}
     },
   },
