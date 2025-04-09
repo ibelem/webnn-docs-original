@@ -1,7 +1,7 @@
 export default function manifest() {
   return {
     name: 'WebNN Documentation',
-    short_name: 'webnn_doc',
+    short_name: 'WebNN',
     icons: [
       {
         src: '/icon-512.png',

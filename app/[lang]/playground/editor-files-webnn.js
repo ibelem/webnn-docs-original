@@ -1326,7 +1326,7 @@ th {
   },
   "pooling": {
   "title": "pooling (average, l2, max)",
-  "description": "Compute a pooling operation across all the elements within the moving window over the input tensor",
+  "description": "Compute a pooling operation (average, l2, max) across all the elements within the moving window over the input tensor",
   "static": {
     '/webnn.js': {
       active: true,
