@@ -1651,14 +1651,12 @@ function createPoolingControls() {
   
   // Using single quotes instead of backticks
   const controlsHtml = 
-    '<div class="control-group">' +
-      '<select id="poolingType">' +
-        '<option value="maxPool2d">Max Pooling</option>' +
-        '<option value="averagePool2d">Average Pooling</option>' +
-        '<option value="l2Pool2d">L2 Pooling</option>' +
-      '</select>' +
-      '<button id="runPooling">Run</button>' +
-    '</div>';
+    '<select id="poolingType">' +
+      '<option value="maxPool2d">Max Pooling</option>' +
+      '<option value="averagePool2d">Average Pooling</option>' +
+      '<option value="l2Pool2d">L2 Pooling</option>' +
+    '</select>' +
+    '<button id="runPooling">Run</button>';
   
   controlsDiv.innerHTML = controlsHtml;
   document.body.appendChild(controlsDiv);
@@ -1744,10 +1742,7 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
 }
 
 .controls {
-  padding: 10px 0;
-}
-
-.control-group {
+  padding: 0;
   display: flex;
   align-items: center;
   gap: 10px;
