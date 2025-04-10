@@ -929,15 +929,15 @@ function displayResults(results) {
     '<div class="grid-container">' +
       '<div class="grid-item">' +
         '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
-        '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
+        '<div class="grid g'+ results.input.shape[3] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Filter ' + filterHeight + 'x' + filterWidth + '</h4>' +
-        '<div class="grid g'+ results.filter.shape[2] +'">' + filterGrid + '</div>' +
+        '<div class="grid g'+ results.filter.shape[3] +'">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
-        '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
+        '<div class="grid g'+ results.output.shape[3] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
 }
@@ -1307,15 +1307,15 @@ function displayResults(results) {
     '<div class="grid-container">' +
       '<div class="grid-item">' +
         '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
-        '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
+        '<div class="grid g'+ results.input.shape[3] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Filter ' + filterHeight + ' x ' + filterWidth + '</h4>' +
-        '<div class="grid g'+ results.filter.shape[2] +'">' + filterGrid + '</div>' +
+        '<div class="grid g'+ results.filter.shape[3] +'">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Output ' + outputHeight + ' x ' + outputWidth + '</h4>' +
-        '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
+        '<div class="grid g'+ results.output.shape[3] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
 }
@@ -1672,11 +1672,11 @@ function displayResults(results) {
   resultDiv.innerHTML = '<div class="grid-container">' +
       '<div class="grid-item">' +
         '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
-        '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
+        '<div class="grid g'+ results.input.shape[3] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
-        '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
+        '<div class="grid g'+ results.output.shape[3] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
 }
