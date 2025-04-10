@@ -911,15 +911,15 @@ function displayResults(results) {
   resultDiv.innerHTML = 
     '<div class="grid-container">' +
       '<div class="grid-item">' +
-        '<h4>Input (' + inputHeight + 'x' + inputWidth + ')</h4>' +
+        '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
         '<div class="grid">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Filter (' + filterHeight + 'x' + filterWidth + ')</h4>' +
+        '<h4>Filter ' + filterHeight + 'x' + filterWidth + '</h4>' +
         '<div class="grid">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Output (' + outputHeight + 'x' + outputWidth + ')</h4>' +
+        '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
         '<div class="grid">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
@@ -1270,15 +1270,15 @@ function displayResults(results) {
   resultDiv.innerHTML = 
     '<div class="grid-container">' +
       '<div class="grid-item">' +
-        '<h4>Input (' + inputHeight + 'x' + inputWidth + ')</h4>' +
+        '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
         '<div class="grid">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Filter (' + filterHeight + ' x ' + filterWidth + ')</h4>' +
+        '<h4>Filter ' + filterHeight + ' x ' + filterWidth + '</h4>' +
         '<div class="grid">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Output (' + outputHeight + ' x ' + outputWidth + ')</h4>' +
+        '<h4>Output ' + outputHeight + ' x ' + outputWidth + '</h4>' +
         '<div class="grid">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
@@ -1633,11 +1633,11 @@ function displayResults(results) {
   
   resultDiv.innerHTML = '<div class="grid-container">' +
       '<div class="grid-item">' +
-        '<h4>Input (' + inputHeight + 'x' + inputWidth + ')</h4>' +
+        '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
         '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Output (' + outputHeight + 'x' + outputWidth + ')</h4>' +
+        '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
         '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
