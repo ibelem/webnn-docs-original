@@ -1310,11 +1310,11 @@ function displayResults(results) {
         '<div class="grid g'+ results.input.shape[3] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Filter ' + filterHeight + ' x ' + filterWidth + '</h4>' +
+        '<h4>Filter ' + filterHeight + 'x' + filterWidth + '</h4>' +
         '<div class="grid g'+ results.filter.shape[3] +'">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
-        '<h4>Output ' + outputHeight + ' x ' + outputWidth + '</h4>' +
+        '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
         '<div class="grid g'+ results.output.shape[3] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
