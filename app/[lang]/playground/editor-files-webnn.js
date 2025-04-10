@@ -971,35 +971,86 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   color: #333;
   font-size: 0.8rem;
 }
+
 table {
   border-collapse: collapse;
   margin: 0.5rem 0;
 }
+
 th, td {
   border: 1px solid #eee;
   padding: 0.2rem 0.5rem;
   text-align: center;
 }
+
 th {
   background-color: #fafafa;
 }
+
 .grid-container {
   display: flex;
   justify-content: start;
   margin: 0;
   gap: 2rem;
 }
+
 .grid-item {
   text-align: center;
 }
+
 .grid-item h4 {
   margin: 0.5rem 0;
 }
+
 .grid {
   font-family: monospace;
   font-size: 0.9rem;
   padding: 10px;
   border: 1px solid #ccc;
+}
+
+.grid div {
+  justify-self: end;
+}
+
+.g1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.g2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.g3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.g4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.g5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.g6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.g7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.g8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.g9 {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.g10 {
+  grid-template-columns: repeat(10, 1fr);
 }`}
     },
   },
@@ -1292,35 +1343,86 @@ document.addEventListener('DOMContentLoaded', initialize, false);`},
   color: #333;
   font-size: 0.8rem;
 }
+
 table {
   border-collapse: collapse;
   margin: 0.5rem 0;
 }
+
 th, td {
   border: 1px solid #eee;
   padding: 0.2rem 0.5rem;
   text-align: center;
 }
+
 th {
   background-color: #fafafa;
 }
+
 .grid-container {
   display: flex;
   justify-content: start;
   margin: 0;
   gap: 2rem;
 }
+
 .grid-item {
   text-align: center;
 }
+
 .grid-item h4 {
   margin: 0.5rem 0;
 }
+
 .grid {
   font-family: monospace;
   font-size: 0.9rem;
   padding: 10px;
   border: 1px solid #ccc;
+}
+
+.grid div {
+  justify-self: end;
+}
+
+.g1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.g2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.g3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.g4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.g5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.g6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.g7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.g8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.g9 {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.g10 {
+  grid-template-columns: repeat(10, 1fr);
 }`}
     },
   },
@@ -1504,7 +1606,12 @@ function displayResults(results) {
   let inputGrid = '';
   for (let i = 0; i < inputHeight; i++) {
     const row = results.input.data.slice(i * inputWidth, (i + 1) * inputWidth);
-    inputGrid += row.join(' ') + '<br>';
+    let rowElements = '';
+    row.forEach(r => {
+      const element = '<div>'+ r + '</div>';
+      rowElements += element;
+    })
+    inputGrid += rowElements;
   }
   
   // Output grid
@@ -1514,21 +1621,24 @@ function displayResults(results) {
   for (let i = 0; i < outputHeight; i++) {
     const row = results.output.data.slice(i * outputWidth, (i + 1) * outputWidth)
       .map(x => x.toFixed(2));
-    outputGrid += row.join(' ') + '<br>';
+    let rowElements = '';
+    row.forEach(r => {
+      const element = '<div>'+ r + '</div>';
+      rowElements += element;
+    })
+    outputGrid += rowElements;
   }
 
-  resultDiv.innerHTML = 
-    '<div class="pooling-type">' +
-      '<h3>' + results.poolingType + '</h3>' +
-    '</div>' +
-    '<div class="grid-container">' +
+  document.querySelector('h1').innerHTML = 'WebNN Pooling ' + results.poolingType;
+  
+  resultDiv.innerHTML = '<div class="grid-container">' +
       '<div class="grid-item">' +
         '<h4>Input (' + inputHeight + 'x' + inputWidth + ')</h4>' +
-        '<div class="grid">' + inputGrid + '</div>' +
+        '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Output (' + outputHeight + 'x' + outputWidth + ')</h4>' +
-        '<div class="grid">' + outputGrid + '</div>' +
+        '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
 }
@@ -1643,6 +1753,21 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   gap: 10px;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #f2f2f2;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #fafafa;
+}
+
 h1 { margin: 10px 0; }
 
 h4 { margin: 0; }
@@ -1686,24 +1811,55 @@ button:hover {
 }
 
 .grid {
+  display: grid;
   font-family: monospace;
-  padding: 10px;
+  padding: 6px;
   border: 1px solid #ddd;
+  gap: 6px;
 }
 
-table {
-  border-collapse: collapse;
+.grid div {
+  justify-self: end;
 }
 
-th,
-td {
-  border: 1px solid #f2f2f2;
-  padding: 4px 8px;
-  text-align: center;
+.g1 {
+  grid-template-columns: repeat(1, 1fr);
 }
 
-th {
-  background-color: #fafafa;
+.g2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.g3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.g4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.g5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.g6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.g7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.g8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.g9 {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.g10 {
+  grid-template-columns: repeat(10, 1fr);
 }`}
   },
 },
