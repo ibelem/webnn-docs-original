@@ -886,7 +886,12 @@ function displayResults(results) {
   let inputGrid = '';
   for (let i = 0; i < inputHeight; i++) {
     const row = results.input.data.slice(i * inputWidth, (i + 1) * inputWidth);
-    inputGrid += row.join(' ') + '<br>';
+    let rowElements = '';
+    row.forEach(r => {
+      const element = '<div>'+ r + '</div>';
+      rowElements += element;
+    })
+    inputGrid += rowElements;
   }
 
   // Filter grid
@@ -895,7 +900,12 @@ function displayResults(results) {
   let filterGrid = '';
   for (let i = 0; i < filterHeight; i++) {
     const row = results.filter.data.slice(i * filterWidth, (i + 1) * filterWidth);
-    filterGrid += row.join(' ') + '<br>';
+    let rowElements = '';
+    row.forEach(r => {
+      const element = '<div>'+ r + '</div>';
+      rowElements += element;
+    })
+    filterGrid += rowElements;
   }
   
   // Output grid
@@ -905,22 +915,27 @@ function displayResults(results) {
   for (let i = 0; i < outputHeight; i++) {
     const row = results.output.data.slice(i * outputWidth, (i + 1) * outputWidth)
       .map(x => x.toFixed(1));
-    outputGrid += row.join(' ') + '<br>';
+    let rowElements = '';
+    row.forEach(r => {
+      const element = '<div>'+ r + '</div>';
+      rowElements += element;
+    })
+    outputGrid += rowElements;
   }
 
   resultDiv.innerHTML = 
     '<div class="grid-container">' +
       '<div class="grid-item">' +
         '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
-        '<div class="grid">' + inputGrid + '</div>' +
+        '<div class="grid g'+ results.input.shape[2] +'">' + inputGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Filter ' + filterHeight + 'x' + filterWidth + '</h4>' +
-        '<div class="grid">' + filterGrid + '</div>' +
+        '<div class="grid g'+ results.filter.shape[2] +'">' + filterGrid + '</div>' +
       '</div>' +
       '<div class="grid-item">' +
         '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
-        '<div class="grid">' + outputGrid + '</div>' +
+        '<div class="grid g'+ results.output.shape[2] +'">' + outputGrid + '</div>' +
       '</div>' +
     '</div>';
 }
@@ -991,7 +1006,7 @@ th {
   display: flex;
   justify-content: start;
   margin: 0;
-  gap: 2rem;
+  gap: 10px;
 }
 
 .grid-item {
@@ -1003,10 +1018,12 @@ th {
 }
 
 .grid {
+  display: grid;
   font-family: monospace;
   font-size: 0.9rem;
   padding: 10px;
   border: 1px solid #ccc;
+  gap: 6px;
 }
 
 .grid div {
