@@ -199,127 +199,164 @@ const msg = ref('// Transformers.js + Vue');
         active: true,
         code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
 
-const videoElement = document.getElementById("video");
-const canvasElement = document.getElementById("canvas");
-const overlayElement = document.getElementById("overlay");
-const statusElement = document.getElementById("status");
-const confidenceSlider = document.getElementById("confidence");
-const confidenceValue = document.getElementById("confidence-value");
+// DOM Elements
+const videoElement = document.getElementById('video');
+const canvasElement = document.getElementById('canvas');
+const overlayElement = document.getElementById('overlay');
+const statusElement = document.getElementById('status');
+const confidenceSlider = document.getElementById('confidence');
+const confidenceValue = document.getElementById('confidence-value');
+const startButton = document.getElementById('start-button');
+const stopButton = document.getElementById('stop-button');
 
 // Configuration
-let MODEL_ID = "webnn/yolov8n"; // Default model
-let confidenceThreshold = 0.25;
-let isProcessing = false;
-let lastFrameTime = 0;
-let detectionLoopId = null; // Store the requestAnimationFrame ID
-let stream = null; // Store the camera stream
+const CONFIG = {
+  DEFAULT_MODEL: 'webnn/yolov8n',
+  CONFIDENCE_THRESHOLD: 0.25,
+  NMS_IOU_THRESHOLD: 0.5,
+  CANVAS_WIDTH: 480,
+  YOLO_INPUT_SIZE: 640
+};
 
-// Add event listeners for model selection
-const modelRadios = document.getElementsByName("model");
-modelRadios.forEach(radio => {
-  radio.addEventListener("change", async () => {
-    // Stop the current detection process
-    stopDetection();
+// Detection state
+const state = {
+  modelId: CONFIG.DEFAULT_MODEL,
+  confidenceThreshold: CONFIG.CONFIDENCE_THRESHOLD,
+  isProcessing: false,
+  lastFrameTime: 0,
+  detectionLoopId: null,
+  cameraStream: null,
+  model: null,
+  processor: null
+};
 
-    // Update the model ID
-    MODEL_ID = radio.value;
-    console.log('Model switched to: ' + MODEL_ID);
-    statusElement.textContent = 'Model switched to: ' + MODEL_ID;
-
-    // Start the detection with the new model
-    await startDetection();
-  });
-});
-
-// Initialize sliders
-confidenceSlider.value = confidenceThreshold;
-confidenceValue.textContent = confidenceThreshold;
-confidenceSlider.addEventListener("input", () => {
-  confidenceThreshold = parseFloat(confidenceSlider.value);
-  confidenceValue.textContent = confidenceThreshold.toFixed(2);
-});
-
-// Colors for bounding boxes
-const COLORS = [
-  "#FF3838", "#FF9D97", "#FF701F", "#FFB21D", "#CFD231", 
-  "#48F90A", "#92CC17", "#3DDB86", "#1A9334", "#00D4BB", 
-  "#2C99A8", "#00C2FF", "#344593", "#6473FF", "#0018EC", 
-  "#8438FF", "#520085", "#CB38FF", "#FF95C8", "#FF37C7"
+// Colors for bounding boxes - using vibrant, distinct colors
+const DETECTION_COLORS = [
+  '#FF3838', '#FF9D97', '#FF701F', '#FFB21D', '#CFD231', 
+  '#48F90A', '#92CC17', '#3DDB86', '#1A9334', '#00D4BB', 
+  '#2C99A8', '#00C2FF', '#344593', '#6473FF', '#0018EC', 
+  '#8438FF', '#520085', '#CB38FF', '#FF95C8', '#FF37C7'
 ];
 
+// Initialize UI elements
+function initializeUI() {
+  // Set initial confidence slider value
+  confidenceSlider.value = state.confidenceThreshold;
+  confidenceValue.textContent = state.confidenceThreshold;
+  
+  // Add event listeners for confidence slider
+  confidenceSlider.addEventListener('input', () => {
+    state.confidenceThreshold = parseFloat(confidenceSlider.value);
+    confidenceValue.textContent = state.confidenceThreshold.toFixed(2);
+  });
+  
+  // Add event listeners for model selection
+  const modelRadios = document.getElementsByName('model');
+  modelRadios.forEach(radio => {
+    radio.addEventListener('change', async () => {
+      await switchModel(radio.value);
+    });
+  });
+  
+  // Add event listeners for start and stop buttons
+  startButton.addEventListener('click', handleStartDetection);
+  stopButton.addEventListener('click', handleStopDetection);
+}
+
+// Handle model switching
+async function switchModel(newModelId) {
+  stopDetection();
+  state.modelId = newModelId;
+  updateStatus('Model switched to: ' + newModelId);
+  console.log('Model switched to: ' + newModelId);
+  await startDetection();
+}
+
+// Load and initialize the model
 async function initializeModel() {
   try {
+    updateStatus('Loading model: ' + state.modelId + '...');
     console.log('Using webnn-gpu backend with fp16 precision');
+    
     // Load model and processor
-    const model = await AutoModel.from_pretrained(MODEL_ID, {
-      device: "webnn-gpu",
-      dtype: "fp16",
+    const model = await AutoModel.from_pretrained(state.modelId, {
+      device: 'webnn-gpu',
+      dtype: 'fp16',
       session_options: {
         logSeverityLevel: 0
       }
     });
     
-    const processor = await AutoProcessor.from_pretrained(MODEL_ID);
+    const processor = await AutoProcessor.from_pretrained(state.modelId);
     
-    // Configure processor to match model's expected input size (640x640)
-    processor.feature_extractor.size = { width: 640, height: 640 };
+    // Configure processor for YOLO's expected input size
+    processor.feature_extractor.size = { 
+      width: CONFIG.YOLO_INPUT_SIZE, 
+      height: CONFIG.YOLO_INPUT_SIZE 
+    };
     
-    // Log the class names from the model config
-    console.log("Model config:", model.config);
+    // Log model configuration for debugging
+    console.log('Model config:', model.config);
     
-    statusElement.textContent = "Model loaded! Starting camera...";
+    // Store in state for reuse
+    state.model = model;
+    state.processor = processor;
+    
+    updateStatus('Model loaded successfully. Starting camera...');
     return { model, processor };
   } catch (error) {
-    statusElement.textContent = 'Error loading model: ' + error.message;
-    console.error("Model initialization error:", error);
+    updateStatus('Error loading model: ' + error.message);
+    console.error('Model initialization error:', error);
     throw error;
   }
 }
 
+// Initialize camera
 function setupCamera() {
   return new Promise((resolve, reject) => {
     navigator.mediaDevices.getUserMedia({ 
       video: { 
-        facingMode: "environment",
+        facingMode: 'environment',
         width: { ideal: 1280 },
         height: { ideal: 720 }
       } 
     })
     .then(stream => {
       videoElement.srcObject = stream;
+      state.cameraStream = stream;
       
       videoElement.onloadedmetadata = () => {
-        // Set canvas size to 480px width and proportional height
+        // Calculate aspect ratio and set canvas dimensions
         const aspectRatio = videoElement.videoHeight / videoElement.videoWidth;
-        canvasElement.width = 480;
-        canvasElement.height = 480 * aspectRatio;
+        canvasElement.width = CONFIG.CANVAS_WIDTH;
+        canvasElement.height = CONFIG.CANVAS_WIDTH * aspectRatio;
+        
+        // Set overlay to match canvas size
         overlayElement.style.width = canvasElement.width + 'px';
-        // overlayElement.style.height = canvasElement.height + 'px';
         
         // Start video playback
-        videoElement.play();
-        resolve(stream);
+        videoElement.play()
+          .then(() => resolve(stream))
+          .catch(error => {
+            updateStatus('Video playback error: ' + error.message);
+            reject(error);
+          });
       };
     })
     .catch(error => {
-      statusElement.textContent = 'Camera error: '+ error.message;
+      updateStatus('Camera access error: ' + error.message);
       reject(error);
     });
   });
 }
 
-function processDetections(outputs, imageWidth, imageHeight, classLabels) {
-
-  // Process YOLOv8 outputs (shape: [1, 84, 8400])
-  // For each of the 8400 predictions, we have 84 values:
-  // - First 4 are bounding box coordinates (x, y, width, height)
-  // - Remaining 80 are class confidences for COCO dataset
-
+// Process YOLOv8 detections
+function processDetections(outputs, classLabels) {
   // Clear previous detections
-  overlayElement.innerHTML = "";
+  overlayElement.innerHTML = '';
 
-  const scaleX = canvasElement.width / 640; // Scale factor for width
-  const scaleY = canvasElement.height / 640; // Scale factor for height
+  const scaleX = canvasElement.width / CONFIG.YOLO_INPUT_SIZE;
+  const scaleY = canvasElement.height / CONFIG.YOLO_INPUT_SIZE;
 
   const predictions = outputs.tolist()[0]; // Get the first batch
   const numClasses = predictions.length - 4; // Subtract 4 for bbox coordinates
@@ -334,6 +371,7 @@ function processDetections(outputs, imageWidth, imageHeight, classLabels) {
     const w = predictions[2][i];
     const h = predictions[3][i];
 
+    // Find class with highest confidence
     let maxScore = 0;
     let maxClassIndex = -1;
 
@@ -345,8 +383,10 @@ function processDetections(outputs, imageWidth, imageHeight, classLabels) {
       }
     }
 
-    if (maxScore < confidenceThreshold) continue;
+    // Filter by confidence threshold
+    if (maxScore < state.confidenceThreshold) continue;
 
+    // Convert to canvas coordinates
     const xmin = (x - w / 2) * scaleX;
     const ymin = (y - h / 2) * scaleY;
     const width = w * scaleX;
@@ -360,35 +400,43 @@ function processDetections(outputs, imageWidth, imageHeight, classLabels) {
   }
 
   // Apply Non-Maximum Suppression (NMS)
-  detections = applyNMS(detections, 0.5); // 0.5 is the IoU threshold
+  detections = applyNMS(detections, CONFIG.NMS_IOU_THRESHOLD);
 
   // Render filtered detections
-  detections.forEach((detection) => {
+  renderDetections(detections, classLabels);
+
+  return detections.length;
+}
+
+// Render detection boxes and labels on overlay
+function renderDetections(detections, classLabels) {
+  detections.forEach(detection => {
     const [x, y, width, height] = detection.bbox;
     const className = classLabels[detection.class];
-    const color = COLORS[detection.class % COLORS.length];
+    const color = DETECTION_COLORS[detection.class % DETECTION_COLORS.length];
     const score = detection.score;
 
-    const boxElement = document.createElement("div");
-    boxElement.className = "detection-box";
+    // Create box element
+    const boxElement = document.createElement('div');
+    boxElement.className = 'detection-box';
     boxElement.style.left = x + 'px';
     boxElement.style.top = y + 'px';
-    boxElement.style.width =  width + 'px';
-    boxElement.style.height =  height + 'px';
+    boxElement.style.width = width + 'px';
+    boxElement.style.height = height + 'px';
     boxElement.style.borderColor = color;
 
-    const labelElement = document.createElement("div");
-    labelElement.className = "detection-label";
+    // Create label element
+    const labelElement = document.createElement('div');
+    labelElement.className = 'detection-label';
     labelElement.style.backgroundColor = color;
     labelElement.textContent = className + ' ' + (score * 100).toFixed(1) + '%';
 
     boxElement.appendChild(labelElement);
     overlayElement.appendChild(boxElement);
   });
-
-  return detections.length;
 }
 
+// Apply Non-Maximum Suppression to filter overlapping boxes
 function applyNMS(detections, iouThreshold) {
   // Sort detections by confidence score in descending order
   detections.sort((a, b) => b.score - a.score);
@@ -417,26 +465,35 @@ function applyNMS(detections, iouThreshold) {
   return filteredDetections;
 }
 
+// Calculate Intersection over Union for two bounding boxes
 function calculateIoU(boxA, boxB) {
   const [xA, yA, wA, hA] = boxA;
   const [xB, yB, wB, hB] = boxB;
 
+  // Calculate coordinates of intersection rectangle
   const x1 = Math.max(xA, xB);
   const y1 = Math.max(yA, yB);
   const x2 = Math.min(xA + wA, xB + wB);
-  const y2 = Math.min(yA + wA, yB + hB);
+  const y2 = Math.min(yA + hA, yB + hB);
 
-  const intersection = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
+  // Calculate area of intersection
+  const intersectionWidth = Math.max(0, x2 - x1);
+  const intersectionHeight = Math.max(0, y2 - y1);
+  const intersection = intersectionWidth * intersectionHeight;
+  
+  // Calculate areas of both bounding boxes
   const areaA = wA * hA;
   const areaB = wB * hB;
 
+  // Calculate IoU
   const union = areaA + areaB - intersection;
   return intersection / union;
 }
 
-async function detectFrame(model, processor, ctx) {
-  if (isProcessing) return;
-  isProcessing = true;
+// Process a single video frame
+async function processFrame(ctx) {
+  if (state.isProcessing) return;
+  state.isProcessing = true;
   
   try {
     const startTime = performance.now();
@@ -448,91 +505,127 @@ async function detectFrame(model, processor, ctx) {
     // Convert to RawImage format for transformers.js
     const image = new RawImage(imageData.data, canvasElement.width, canvasElement.height, 4);
     
-    // Process image and run model
-    const inputs = await processor(image);
-    const { outputs } = await model(inputs);
+    // Process image with the model
+    const inputs = await state.processor(image);
+    const { outputs } = await state.model(inputs);
     
     // Extract class labels from model config
     const classLabels = {};
-    for (const [id, label] of Object.entries(model.config.id2label)) {
+    for (const [id, label] of Object.entries(state.model.config.id2label)) {
       classLabels[id] = label;
     }
     
     // Process and display detections
-    const detectionCount = processDetections(outputs, canvasElement.width, canvasElement.height, classLabels);
+    const detectionCount = processDetections(outputs, classLabels);
     
-    // Calculate FPS
+    // Calculate performance metrics
     const endTime = performance.now();
     const frameTime = endTime - startTime;
-    const fps = 1000 / (endTime - lastFrameTime);
-    lastFrameTime = endTime;
+    const fps = 1000 / (endTime - state.lastFrameTime);
+    state.lastFrameTime = endTime;
     
-    // Update status
-    statusElement.textContent = 'Detected ' + detectionCount + ' objects · '+ fps.toFixed(1) + ' FPS · ' + frameTime.toFixed(0) + 'ms processing';
+    // Update status display
+    updateStatus(
+      'Detected ' + detectionCount + ' objects · ' + 
+      fps.toFixed(1) + ' FPS · ' + 
+      frameTime.toFixed(0) + 'ms processing'
+    );
   } catch (error) {
-    console.error("Detection error:", error);
-    statusElement.textContent = 'Error: ' + error.message;
+    console.error('Detection error:', error);
+    updateStatus('Error: ' + error.message);
   } finally {
-    isProcessing = false;
+    state.isProcessing = false;
   }
 }
 
+// Main detection loop
+function startDetectionLoop(ctx) {
+  function detectionLoop() {
+    processFrame(ctx).finally(() => {
+      state.detectionLoopId = requestAnimationFrame(detectionLoop);
+    });
+  }
+  
+  detectionLoop();
+}
+
+// Start detection process
 async function startDetection() {
   try {
-    // Initialize model and camera
-    const { model, processor } = await initializeModel();
-    stream = await setupCamera();
-
-    // Get the canvas context with willReadFrequently set to true
-    const ctx = canvasElement.getContext("2d", { willReadFrequently: true });
-
-    // Main detection loop
-    function detectionLoop() {
-      detectFrame(model, processor, ctx).finally(() => {
-        detectionLoopId = requestAnimationFrame(detectionLoop);
-      });
+    // Initialize model if not already loaded
+    if (!state.model || !state.processor) {
+      await initializeModel();
     }
+    
+    // Setup camera
+    await setupCamera();
+
+    // Get the canvas context with willReadFrequently set to true for better performance
+    const ctx = canvasElement.getContext('2d', { willReadFrequently: true });
 
     // Start detection loop
-    detectionLoop();
+    startDetectionLoop(ctx);
+    
+    return true;
   } catch (error) {
-    console.error("Application error:", error);
-    statusElement.textContent = 'Failed to start:' + error.message;
+    console.error('Application error:', error);
+    updateStatus('Failed to start: ' + error.message);
+    return false;
   }
 }
 
+// Stop detection process
 function stopDetection() {
-  if (detectionLoopId) {
-    cancelAnimationFrame(detectionLoopId);
-    detectionLoopId = null;
+  // Cancel animation frame
+  if (state.detectionLoopId) {
+    cancelAnimationFrame(state.detectionLoopId);
+    state.detectionLoopId = null;
   }
 
-  if (stream) {
-    const tracks = stream.getTracks();
-    tracks.forEach((track) => track.stop());
-    stream = null;
+  // Stop camera stream
+  if (state.cameraStream) {
+    const tracks = state.cameraStream.getTracks();
+    tracks.forEach(track => track.stop());
+    state.cameraStream = null;
   }
 
+  // Clear video source
   videoElement.srcObject = null;
-  isProcessing = false; // Ensure no further frames are processed
-  statusElement.textContent = "Detection stopped";
+  
+  // Reset state
+  state.isProcessing = false;
+  
+  updateStatus('Detection stopped');
 }
 
-// Add event listeners for start and stop buttons
-const startButton = document.getElementById("start-button");
-const stopButton = document.getElementById("stop-button");
-
-startButton.addEventListener("click", async () => {
+// Handle start button click
+async function handleStartDetection() {
   startButton.disabled = true;
   stopButton.disabled = false;
-  await startDetection();
-});
+  const success = await startDetection();
+  
+  // Revert button state if startup failed
+  if (!success) {
+    startButton.disabled = false;
+    stopButton.disabled = true;
+  }
+}
 
-stopButton.addEventListener("click", () => {
+// Handle stop button click
+function handleStopDetection() {
   stopDetection();
   startButton.disabled = false;
   stopButton.disabled = true;
-});`},
+}
+
+// Update status display
+function updateStatus(message) {
+  statusElement.textContent = message;
+  console.log('Status:', message);
+}
+
+// Initialize the application
+initializeUI();`},
       '/styles.css': {
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
