@@ -198,7 +198,6 @@ const msg = ref('// Transformers.js + Vue');
     <div id="log"></div>
 
     <script type="module" src="./webnn.js"></script>
-    <script src="./ui.js"></script>
   </body>
 </html>
 `},
@@ -526,8 +525,9 @@ function stopDetection() {
   isProcessing = false; // Ensure no further frames are processed
   statusElement.textContent = "Detection stopped.";
   fpsElement.textContent = "FPS: 0";
-}`},'/ui.js': {
-  code: `// Add event listeners for start and stop buttons
+}
+
+// Add event listeners for start and stop buttons
 const startButton = document.getElementById("start-button");
 const stopButton = document.getElementById("stop-button");
 
