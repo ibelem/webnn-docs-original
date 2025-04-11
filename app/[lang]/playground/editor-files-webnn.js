@@ -1490,7 +1490,6 @@ function createInputTensor(builder, shape) {
 // Execute pooling operation
 async function runPooling(context, builder, input, poolingType, options, inputData, outputShape) {
   let poolOperation;
-  
   // Select the appropriate pooling operation based on the type
   switch(poolingType) {
     case 'averagePool2d':
