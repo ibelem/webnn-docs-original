@@ -158,18 +158,18 @@ const msg = ref('// Transformers.js + Vue');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js | Real-time Object Detection</title>
+    <title>WebNN / Transformers.js - Object Detection</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
-    <h1>WebNN / Transformers.js - Object Detection / Yolo</h1>
+    <h1>WebNN / Transformers.js - Object Detection</h1>
     <div class="container">
       <video id="video" playsinline></video>
       <canvas id="canvas"></canvas>
       <div id="overlay"></div>
     </div>
-    
+    <div id="status"></div>
     <div class="controls">
       <div>
         <label for="confidence">Confidence Threshold: <span id="confidence-value">0.25</span></label>
@@ -190,11 +190,7 @@ const msg = ref('// Transformers.js + Vue');
         <button id="stop-button" disabled>Stop Detection</button>
       </div>
     </div>
-    
-    <div class="status-bar">
-      <div id="status"></div>
-      <div id="fps">FPS: 0</div>
-    </div>
+
     <div id="log"></div>
 
     <script type="module" src="./webnn.js"></script>
@@ -209,7 +205,6 @@ const videoElement = document.getElementById("video");
 const canvasElement = document.getElementById("canvas");
 const overlayElement = document.getElementById("overlay");
 const statusElement = document.getElementById("status");
-const fpsElement = document.getElementById("fps");
 const confidenceSlider = document.getElementById("confidence");
 const confidenceValue = document.getElementById("confidence-value");
 
@@ -298,8 +293,8 @@ function setupCamera() {
       videoElement.onloadedmetadata = () => {
         // Set canvas size to 720px width and proportional height
         const aspectRatio = videoElement.videoHeight / videoElement.videoWidth;
-        canvasElement.width = 720;
-        canvasElement.height = 720 * aspectRatio;
+        canvasElement.width = 480;
+        canvasElement.height = 480 * aspectRatio;
         overlayElement.style.width = canvasElement.width + 'px';
         // overlayElement.style.height = canvasElement.height + 'px';
         
@@ -475,8 +470,7 @@ async function detectFrame(model, processor, ctx) {
     lastFrameTime = endTime;
     
     // Update status
-    statusElement.textContent = 'Detected: ' + detectionCount + 'objects';
-    fpsElement.textContent = 'FPS: '+ fps.toFixed(1) + ' | Processing: ' + frameTime.toFixed(0) + 'ms';
+    statusElement.textContent = 'Detected ' + detectionCount + ' objects · '+ fps.toFixed(1) FPS + ' · ' + frameTime.toFixed(0) + 'ms processing';
   } catch (error) {
     console.error("Detection error:", error);
     statusElement.textContent = 'Error: ' + error.message;
@@ -523,8 +517,7 @@ function stopDetection() {
 
   videoElement.srcObject = null;
   isProcessing = false; // Ensure no further frames are processed
-  statusElement.textContent = "Detection stopped.";
-  fpsElement.textContent = "FPS: 0";
+  statusElement.textContent = "Detection stopped";
 }
 
 // Add event listeners for start and stop buttons
@@ -595,10 +588,10 @@ h1 { margin: 10px 0; }
   gap: 10px;
 }
 
-.status-bar {
+#status {
   display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
+  justify-content: start;
+  margin: 5px 0;
 }`},
     },
  
