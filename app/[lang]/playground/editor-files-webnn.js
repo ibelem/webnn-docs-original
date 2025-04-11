@@ -1500,11 +1500,7 @@ async function runPooling(context, builder, input, poolingType, options, inputDa
       poolOperation = builder.maxPool2d(input, options);
       break;
     case 'l2Pool2d':
-      // L2Pool2d implementation - since WebNN doesn't have a direct l2Pool2d operation
-      // We'll implement it as: sqrt(averagePool2d(input^2))
-      const squared = builder.pow(input, builder.constant({dataType: 'float32'}, 2));
-      const avgPooled = builder.averagePool2d(squared, options);
-      poolOperation = builder.sqrt(avgPooled);
+      poolOperation = builder.l2Pool2d(input, options);
       break;
     default:
       throw new Error('Unsupported pooling type: ' + poolingType);
