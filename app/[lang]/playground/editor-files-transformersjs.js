@@ -210,10 +210,6 @@ const msg = ref('// Transformers.js + Vue');
         active: true,
         code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
 
-// Reduce log noise from ONNX Runtime
-env.backends.onnx.logSeverityLevel = 0;
-
-// DOM elements
 const videoElement = document.getElementById("video");
 const canvasElement = document.getElementById("canvas");
 const overlayElement = document.getElementById("overlay");
@@ -264,18 +260,11 @@ const COLORS = [
 ];
 
 async function initializeModel() {
-  statusElement.textContent = "Loading model...";
-  
   try {
-    // Detect best available backend
-    const urlParams = new URLSearchParams(window.location.search);
-    const provider = urlParams.get('provider') || 'webgpu';
-    
-    console.log('Using ' + provider + ' backend with fp16 precision');
-    
+    console.log('Using webnn-gpu backend with fp16 precision');
     // Load model and processor
     const model = await AutoModel.from_pretrained(MODEL_ID, {
-      device: provider.toLowerCase(),
+      device: "webnn-gpu",
       dtype: "fp16",
       session_options: {
         logSeverityLevel: 0
@@ -289,7 +278,6 @@ async function initializeModel() {
     
     // Log the class names from the model config
     console.log("Model config:", model.config);
-    console.log("Class labels:", model.config.id2label);
     
     statusElement.textContent = "Model loaded! Starting camera...";
     return { model, processor };
