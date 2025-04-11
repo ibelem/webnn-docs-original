@@ -380,7 +380,7 @@ function processDetections(outputs, imageWidth, imageHeight, classLabels) {
     const labelElement = document.createElement("div");
     labelElement.className = "detection-label";
     labelElement.style.backgroundColor = color;
-    labelElement.textContent = 'className ' + (score * 100).toFixed(1) + '%';
+    labelElement.textContent = className + ' ' + (score * 100).toFixed(1) + '%';
 
     boxElement.appendChild(labelElement);
     overlayElement.appendChild(boxElement);
