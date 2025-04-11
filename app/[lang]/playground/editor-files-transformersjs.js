@@ -163,7 +163,7 @@ const msg = ref('// Transformers.js + Vue');
   </head>
 
   <body>
-    WebNN / Transformers.js | Real-time Object Detection / Yolo
+    <h1>WebNN / Transformers.js - Object Detection / Yolo</h1>
     <div class="container">
       <video id="video" playsinline></video>
       <canvas id="canvas"></canvas>
@@ -176,7 +176,8 @@ const msg = ref('// Transformers.js + Vue');
         <input type="range" min="0.1" max="0.9" step="0.05" value="0.25" id="confidence">
       </div>
       <div>
-        <label>Select Model:</label>
+        <input type="radio" id="yolo12n" name="model" value="webnn/yolo12n">
+        <label for="yolo12n">YOLO12n</label>
         <input type="radio" id="yolo11n" name="model" value="webnn/yolo11n">
         <label for="yolo11n">YOLO11n</label>
         <input type="radio" id="yolov8n" name="model" value="webnn/yolov8n" checked>
@@ -191,13 +192,8 @@ const msg = ref('// Transformers.js + Vue');
     </div>
     
     <div class="status-bar">
-      <div id="status">Loading...</div>
+      <div id="status"></div>
       <div id="fps">FPS: 0</div>
-    </div>
-    <div>
-      session_options: { logSeverityLevel: 0 }<br/>
-      env.backends.onnx.logSeverityLevel = 0; <br/>
-      <a href="?provider=webgpu">WebGPU</a> | <a href="?provider=webnn-gpu">WebNN GPU</a> | <a href="?provider=webnn-npu">WebNN NPU</a>
     </div>
     <div id="log"></div>
 
@@ -530,9 +526,8 @@ function stopDetection() {
   isProcessing = false; // Ensure no further frames are processed
   statusElement.textContent = "Detection stopped.";
   fpsElement.textContent = "FPS: 0";
-}
-
-// Add event listeners for start and stop buttons
+}`},'/ui.js': {
+  code: `// Add event listeners for start and stop buttons
 const startButton = document.getElementById("start-button");
 const stopButton = document.getElementById("stop-button");
 
