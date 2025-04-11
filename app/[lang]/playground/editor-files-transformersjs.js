@@ -190,9 +190,7 @@ const msg = ref('// Transformers.js + Vue');
         <button id="stop-button" disabled>Stop Detection</button>
       </div>
     </div>
-
     <div id="log"></div>
-
     <script type="module" src="./webnn.js"></script>
   </body>
 </html>
@@ -291,7 +289,7 @@ function setupCamera() {
       videoElement.srcObject = stream;
       
       videoElement.onloadedmetadata = () => {
-        // Set canvas size to 720px width and proportional height
+        // Set canvas size to 480px width and proportional height
         const aspectRatio = videoElement.videoHeight / videoElement.videoWidth;
         canvasElement.width = 480;
         canvasElement.height = 480 * aspectRatio;
@@ -470,7 +468,7 @@ async function detectFrame(model, processor, ctx) {
     lastFrameTime = endTime;
     
     // Update status
-    statusElement.textContent = 'Detected ' + detectionCount + ' objects · '+ fps.toFixed(1) FPS + ' · ' + frameTime.toFixed(0) + 'ms processing';
+    statusElement.textContent = 'Detected ' + detectionCount + ' objects · '+ fps.toFixed(1) + ' FPS · ' + frameTime.toFixed(0) + 'ms processing';
   } catch (error) {
     console.error("Detection error:", error);
     statusElement.textContent = 'Error: ' + error.message;
