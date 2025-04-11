@@ -551,6 +551,8 @@ stopButton.addEventListener("click", () => {
   font-size: 0.8rem;
 }
 
+h1 { margin: 10px 0; }
+
 .container {
   position: relative;
   margin: 0 auto;
