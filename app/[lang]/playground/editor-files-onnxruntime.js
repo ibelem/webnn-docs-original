@@ -45,7 +45,6 @@ export const onnxruntimeEditorFiles = {
       '/webnn.js': {
         active: true,
         code: `// const HOST = 'https://huggingface.co'; // Set this remote host for model loading if you are not in China
-
 const HOST = 'https://hf-mirror.com'; // PRC users only, set remote host for model loading
 
 async function classifyImage(pathToImage) {

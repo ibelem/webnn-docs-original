@@ -41,7 +41,6 @@ export const transformersjsEditorFiles = {
       '/webnn.js': {
         active: true,
         code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
-
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host for model loading 
 
 async function classifyImage() {
@@ -200,7 +199,6 @@ const msg = ref('// Transformers.js + Vue');
       '/webnn.js': {
         active: true,
         code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
-
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host for model loading 
 
 // DOM Elements
