@@ -813,7 +813,8 @@ async function run() {
     throw error;
   }
 }`},
-      '/ui.js': { code:`function createOptionsTable(element, options) {
+      '/ui.js': {
+        code: `function createOptionsTable(element, options) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
@@ -1191,7 +1192,8 @@ async function run() {
     throw error;
   }
 }`},
-      '/ui.js': { code: `function createOptionsTable(element, options) {
+      '/ui.js': {
+        code: `function createOptionsTable(element, options) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
@@ -1465,12 +1467,12 @@ th {
     },
   },
   "pooling": {
-  "title": "pooling",
-  "description": "Compute a pooling operation (average, l2, max) across all the elements within the moving window over the input tensor",
-  "static": {
-    '/webnn.js': {
-      active: true,
-      code: `// Create WebNN context
+    "title": "pooling",
+    "description": "Compute a pooling operation (average, l2, max) across all the elements within the moving window over the input tensor",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `// Create WebNN context
 async function createWebNNContext() {
   if (!('ml' in navigator)) {
     throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
@@ -1566,7 +1568,8 @@ async function run(poolingType = 'maxPool2d') {
     throw error;
   }
 }`},
-    '/ui.js': { code:`function createOptionsTable(element, options) {
+      '/ui.js': {
+        code: `function createOptionsTable(element, options) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
@@ -1748,8 +1751,8 @@ async function initialize() {
 }
 
 document.addEventListener('DOMContentLoaded', initialize, false);` },
-    '/index.html': {
-      code: `<!DOCTYPE html>
+      '/index.html': {
+        code: `<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>WebNN Pooling</title>
@@ -1765,8 +1768,8 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   <script src="./ui.js"></script>
 </body>
 </html>` },
-    '/styles.css': {
-      code: `body {
+      '/styles.css': {
+        code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
   margin: 0;
@@ -1889,6 +1892,406 @@ button:hover {
 .g10 {
   grid-template-columns: repeat(10, 1fr);
 }`}
+    },
   },
-},
+  "transpose": {
+    "title": "transpose",
+    "description": "Permute the dimensions of the input tensor according to permutation",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `// Create WebNN context
+async function createWebNNContext() {
+if (!('ml' in navigator)) {
+  throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
+}
+try {
+  return await navigator.ml.createContext({ deviceType: 'cpu' });
+} catch (e) {
+  throw new Error('Failed to create WebNN context: ' + e.message);
+}
+}
+
+// Create input tensor
+function createInputTensor(builder, shape, data) {
+return builder.input('input', { dataType: 'float32', shape });
+}
+
+// Execute transpose operation
+async function runTranspose(context, builder, input, permutation, inputData, outputShape) {
+const transpose = builder.transpose(input, { permutation });
+const graph = await builder.build({ 'output': transpose });
+
+const inputTensor = await context.createTensor({
+  dataType: 'float32',
+  shape: input.shape,
+  writable: true
+});
+
+await context.writeTensor(inputTensor, inputData);
+
+const outputTensor = await context.createTensor({
+  dataType: 'float32',
+  shape: outputShape,
+  readable: true
+});
+
+const inputs = {
+  'input': inputTensor
+};
+  
+const outputs = {
+  'output': outputTensor
+};
+
+await context.dispatch(graph, inputs, outputs);
+return await context.readTensor(outputTensor);
+}
+
+async function run() {
+try {
+  const context = await createWebNNContext();
+  const builder = new MLGraphBuilder(context);
+  
+  // Create a 3D tensor with shape [2, 3, 4]
+  const inputShape = [2, 3, 4];
+  const inputSize = inputShape.reduce((a, b) => a * b, 1);
+  
+  // Fill with sequential values for easy identification after transpose
+  const inputData = new Float32Array(inputSize);
+  for (let i = 0; i < inputSize; i++) {
+    inputData[i] = i + 1;
+  }
+  
+  const input = createInputTensor(builder, inputShape, inputData);
+  
+  // Permutation pattern: [2, 0, 1] means:
+  // - dimension 0 moves to position 1
+  // - dimension 1 moves to position 2
+  // - dimension 2 moves to position 0
+  // So [2, 3, 4] becomes [4, 2, 3]
+  const permutation = [2, 0, 1];
+  
+  // Calculate output shape based on the permutation
+  const outputShape = permutation.map(p => inputShape[p]);
+  
+  const outputData = await runTranspose(context, builder, input, permutation, inputData, outputShape);
+  
+  console.log('Input Shape:', inputShape);
+  console.log('Input Data:', Array.from(inputData));
+  console.log('Permutation:', permutation);
+  console.log('Output Shape:', outputShape);
+  console.log('Output Data:', Array.from(new Float32Array(outputData)));
+  
+  // Format output for display
+  const formattedInput = formatTensor(inputData, inputShape);
+  const formattedOutput = formatTensor(new Float32Array(outputData), outputShape);
+  
+  return {
+    input: { 
+      shape: inputShape, 
+      data: Array.from(inputData),
+      formatted: formattedInput
+    },
+    permutation,
+    output: { 
+      shape: outputShape, 
+      data: Array.from(new Float32Array(outputData)),
+      formatted: formattedOutput
+    }
+  };
+  
+} catch (error) {
+  console.error('WebNN error:', error);
+  throw error;
+}
+}
+
+// Helper function to format tensor data for display
+function formatTensor(data, shape) {
+if (shape.length === 1) {
+  return Array.from(data);
+}
+
+const result = [];
+const size = shape.slice(1).reduce((a, b) => a * b, 1);
+
+for (let i = 0; i < shape[0]; i++) {
+  const slice = data.subarray(i * size, (i + 1) * size);
+  result.push(formatTensor(slice, shape.slice(1)));
+}
+
+return result;
+}
+
+// Execute the demo
+run()
+.then(result => {
+  console.log('Demo completed successfully!');
+  console.log('Result:', JSON.stringify(result, null, 2));
+})
+.catch(error => {
+  console.error('Demo failed:', error);
+});`},
+      '/ui.js': {
+        code: `function createOptionsTable(element, options) {
+const table = document.createElement('table');
+const thead = document.createElement('thead');
+const tbody = document.createElement('tbody');
+
+const headerRow = document.createElement('tr');
+const headers = ['Option', 'Value', 'Option', 'Value'];
+headers.forEach(text => {
+  const th = document.createElement('th');
+  th.textContent = text;
+  headerRow.appendChild(th);
+});
+thead.appendChild(headerRow);
+
+const entries = Object.entries(options);
+const halfLength = Math.ceil(entries.length / 2);
+const leftColumn = entries.slice(0, halfLength);
+const rightColumn = entries.slice(halfLength);
+
+for (let i = 0; i < halfLength; i++) {
+  const row = document.createElement('tr');
+
+  const leftKeyCell = document.createElement('td');
+  const leftValueCell = document.createElement('td');
+  if (leftColumn[i]) {
+    leftKeyCell.textContent = leftColumn[i][0];
+    const value = leftColumn[i][1];
+    if (value && value.dataType && value.shape) {
+      leftValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+    } else if (Array.isArray(value)) {
+      leftValueCell.textContent = '[' + value.join(', ') + ']';
+    } else {
+      leftValueCell.textContent = String(value);
+    }
+  }
+
+  const rightKeyCell = document.createElement('td');
+  const rightValueCell = document.createElement('td');
+  if (rightColumn[i]) {
+    rightKeyCell.textContent = rightColumn[i][0];
+    const value = rightColumn[i][1];
+    if (value && value.dataType && value.shape) {
+      rightValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
+    } else if (Array.isArray(value)) {
+      rightValueCell.textContent = '[' + value.join(', ') + ']';
+    } else {
+      rightValueCell.textContent = String(value);
+    }
+  }
+
+  row.appendChild(leftKeyCell);
+  row.appendChild(leftValueCell);
+  row.appendChild(rightKeyCell);
+  row.appendChild(rightValueCell);
+  tbody.appendChild(row);
+}
+
+table.appendChild(thead);
+table.appendChild(tbody);
+element.innerHTML = '';
+element.appendChild(table);
+}
+
+function displayResults(results) {
+const resultDiv = document.getElementById('result');
+if (!resultDiv) return;
+
+// Input grid
+const inputHeight = results.input.shape[2];
+const inputWidth = results.input.shape[3];
+let inputGrid = '';
+for (let i = 0; i < inputHeight; i++) {
+  const row = results.input.data.slice(i * inputWidth, (i + 1) * inputWidth)
+    .map(x => x.toFixed(1));
+  let rowElements = '';
+  row.forEach(r => {
+    const element = '<div>'+ r + '</div>';
+    rowElements += element;
+  })
+  inputGrid += rowElements;
+}
+
+// Filter grid
+const filterHeight = results.filter.shape[2];
+const filterWidth = results.filter.shape[3];
+let filterGrid = '';
+for (let i = 0; i < filterHeight; i++) {
+  const row = results.filter.data.slice(i * filterWidth, (i + 1) * filterWidth)
+    .map(x => x.toFixed(1));
+  let rowElements = '';
+  row.forEach(r => {
+    const element = '<div>'+ r + '</div>';
+    rowElements += element;
+  })
+  filterGrid += rowElements;
+}
+
+// Output grid
+const outputHeight = results.output.shape[2];
+const outputWidth = results.output.shape[3];
+let outputGrid = '';
+for (let i = 0; i < outputHeight; i++) {
+  const row = results.output.data.slice(i * outputWidth, (i + 1) * outputWidth)
+    .map(x => x.toFixed(1));
+  let rowElements = '';
+  row.forEach(r => {
+    const element = '<div>'+ r + '</div>';
+    rowElements += element;
+  })
+  outputGrid += rowElements;
+}
+
+resultDiv.innerHTML = 
+  '<div class="grid-container">' +
+    '<div class="grid-item">' +
+      '<h4>Input ' + inputHeight + 'x' + inputWidth + '</h4>' +
+      '<div class="grid g'+ results.input.shape[3] +'">' + inputGrid + '</div>' +
+    '</div>' +
+    '<div class="grid-item">' +
+      '<h4>Filter ' + filterHeight + 'x' + filterWidth + '</h4>' +
+      '<div class="grid g'+ results.filter.shape[3] +'">' + filterGrid + '</div>' +
+    '</div>' +
+    '<div class="grid-item">' +
+      '<h4>Output ' + outputHeight + 'x' + outputWidth + '</h4>' +
+      '<div class="grid g'+ results.output.shape[3] +'">' + outputGrid + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+async function initialize() {
+const statusDiv = document.getElementById('status');
+if (statusDiv) {
+  statusDiv.textContent = 'Running transpose with WebNN...';
+}
+
+try {
+  const results = await run();
+  if (results) {
+    if (statusDiv) {
+      createOptionsTable(statusDiv, results.options);
+    }
+    displayResults(results);
+  }
+} catch (error) {
+  console.error('Error:', error);
+  if (statusDiv) {
+    statusDiv.textContent = 'Error: ' + error.message;
+  }
+}
+}
+
+document.addEventListener('DOMContentLoaded', initialize, false);` },
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebNN Transpose</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <h1>WebNN Transpose</h1>
+  <div id="status"></div>
+  <div id="result"></div>
+  <script src="./webnn.js"></script>
+  <script src="./ui.js"></script>
+</body>
+</html>` },
+      '/styles.css': {
+        code: `body {
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+color: #333;
+font-size: 0.8rem;
+}
+
+table {
+border-collapse: collapse;
+margin: 0.5rem 0;
+}
+
+th, td {
+border: 1px solid #eee;
+padding: 0.2rem 0.5rem;
+text-align: center;
+}
+
+th {
+background-color: #fafafa;
+}
+
+.grid-container {
+display: flex;
+justify-content: start;
+margin: 0;
+gap: 10px;
+}
+
+.grid-item {
+text-align: center;
+}
+
+.grid-item h4 {
+margin: 0.5rem 0;
+}
+
+.grid {
+display: grid;
+font-family: monospace;
+font-size: 0.9rem;
+padding: 10px;
+border: 1px solid #ccc;
+gap: 6px;
+}
+
+.grid div {
+justify-self: end;
+}
+
+.g1 {
+grid-template-columns: repeat(1, 1fr);
+}
+
+.g2 {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.g3 {
+grid-template-columns: repeat(3, 1fr);
+}
+
+.g4 {
+grid-template-columns: repeat(4, 1fr);
+}
+
+.g5 {
+grid-template-columns: repeat(5, 1fr);
+}
+
+.g6 {
+grid-template-columns: repeat(6, 1fr);
+}
+
+.g7 {
+grid-template-columns: repeat(7, 1fr);
+}
+
+.g8 {
+grid-template-columns: repeat(8, 1fr);
+}
+
+.g9 {
+grid-template-columns: repeat(9, 1fr);
+}
+
+.g10 {
+grid-template-columns: repeat(10, 1fr);
+}`}
+    },
+  },
 }
