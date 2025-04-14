@@ -44,7 +44,11 @@ export const onnxruntimeEditorFiles = {
 </html>` },
       '/webnn.js': {
         active: true,
-        code: `async function classifyImage(pathToImage) {
+        code: `// const HOST = 'https://huggingface.co'; // Set this remote host for model loading if you are not in China
+
+const HOST = 'https://hf-mirror.com'; // PRC users only, set remote host for model loading
+
+async function classifyImage(pathToImage) {
   const imageTensor = await getImageTensorFromPath(pathToImage); // Convert image to a tensor
   const predictions = await runModel(imageTensor); // Run inference on the tensor
   console.log(predictions); // Print predictions to console
@@ -97,7 +101,7 @@ let modelSession;
 async function runModel(preprocessedData) {
   if (typeof modelSession == 'undefined') {
     // Configure WebNN.
-    const modelPath = "https://huggingface.co/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx";
+    const modelPath = HOST + "/webnn/mobilenet-v2/resolve/main/onnx/mobilenetv2-10_fp16.onnx";
     const devicePreference = "gpu"; // Other options include "npu" and "cpu".
     const options = {
       executionProviders: [{ name: "webnn", deviceType: devicePreference, powerPreference: "default" }],
