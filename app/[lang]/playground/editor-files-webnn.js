@@ -2148,10 +2148,11 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   // Show a sample of values
   const sampleSize = Math.min(20, data.length);
   const sample = data.slice(0, sampleSize).map(v => v.toFixed(1));
+  let values = (data.length > sampleSize) ? ", ..." : ""
   
   infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D</p>'
     + '<p>Total elements: ' + data.length + '</p>'
-    + '<p>Values (sample): [' + sample.join(', ') + data.length > sampleSize ? ", ..." : "" + ']</p>';
+    + '<p>Values (sample): [' + sample.join(', ') + values + ']</p>';
   
   container.appendChild(infoDiv);
   return container;
