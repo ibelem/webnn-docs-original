@@ -696,7 +696,7 @@ h1 { margin: 10px 0; }
 
   },
   "translation": {
-    "title": "Translation",
+    "title": "Translation (WIP)",
     "description": "An multiple languages translation demo using WebNN and Transformers.js based on ONNX Runtime Web",
     "static": {
       '/index.html': {
