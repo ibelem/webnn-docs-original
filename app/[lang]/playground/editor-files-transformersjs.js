@@ -109,15 +109,15 @@ button {
 }`},
     },
     "vanilla": {
-      '/index.html': { code: ``},
+      '/index.html': { code: `` },
       '/index.js': {
         active: true,
         code: `document.getElementById("app").innerHTML = '// Transformers.js + Vanilla JavaScript';
 `},
-'/styles.css': { code: ``},
+      '/styles.css': { code: `` },
     },
     "svelte": {
-      '/webnn.js': { code: ``},
+      '/webnn.js': { code: `` },
       '/App.svelte': {
         active: true,
         code: `<script>
@@ -127,10 +127,10 @@ button {
 <main>
   {name}
 </main>`},
-'/styles.css': { code: ``},
+      '/styles.css': { code: `` },
     },
     "react": {
-      '/webnn.js': { code: ``},
+      '/webnn.js': { code: `` },
       '/App.js': {
         active: true,
         code: `export default function App() {
@@ -138,7 +138,7 @@ button {
 }`},
     },
     "vue": {
-      '/src/webnn.js': { code: ``},
+      '/src/webnn.js': { code: `` },
       '/src/App.vue': {
         active: true,
         code: `<template>
@@ -693,6 +693,68 @@ h1 { margin: 10px 0; }
   margin: 5px 0;
 }`},
     },
- 
+
+  },
+  "object-detection-yolos": {
+    "title": "Object Detection (Yolos)",
+    "description": "An Object Detection demo using WebNN and Transformers.js based on ONNX Runtime Web",
+    "static": {
+      '/index.html': {
+        code: `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebNN / Transformers.js - Object Detection</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <h1>WebNN / Transformers.js - Object Detection</h1>
+    <div id="content"> 
+      <div id="src" contenteditable="true">
+	生活就像一盒巧克力。
+      </div>
+      <div id="tgt">
+      </div>
+    </div> 
+    <div class="controls">
+      <button id="start">Translate</button>
+    </div>
+    <div id="log"></div>
+    <script type="module" src="./webnn.js"></script>
+  </body>
+</html>
+`},
+      '/webnn.js': {
+        active: true,
+        code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
+
+// Default remoteHost is https://huggingface.co
+// Comment the following line if you are not in China
+env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
+
+async function translate() {
+  const translator = await pipeline('translation', 'Xenova/opus-mt-mul-en');
+  const srcContent = document.querySelector('#src').textContent;
+  const output = await translator(srcContent, {
+    src_lang: 'zh', // Chinese
+    tgt_lang: 'en', // English
+  });
+  document.querySelector('#tgt').textContent = output;
+}
+
+document.querySelector('#start').addEventListener('click', translate, false);`},
+      '/styles.css': {
+        code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0 10px;
+  font-size: 0.8rem;
+}
+
+h1 { margin: 10px 0; }`},
+    },
   }
 }
