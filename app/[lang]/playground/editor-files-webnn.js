@@ -2032,72 +2032,61 @@ run()
     console.error('Error: ', error);
   });`},
       '/ui.js': {
-        code: `function createOptionsTable(element, options) {
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
-
-  const headerRow = document.createElement('tr');
-  const headers = ['Option', 'Value', 'Option', 'Value'];
-  headers.forEach(text => {
-    const th = document.createElement('th');
-    th.textContent = text;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  const entries = Object.entries(options || {});
-  const halfLength = Math.ceil(entries.length / 2);
-  const leftColumn = entries.slice(0, halfLength);
-  const rightColumn = entries.slice(halfLength);
-
-  for (let i = 0; i < halfLength; i++) {
-    const row = document.createElement('tr');
-
-    const leftKeyCell = document.createElement('td');
-    const leftValueCell = document.createElement('td');
-    if (leftColumn[i]) {
-      leftKeyCell.textContent = leftColumn[i][0];
-      const value = leftColumn[i][1];
-      if (value && value.dataType && value.shape) {
-        leftValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
-      } else if (Array.isArray(value)) {
-        leftValueCell.textContent = '[' + value.join(', ') + ']';
-      } else {
-        leftValueCell.textContent = String(value);
-      }
-    }
-
-    const rightKeyCell = document.createElement('td');
-    const rightValueCell = document.createElement('td');
-    if (rightColumn[i]) {
-      rightKeyCell.textContent = rightColumn[i][0];
-      const value = rightColumn[i][1];
-      if (value && value.dataType && value.shape) {
-        rightValueCell.textContent = 'Tensor(' + value.dataType + ', shape=[' + value.shape.join(',') + '])';
-      } else if (Array.isArray(value)) {
-        rightValueCell.textContent = '[' + value.join(', ') + ']';
-      } else {
-        rightValueCell.textContent = String(value);
-      }
-    }
-
-    row.appendChild(leftKeyCell);
-    row.appendChild(leftValueCell);
-    row.appendChild(rightKeyCell);
-    row.appendChild(rightValueCell);
-    tbody.appendChild(row);
+        code: `/**
+ * Create an HTML table representation of a multi-dimensional array
+ * @param {Array} arr - The array to display
+ * @returns {HTMLElement} Table element 
+ */
+function createArrayTable(arr) {
+  if (!Array.isArray(arr)) {
+    const span = document.createElement('span');
+    span.textContent = String(arr);
+    return span;
   }
+  
+  // Determine if this is the deepest level (contains no more arrays)
+  const isDeepestLevel = arr.every(item => !Array.isArray(item));
+  
+  if (isDeepestLevel) {
+    // Create a row for a 1D array
+    const table = document.createElement('table');
+    table.className = 'deep-table';
+    
+    const tr = document.createElement('tr');
+    arr.forEach(item => {
+      const td = document.createElement('td');
+      td.textContent = String(item);
+      tr.appendChild(td);
+    });
+    
+    table.appendChild(tr);
+    return table;
+  } else {
+    // Create a container for nested arrays
+    const div = document.createElement('div');
+    div.className = 'nested-arrays';
+    div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
 
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  element.innerHTML = '';
-  element.appendChild(table);
+    arr.forEach((item, index) => {
+      const itemContainer = document.createElement('div');
+      
+      // Add a label for this dimension
+      // const label = document.createElement('div');
+      // label.textContent = index;
+      // itemContainer.appendChild(label);
+      
+      // Add the nested array
+      itemContainer.appendChild(createArrayTable(item));
+      div.appendChild(itemContainer);
+    });
+    
+    return div;
+  }
 }
 
 // Helper function to create a visual representation of tensor data
 function createTensorVisual(tensorInfo, maxDimensions = 2) {
-  const { shape, data } = tensorInfo;
+  const { shape, data, formatted } = tensorInfo;
   const container = document.createElement('div');
   container.classList.add('tensor-container');
   
@@ -2106,53 +2095,15 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   heading.textContent = 'Tensor [' + shape.join(' × ') +']';
   container.appendChild(heading);
   
-  // For 1D tensors, display as a row
-  if (shape.length === 1) {
-    const gridDiv = document.createElement('div');
-    gridDiv.classList.add('grid', 'g'+ shape[0]);
-    
-    for (let i = 0; i < shape[0]; i++) {
-      const cell = document.createElement('div');
-      cell.textContent = data[i].toFixed(1);
-      gridDiv.appendChild(cell);
-    }
-    
-    container.appendChild(gridDiv);
-    return container;
-  }
-  
-  // For 2D tensors, display as a grid
-  if (shape.length === 2) {
-    const gridDiv = document.createElement('div');
-    gridDiv.classList.add('grid', 'g'+ shape[1]);
-    
-    for (let i = 0; i < shape[0]; i++) {
-      for (let j = 0; j < shape[1]; j++) {
-        const index = i * shape[1] + j;
-        const cell = document.createElement('div');
-        cell.textContent = data[index].toFixed(1);
-        gridDiv.appendChild(cell);
-      }
-    }
-    
-    container.appendChild(gridDiv);
-    return container;
-  }
-  
-  // For 3D+ tensors, show a simplified representation
+
   const infoDiv = document.createElement('div');
   infoDiv.classList.add('tensor-info');
   
-  // Show a sample of values
-  const sampleSize = Math.min(20, data.length);
-  const sample = data.slice(0, sampleSize).map(v => v.toFixed(1));
-  let values = (data.length > sampleSize) ? ", ..." : ""
-  
   infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D</p>'
-    + '<p>Total elements: ' + data.length + '</p>'
-    + '<p>[' + sample.join(', ') + values + ']</p>';
-  
+    + '<p>Total elements: ' + data.length + '</p>';
+
   container.appendChild(infoDiv);
+  container.appendChild(createArrayTable(formatted));
   return container;
 }
 
@@ -2220,7 +2171,8 @@ async function initialize() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initialize, false);` },
+document.addEventListener('DOMContentLoaded', initialize, false);
+` },
       '/index.html': {
         code: `<!DOCTYPE html>
 <html lang="en">
@@ -2245,9 +2197,31 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   font-size: 0.8rem;
 }
 
+h1 {
+  margin: 0 0 0.5rem 0;
+}
+
 table {
   border-collapse: collapse;
   margin: 0.5rem 0;
+}
+
+.deep-table {
+   border-collapse: collapse;
+   margin: 2px;
+}
+
+.deep-table td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+}
+
+.nested-arrays {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 4px 0;
 }
 
 th,
@@ -2265,7 +2239,7 @@ th {
   display: flex;
   justify-content: start;
   margin: 0;
-  gap: 10px;
+  gap: 4px;
 }
 
 .grid-item {
@@ -2274,26 +2248,16 @@ th {
 }
 
 .grid-item h4 {
-  margin: 0.5rem 0;
-}
-
-.grid {
-  display: grid;
-  font-family: monospace;
-  font-size: 0.9rem;
-  padding: 10px;
-  border: 1px solid #ccc;
-  gap: 6px;
-}
-
-.grid div {
-  justify-self: end;
+  margin: 0;
 }
 
 .tensor-info, .permutation-info {
-  background-color: #f9f9f9;
-  padding: 10px;
+  padding: 4px;
   border-radius: 4px;
+}
+
+.tensor-info p, .permutation-info p {
+  margin: 2px;
 }
 
 .g1 {
