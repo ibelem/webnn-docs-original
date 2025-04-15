@@ -2024,14 +2024,12 @@ function formatTensor(data, shape) {
   return result;
 }
 
-// Execute the demo
 run()
   .then(result => {
-    console.log('Demo completed successfully!');
-    console.log('Result:', JSON.stringify(result, null, 2));
+    console.log('Result: ', JSON.stringify(result, null, 2));
   })
   .catch(error => {
-    console.error('Demo failed:', error);
+    console.error('Error: ', error);
   });`},
       '/ui.js': {
         code: `function createOptionsTable(element, options) {
@@ -2208,7 +2206,7 @@ async function initialize() {
       // For transpose, we don't have options like in conv2d
       // but we can display the permutation information
       if (statusDiv) {
-        statusDiv.textContent = 'Permutation: [' + results.permutation.join(', ') + ']';
+        statusDiv.textContent = '';
       }
       displayTransposeResults(results);
     }
