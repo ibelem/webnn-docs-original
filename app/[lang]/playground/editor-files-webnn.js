@@ -1977,15 +1977,15 @@ async function run() {
     
     const outputData = await runTranspose(context, builder, input, permutation, inputData, outputShape);
     
+    // Format output for display
+    const formattedInput = formatTensor(inputData, inputShape);
+    const formattedOutput = formatTensor(new Float32Array(outputData), outputShape);
     console.log('Input Shape:', inputShape);
     console.log('Input Data:', Array.from(inputData));
     console.log('Permutation:', permutation);
     console.log('Output Shape:', outputShape);
     console.log('Output Data:', Array.from(new Float32Array(outputData)));
-    
-    // Format output for display
-    const formattedInput = formatTensor(inputData, inputShape);
-    const formattedOutput = formatTensor(new Float32Array(outputData), outputShape);
+    console.log('Formatted Output:', formattedOutput);
     
     return {
       input: { 
@@ -2150,7 +2150,7 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   
   infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D</p>'
     + '<p>Total elements: ' + data.length + '</p>'
-    + '<p>Values (sample): [' + sample.join(', ') + values + ']</p>';
+    + '<p>[' + sample.join(', ') + values + ']</p>';
   
   container.appendChild(infoDiv);
   return container;
@@ -2170,14 +2170,16 @@ function displayTransposeResults(results) {
   
   // Permutation information
   const permutationContainer = document.createElement('div');
-  permutationContainer.classList.add('grid-item', 'permutation-info');
+  permutationContainer.classList.add('grid-item');
   const permInfo = document.createElement('div');
   permInfo.innerHTML = ''
     + '<h4>Permutation</h4>'
+    + '<div class="permutation-info">'
     + '<div class="perm-arrow">[' + results.permutation.join(', ') + ']</div>'
     + '<div class="perm-description">'
       + '<p>Input shape: [' + results.input.shape.join(', ') + ']</p>'
       + '<p>Output shape: [' + results.output.shape.join(', ') + ']</p>'
+    + '</div>'
     + '</div>';
   permutationContainer.appendChild(permInfo);
   
@@ -2288,28 +2290,7 @@ th {
   justify-self: end;
 }
 
-
-.permutation-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.perm-arrow {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0;
-  padding: 10px;
-  background-color: #e9f5ff;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.perm-description {
-  font-size: 14px;
-}
-
-.tensor-info {
+.tensor-info, .permutation-info {
   background-color: #f9f9f9;
   padding: 10px;
   border-radius: 4px;
