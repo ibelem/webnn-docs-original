@@ -695,9 +695,9 @@ h1 { margin: 10px 0; }
     },
 
   },
-  "object-detection-yolos": {
-    "title": "Object Detection (Yolos)",
-    "description": "An Object Detection demo using WebNN and Transformers.js based on ONNX Runtime Web",
+  "translation": {
+    "title": "Translation",
+    "description": "An multiple languages translation demo using WebNN and Transformers.js based on ONNX Runtime Web",
     "static": {
       '/index.html': {
         code: `<!doctype html>
@@ -705,12 +705,12 @@ h1 { margin: 10px 0; }
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js - Object Detection</title>
+    <title>WebNN / Transformers.js - Translation</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
-    <h1>WebNN / Transformers.js - Object Detection</h1>
+    <h1>WebNN / Transformers.js - Translation</h1>
     <div id="content"> 
       <div id="src" contenteditable="true">
 	生活就像一盒巧克力。
