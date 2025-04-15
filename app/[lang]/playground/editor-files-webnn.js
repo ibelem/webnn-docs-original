@@ -1895,7 +1895,7 @@ button:hover {
     },
   },
   "transpose": {
-    "title": "transpose （WIP)",
+    "title": "transpose",
     "description": "Permute the dimensions of the input tensor according to permutation",
     "static": {
       '/webnn.js': {
