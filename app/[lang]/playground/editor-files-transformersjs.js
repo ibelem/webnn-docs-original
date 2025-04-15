@@ -735,8 +735,16 @@ h1 { margin: 10px 0; }
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
 
 async function translate() {
-  const translator = await pipeline('translation', 'Xenova/opus-mt-mul-en');
+  const options = {
+    dtype: 'fp32',
+    device: 'webgpu', // 'webnn-gpu' and 'webnn-npu'
+    session_options: {
+      freeDimensionOverrides: {},
+   }
+  }
+  const translator = await pipeline('translation', 'Xenova/opus-mt-mul-en', options);
   const srcContent = document.querySelector('#src').textContent;
+
   const output = await translator(srcContent, {
     src_lang: 'zh', // Chinese
     tgt_lang: 'en', // English
