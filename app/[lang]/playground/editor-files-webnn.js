@@ -109,7 +109,7 @@ async function checkWebNNSupport() {
 
   // Ensure status element exists
   if (!appElement) {
-    console.error('Status element not found.');
+    console.error('App element not found.');
     return;
   }
 
@@ -264,7 +264,7 @@ export async function checkWebNNSupport() {
 import ReactDOM from 'react-dom';
 import { checkWebNNSupport } from './webnn.js';
 
-const App = () => {
+export default function App() {
   const [status, setStatus] = useState('Checking WebNN API support...');
 
   useEffect(() => {
@@ -287,8 +287,7 @@ const App = () => {
     </div>
   );
 };
-
-ReactDOM.render(<App />, document.getElementById('root'));` }
+` }
     }, "vue": {
       '/src/webnn.js': { code: `'use strict';
 
