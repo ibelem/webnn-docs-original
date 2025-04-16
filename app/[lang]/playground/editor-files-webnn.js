@@ -1743,9 +1743,7 @@ th {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `// webnn.js for matrix multiplication
-
-// Create WebNN context
+        code: `// Create WebNN context
 async function createWebNNContext() {
   if (!('ml' in navigator)) {
     throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
@@ -2418,9 +2416,9 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
     <div>
       <input type="radio" id="maxPool2d" name="model" value="maxPool2d">
       <label for="maxPool2d">Max Pooling</label>
-      <input type="radio" id="averagePool2d" name="model" value="averagePool2d">
+      <input type="radio" id="averagePool2d" name="model" value="averagePool2d" checked>
       <label for="averagePool2d">Average Pooling</label>
-      <input type="radio" id="l2Pool2d" name="model" value="l2Pool2d" checked>
+      <input type="radio" id="l2Pool2d" name="model" value="l2Pool2d">
       <label for="l2Pool2d">L2 Pooling</label>
     </div>
     <button id="runPooling">Run</button>
@@ -2718,7 +2716,7 @@ function createArrayTable(arr) {
     // Create a container for nested arrays
     const div = document.createElement('div');
     div.className = 'nested-arrays';
-    div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
+    // div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
 
     arr.forEach((item, index) => {
       const itemContainer = document.createElement('div');
@@ -2856,25 +2854,22 @@ h1 {
 
 table {
   border-collapse: collapse;
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
-.deep-table {
-   border-collapse: collapse;
-   margin: 2px;
-}
-
-.deep-table td {
+table td {
   border: 1px solid #ccc;
   padding: 4px;
+  min-width: 16px;
   text-align: center;
 }
 
 .nested-arrays {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   padding: 4px 0;
+  align-items: center;
 }
 
 th,
