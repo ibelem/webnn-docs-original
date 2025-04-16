@@ -713,7 +713,7 @@ h1 { margin: 10px 0; }
     <h1>WebNN / Transformers.js - Translation</h1>
     <div id="content"> 
       <div id="src" contenteditable="true">
-	      Space: the final frontier. These are the voyages of the starship Enterprise. Its five-year mission: to explore strange new worlds; to seek out new life and new civilizations; to boldly go where no man has gone before!
+	      宇宙，最后的边疆。这是星舰进取号的航程。它的五年任务，是去探索这未知的新世界，找寻新的生命与新文明，勇踏前人未至之境。
       </div>
       <div id="tgt"></div>
     </div> 
@@ -745,8 +745,8 @@ async function translate() {
   const srcContent = document.querySelector('#src').textContent;
 
   const output = await translator(srcContent, {
-    src_lang: 'en', // English
-    tgt_lang: 'zh', // Chinese
+    src_lang: 'zh', // Chinese
+    tgt_lang: 'en', // English
   });
   console.log(output);
   document.querySelector('#tgt').textContent = output[0].translation_text;
