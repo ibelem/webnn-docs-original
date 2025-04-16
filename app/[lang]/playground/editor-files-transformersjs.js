@@ -749,7 +749,8 @@ async function translate() {
     src_lang: 'zh', // Chinese
     tgt_lang: 'en', // English
   });
-  document.querySelector('#tgt').textContent = output;
+  console.log(output);
+  document.querySelector('#tgt').textContent = output[0].translation_text;
 }
 
 document.querySelector('#start').addEventListener('click', translate, false);`},
@@ -762,7 +763,36 @@ document.querySelector('#start').addEventListener('click', translate, false);`},
   font-size: 0.8rem;
 }
 
-h1 { margin: 10px 0; }`},
+h1 { margin: 10px 0; }
+
+#content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+  margin-bottom: 10px;
+}
+
+#content div {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  min-height: 60px;
+  outline: none;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  background-color: #f3f3f3;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #eee;
+}`},
     },
   }
 }
