@@ -1950,31 +1950,6 @@ function displayResults(results) {
     '</div>';
 }
 
-// Create pooling type selection UI
-function createPoolingControls() {
-  const controlsDiv = document.createElement('div');
-  controlsDiv.id = 'controls';
-  controlsDiv.className = 'controls';
-  
-  // Using single quotes instead of backticks
-  const controlsHtml = 
-    '<select id="poolingType">' +
-      '<option value="maxPool2d">Max Pooling</option>' +
-      '<option value="averagePool2d">Average Pooling</option>' +
-      '<option value="l2Pool2d">L2 Pooling</option>' +
-    '</select>' +
-    '<button id="runPooling">Run</button>';
-  
-  controlsDiv.innerHTML = controlsHtml;
-  document.body.appendChild(controlsDiv);
-  
-  // Add event listener for the button
-  document.getElementById('runPooling').addEventListener('click', () => {
-    const poolingType = document.getElementById('poolingType').value;
-    runPoolingOperation(poolingType);
-  });
-}
-
 async function runPoolingOperation(poolingType) {
   const statusDiv = document.getElementById('status');
   if (statusDiv) {
@@ -1998,11 +1973,6 @@ async function runPoolingOperation(poolingType) {
 }
 
 async function initialize() {
-  const controlsDiv = document.getElementById('controls');
-  if (!controlsDiv) {
-    createPoolingControls();
-  }
-  
   const statusDiv = document.getElementById('status');
   if (!statusDiv) {
     const statusDiv = document.createElement('div');
@@ -2021,6 +1991,11 @@ async function initialize() {
   await runPoolingOperation('maxPool2d');
 }
 
+document.getElementById('runPooling').addEventListener('click', async () => {
+  const poolingType = document.getElementById('poolingType').value;
+  await runPoolingOperation(poolingType);
+});
+
 document.addEventListener('DOMContentLoaded', initialize, false);` },
       '/index.html': {
         code: `<!DOCTYPE html>
@@ -2035,6 +2010,17 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   <h1>WebNN Pooling</h1>
   <div id="status"></div>
   <div id="result"></div>
+  <div id="controls">
+    <div>
+      <input type="radio" id="maxPool2d" name="model" value="maxPool2d">
+      <label for="maxPool2d">Max Pooling</label>
+      <input type="radio" id="averagePool2d" name="model" value="averagePool2d">
+      <label for="averagePool2d">Average Pooling</label>
+      <input type="radio" id="l2Pool2d" name="model" value="l2Pool2d" checked>
+      <label for="l2Pool2d">L2 Pooling</label>
+    </div>
+    <button id="runPooling">Run</button>
+  </div>
   <script src="./webnn.js"></script>
   <script src="./ui.js"></script>
 </body>
@@ -2046,13 +2032,6 @@ document.addEventListener('DOMContentLoaded', initialize, false);` },
   margin: 0;
   padding: 0 10px;
   font-size: 0.8rem;
-}
-
-.controls {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 table {
@@ -2082,14 +2061,13 @@ button {
 }
 
 button {
-  background-color: #007bff;
-  color: white;
-  border: none;
   cursor: pointer;
+  margin-top: 10px;
+  width: 80px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #eee;
 }
 
 #status {
