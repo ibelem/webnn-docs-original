@@ -1,12 +1,12 @@
 
 export const webnnEditorFiles = {
-  "hello-world": {
+  "hello-webnn": {
     "title": "Hello WebNN",
     "description": "Hello WebNN",
     "static": {
       '/webnn.js': {
         active: true,
-        code: `'use strict';
+        code: `''use strict';
 
 /**
  * Checks if the WebNN API is supported in the current browser
@@ -39,10 +39,7 @@ async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    if (!window.MLGraphBuilder) {
-      throw new Error('MLGraphBuilder is not available.');
-    }
-    new MLGraphBuilder(context);
+    const builder = new MLGraphBuilder(context);
 
     // Success case
     statusElement.textContent = messages.supported;
@@ -123,10 +120,7 @@ async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    if (!window.MLGraphBuilder) {
-      throw new Error('MLGraphBuilder is not available.');
-    }
-    new MLGraphBuilder(context);
+    const builder = new MLGraphBuilder(context);
 
     // Success case
     statusElement.textContent = messages.supported;
@@ -211,10 +205,7 @@ export async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    if (!window.MLGraphBuilder) {
-      throw new Error('MLGraphBuilder is not available.');
-    }
-    new MLGraphBuilder(context);
+    const builder = new MLGraphBuilder(context);
 
     // Success case
     console.log(messages.supported);
