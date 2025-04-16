@@ -1954,7 +1954,7 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   const infoDiv = document.createElement('div');
   infoDiv.classList.add('tensor-info');
   
-  infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D Total elements: ' + data.length + '</p>';
+  infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D · Total elements: ' + data.length + '</p>';
 
   container.appendChild(infoDiv);
   container.appendChild(createArrayTable(formatted));
