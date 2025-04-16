@@ -39,7 +39,10 @@ async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
 
     // Success case
     statusElement.textContent = messages.supported;
@@ -121,7 +124,10 @@ async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
 
     // Success case
     appElement.innerHTML = titleElement + messages.supported;
@@ -129,9 +135,7 @@ async function checkWebNNSupport() {
   } catch (error) {
     // Handle errors with specific messaging
     const errorMessage = messages.error + ' ' + error.message;
-    statusElement.innerHTML = appElement + error.message.includes('not available')
-      ? messages.unsupported
-      : errorMessage;
+    appElement.innerHTML = titleElement + errorMessage;
     console.error(errorMessage, error.stack);
   }
 }
@@ -198,7 +202,10 @@ export async function checkWebNNSupport() {
 
     // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
 
     // Success case
     console.log(messages.supported);
@@ -211,6 +218,176 @@ export async function checkWebNNSupport() {
   }
 }`},
     },
+    "react": {
+      '/webnn.js': {
+        active: true,
+        code: `/**
+ * Checks if the WebNN API is supported in the current browser.
+ * @returns {Promise<string>} The status message indicating support or error.
+ */
+export async function checkWebNNSupport() {
+  'use strict';
+
+  const messages = {
+    checking: 'Checking WebNN API support...',
+    supported: 'WebNN API is supported in this browser.',
+    unsupported: 'WebNN API is not supported in this browser.',
+    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
+    error: 'An error occurred while checking WebNN support: ',
+  };
+
+  try {
+    // Check if navigator.ml exists
+    if (!('ml' in navigator)) {
+      throw new Error(messages.missingNavigatorML);
+    }
+
+    // Attempt to create WebNN context and builder
+    const context = await navigator.ml.createContext();
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
+
+    // Success case
+    console.log(messages.supported);
+    return messages.supported;
+  } catch (error) {
+    // Handle errors with specific messaging
+    const errorMessage = messages.error + ' ' + error.message;
+    console.error(errorMessage, error.stack);
+    return error.message.includes('not available') ? messages.unsupported : errorMessage;
+  }
+}`
+      },
+      '/App.js': { code: `import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { checkWebNNSupport } from './webnn.js';
+
+const App = () => {
+  const [status, setStatus] = useState('Checking WebNN API support...');
+
+  useEffect(() => {
+    async function initialize() {
+      const result = await checkWebNNSupport();
+      setStatus(result);
+    }
+    initialize();
+  }, []);
+
+  return (
+    <div className="container">
+      <h1 className="title">Hello WebNN</h1>
+      <p
+        className={status.includes('supported') ? 'status-supported' : 'status-error'}
+        aria-live="polite"
+      >
+        {status}
+      </p>
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));` }
+    }, "vue": {
+      '/src/webnn.js': { code: `'use strict';
+
+/**
+ * Checks if the WebNN API is supported in the current browser.
+ * @returns {Promise<{ isSupported: boolean, message: string }>} Result object with support status and message.
+ * @throws {Error} If an error occurs during the check.
+ */
+export async function checkWebNNSupport() {
+  const messages = {
+    checking: 'Checking WebNN API support...',
+    supported: 'WebNN API is supported in this browser.',
+    unsupported: 'WebNN API is not supported in this browser.',
+    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
+    error: 'An error occurred while checking WebNN support:',
+  };
+
+  try {
+    // Check if navigator.ml exists
+    if (!('ml' in navigator)) {
+      throw new Error(messages.missingNavigatorML);
+    }
+
+    // Attempt to create WebNN context and builder
+    const context = await navigator.ml.createContext();
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
+
+    // Success case
+    return { isSupported: true, message: messages.supported };
+  } catch (error) {
+    // Handle errors with specific messaging
+    const errorMessage = error.message.includes('not available')
+      ? messages.unsupported
+      : messages.error + ' '+ error.message;
+    console.error(errorMessage, error.stack);
+    return { isSupported: false, message: errorMessage };
+  }
+}` },
+      '/src/App.vue': { code: `<template>
+  <div id="app">
+    <h1>WebNN API Support Check</h1>
+    <div :class="statusClass" id="status">{{ status }}</div>
+  </div>
+</template>
+
+<script>
+import { checkWebNNSupport } from './webnn.js';
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      status: 'Checking WebNN API support...',
+      statusClass: 'checking',
+    };
+  },
+  async mounted() {
+    try {
+      const result = await checkWebNNSupport();
+      this.status = result.message;
+      this.statusClass = result.isSupported ? 'success' : 'error';
+    } catch (error) {
+      this.status = error.message;
+      this.statusClass = 'error';
+    }
+  },
+};
+</script>` },
+      '/src/styles.css': {
+        code: `#app {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+#status {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.checking {
+  color: #666;
+  background-color: #f0f0f0;
+}
+
+.success {
+  color: #2f8d46;
+  background-color: #e6f4ea;
+}
+
+.error {
+  color: #d32f2f;
+  background-color: #fce4e4;
+}`
+      }
+    }
   },
   "add-mul": {
     "title": "C = 0.2 * A + B",
