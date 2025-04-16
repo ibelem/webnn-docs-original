@@ -739,7 +739,8 @@ async function translate() {
     device: 'webgpu', // 'webnn-gpu' and 'webnn-npu'
     session_options: {
       freeDimensionOverrides: {},
-      // https://ibelem.github.io/netron/?url=https://huggingface.co/Xenova/opus-mt-mul-en/resolve/main/onnx/decoder_model_merged_fp16.onnx
+      // https://ibelem.github.io/netron/?url=https://huggingface.co/Xenova/opus-mt-mul-en/resolve/main/onnx/encoder_model.onnx
+      // https://ibelem.github.io/netron/?url=https://huggingface.co/Xenova/opus-mt-mul-en/resolve/main/onnx/decoder_model_merged.onnx
       // freeDimensionOverrides: {
       //   batch_size:
       //   encoder_sequence_length:
