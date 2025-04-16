@@ -1928,7 +1928,7 @@ function createArrayTable(arr) {
     // Create a container for nested arrays
     const div = document.createElement('div');
     div.className = 'nested-arrays';
-    div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
+    // div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
 
     arr.forEach((item, index) => {
       const itemContainer = document.createElement('div');
@@ -1954,8 +1954,7 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   const infoDiv = document.createElement('div');
   infoDiv.classList.add('tensor-info');
   
-  infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D</p>'
-    + '<p>Total elements: ' + data.length + '</p>';
+  infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D Total elements: ' + data.length + '</p>';
 
   container.appendChild(infoDiv);
   container.appendChild(createArrayTable(formatted));
@@ -2089,7 +2088,7 @@ table {
 
 .nested-arrays {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   padding: 4px 0;
 }
