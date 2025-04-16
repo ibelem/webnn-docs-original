@@ -2076,7 +2076,7 @@ table {
 
 .deep-table {
   border-collapse: collapse;
-  margin: 2px;
+  margin: -1px 0 0 0;
 }
 
 .deep-table td {
@@ -2090,7 +2090,12 @@ table {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4px 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nested-arrays div {
+  text-align: center;
 }
 
 th,
@@ -2109,7 +2114,7 @@ th {
   flex-wrap: wrap;
   justify-content: center;
   margin: 0;
-  gap: 20px;
+  gap: 10px;
 }
 
 .grid-item {
@@ -2122,13 +2127,15 @@ th {
 }
 
 .grid-item h4 {
-  margin: 0 0 10px 0;
+  margin: 0;
+}
+
+.tensor-container h4, .matmul-info .matmul-arrow {
+  margin: 0;
+  font-weight: normal;
 }
 
 .tensor-info, .matmul-info {
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #f5f5f5;
   margin-bottom: 10px;
 }
 
