@@ -6,25 +6,66 @@ export const webnnEditorFiles = {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `async function webnn() {
-  const status = document.querySelector('#status');
-  let message = '';
-  if (!('ml' in navigator)) {
-    message = 'ml in navigator: false<br/>';
+        code: `'use strict';
+
+/**
+ * Checks if the WebNN API is supported in the current browser
+ * @returns {Promise<void>}
+ */
+async function checkWebNNSupport() {
+  const statusElement = document.querySelector('#status');
+  const messages = {
+    checking: 'Checking WebNN API support...',
+    supported: 'WebNN API is supported in this browser.',
+    unsupported: 'WebNN API is not supported in this browser.',
+    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
+    error: 'An error occurred while checking WebNN support: ',
+  };
+
+  // Ensure status element exists
+  if (!statusElement) {
+    console.error('Status element not found.');
+    return;
   }
+
+  // Set initial loading state
+  statusElement.textContent = messages.checking;
+
   try {
+    // Check if navigator.ml exists
+    if (!('ml' in navigator)) {
+      throw new Error(messages.missingNavigatorML);
+    }
+
+    // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
-    message = 'WebNN API is supported in this browser';
-   } catch (error) {
-    message += error.message + '<br/>';
-    message += 'WebNN API is not supported in this browser';
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
+
+    // Success case
+    statusElement.textContent = messages.supported;
+    console.log(messages.supported);
+  } catch (error) {
+    // Handle errors with specific messaging
+    const errorMessage = messages.error + ' ' + error.message;
+    statusElement.textContent = error.message.includes('not available')
+      ? messages.unsupported
+      : errorMessage;
+    console.error(errorMessage, error.stack);
   }
-  status.innerHTML = message;
-  console.log(message);
 }
 
-document.addEventListener('DOMContentLoaded', webnn, false);`},
+/**
+ * Initializes the WebNN support check on DOM content load.
+ */
+function initialize() {
+  document.addEventListener('DOMContentLoaded', checkWebNNSupport, { once: true });
+}
+
+// Run initialization
+initialize();`},
       '/index.html': {
         code: `<!DOCTYPE html>
 <html lang="en">
@@ -51,25 +92,64 @@ document.addEventListener('DOMContentLoaded', webnn, false);`},
         active: true,
         code: `import "./styles.css";
 
-async function webnn() {
-  let message = '';
-  if (!('ml' in navigator)) {
-    message = 'ml in navigator: false<br/>';
+/**
+ * Checks if the WebNN API is supported in the current browser
+ * @returns {Promise<void>}
+ */
+async function checkWebNNSupport() {
+  const statusElement = document.querySelector('#status');
+  const messages = {
+    checking: 'Checking WebNN API support...',
+    supported: 'WebNN API is supported in this browser.',
+    unsupported: 'WebNN API is not supported in this browser.',
+    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
+    error: 'An error occurred while checking WebNN support: ',
+  };
+
+  // Ensure status element exists
+  if (!statusElement) {
+    console.error('Status element not found.');
+    return;
   }
+
+  // Set initial loading state
+  statusElement.textContent = messages.checking;
+
   try {
+    // Check if navigator.ml exists
+    if (!('ml' in navigator)) {
+      throw new Error(messages.missingNavigatorML);
+    }
+
+    // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
-    message = 'WebNN API is supported in this browser';
-   } catch (error) {
-    message += error.message + '<br/>';
-    message += 'WebNN API is not supported in this browser';
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
+
+    // Success case
+    statusElement.textContent = messages.supported;
+    console.log(messages.supported);
+  } catch (error) {
+    // Handle errors with specific messaging
+    const errorMessage = messages.error + ' ' + error.message;
+    statusElement.textContent = error.message.includes('not available')
+      ? messages.unsupported
+      : errorMessage;
+    console.error(errorMessage, error.stack);
   }
-  message = '<h1>Hello WebNN</h1>' + message;
-  document.getElementById("app").innerHTML = message;
-  console.log(message);
 }
 
-webnn()`},
+/**
+ * Initializes the WebNN support check on DOM content load.
+ */
+function initialize() {
+  document.addEventListener('DOMContentLoaded', checkWebNNSupport, { once: true });
+}
+
+// Run initialization
+initialize();`},
       '/styles.css': {
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -81,39 +161,70 @@ webnn()`},
         active: true,
         code: `<script>
   import { onMount } from 'svelte';
-  import { webnn } from './webnn.js';
+  import { checkWebNNSupport } from './webnn.js';
 
-  let message = '';
+  let status = 'Checking WebNN API support...';
+
   onMount(async () => {
-    message = await webnn();
-    console.log(message);
+    try {
+      status = await checkWebNNSupport();
+    } catch (error) {
+      status = 'Error: ' + error.message;
+      console.error('Failed to check WebNN support:', error);
+    }
   });
 </script>
 
-<h1>Hello WebNN</h1>
-<div>{message}</div>
+<main>
+  <h1>Hello WebNN</h1>
+  <div>
+    {status}
+  </div>
+</main>
 
 <style>
-  div {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+  /* Optional: Add custom styles if Tailwind is not used */
+  main {
+    font-family: Arial, sans-serif;
   }
 </style>`},
       '/webnn.js': {
-        code: `export async function webnn() {
-  let message;
-  if (!('ml' in navigator)) {
-    message = 'ml in navigator: false; ';
-  }
+        code: `/**
+ * Checks if the WebNN API is supported in the current browser.
+ * @returns {Promise<string>} A message indicating WebNN support status.
+ * @throws {Error} If an unexpected error occurs during the check.
+ */
+export async function checkWebNNSupport() {
+  const messages = {
+    checking: 'Checking WebNN API support...',
+    supported: 'WebNN API is supported in this browser.',
+    unsupported: 'WebNN API is not supported in this browser.',
+    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
+    error: 'An error occurred while checking WebNN support:',
+  };
+
   try {
+    // Check if navigator.ml exists
+    if (!('ml' in navigator)) {
+      throw new Error(messages.missingNavigatorML);
+    }
+
+    // Attempt to create WebNN context and builder
     const context = await navigator.ml.createContext();
-    const builder = new MLGraphBuilder(context);
-    message = 'WebNN API is supported in this browser';
+    if (!window.MLGraphBuilder) {
+      throw new Error('MLGraphBuilder is not available.');
+    }
+    new MLGraphBuilder(context);
+
+    // Success case
+    console.log(messages.supported);
+    return messages.supported;
   } catch (error) {
-    message += error.message + '; ';
-    message += 'WebNN API is not supported in this browser';
+    // Handle errors with specific messaging
+    const errorMessage = messages.error + ' ' + error.message;
+    console.error(errorMessage, error.stack);
+    return error.message.includes('not available') ? messages.unsupported : errorMessage;
   }
-  return message;
 }`},
     },
   },
