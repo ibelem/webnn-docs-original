@@ -94,7 +94,8 @@ initialize();`},
  * @returns {Promise<void>}
  */
 async function checkWebNNSupport() {
-  const statusElement = document.querySelector('#status');
+  const titleElement = '<h1>Hello WebNN</h1>';
+  const appElement = document.getElementById("app");
   const messages = {
     checking: 'Checking WebNN API support...',
     supported: 'WebNN API is supported in this browser.',
@@ -104,13 +105,13 @@ async function checkWebNNSupport() {
   };
 
   // Ensure status element exists
-  if (!statusElement) {
+  if (!appElement) {
     console.error('Status element not found.');
     return;
   }
 
   // Set initial loading state
-  statusElement.textContent = messages.checking;
+  appElement.innerHTML = titleElement + messages.checking;
 
   try {
     // Check if navigator.ml exists
@@ -123,12 +124,12 @@ async function checkWebNNSupport() {
     const builder = new MLGraphBuilder(context);
 
     // Success case
-    statusElement.textContent = messages.supported;
+    appElement.innerHTML = titleElement + messages.supported;
     console.log(messages.supported);
   } catch (error) {
     // Handle errors with specific messaging
     const errorMessage = messages.error + ' ' + error.message;
-    statusElement.textContent = error.message.includes('not available')
+    statusElement.innerHTML = appElement + error.message.includes('not available')
       ? messages.unsupported
       : errorMessage;
     console.error(errorMessage, error.stack);
