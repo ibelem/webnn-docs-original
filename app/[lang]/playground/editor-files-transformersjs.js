@@ -735,7 +735,7 @@ env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to 
 
 async function translate() {
   const options = {
-    dtype: 'fp32',
+    dtype: 'fp16',
     device: 'webgpu', // 'webnn-gpu' and 'webnn-npu'
     session_options: {
       freeDimensionOverrides: {},
