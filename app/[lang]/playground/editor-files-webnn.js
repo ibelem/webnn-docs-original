@@ -1737,6 +1737,417 @@ th {
 }`}
     },
   },
+  "matmul": {
+    "title": "matmul (Matrix Multiplication)",
+    "description": "Compute the matrix product of two input tensors",
+    "static": {
+      '/webnn.js': {
+        active: true,
+        code: `// webnn.js for matrix multiplication
+
+// Create WebNN context
+async function createWebNNContext() {
+  if (!('ml' in navigator)) {
+    throw new Error('WebNN API is not supported. Try enabling it in chrome://flags or using a compatible browser.');
+  }
+  try {
+    return await navigator.ml.createContext({ deviceType: 'cpu' });
+  } catch (e) {
+    throw new Error('Failed to create WebNN context: ' + e.message);
+  }
+}
+
+// Create input tensor
+function createInputTensor(builder, shape, name) {
+  return builder.input(name, { dataType: 'float32', shape });
+}
+
+// Execute matmul operation
+async function runMatmul(context, builder, inputA, inputB, inputAData, inputBData, outputShape) {
+  const matmul = builder.matmul(inputA, inputB);
+  const graph = await builder.build({ 'output': matmul });
+  
+  const inputATensor = await context.createTensor({
+    dataType: 'float32',
+    shape: inputA.shape,
+    writable: true
+  });
+  
+  const inputBTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: inputB.shape,
+    writable: true
+  });
+  
+  await context.writeTensor(inputATensor, inputAData);
+  await context.writeTensor(inputBTensor, inputBData);
+  
+  const outputTensor = await context.createTensor({
+    dataType: 'float32',
+    shape: outputShape,
+    readable: true
+  });
+  
+  const inputs = {
+    'inputA': inputATensor,
+    'inputB': inputBTensor
+  };
+    
+  const outputs = {
+    'output': outputTensor
+  };
+ 
+  await context.dispatch(graph, inputs, outputs);
+  return await context.readTensor(outputTensor);
+}
+
+async function run() {
+  try {
+    const context = await createWebNNContext();
+    const builder = new MLGraphBuilder(context);
+    
+    // Create input matrices
+    // Matrix A: [2, 3] (2 rows, 3 columns)
+    const inputAShape = [2, 3];
+    const inputASize = inputAShape.reduce((a, b) => a * b, 1);
+    const inputAData = new Float32Array(inputASize);
+    for (let i = 0; i < inputASize; i++) {
+      inputAData[i] = i + 1; // Fill with sequential values 1,2,3,4,5,6
+    }
+    
+    // Matrix B: [3, 4] (3 rows, 4 columns)
+    const inputBShape = [3, 4];
+    const inputBSize = inputBShape.reduce((a, b) => a * b, 1);
+    const inputBData = new Float32Array(inputBSize);
+    for (let i = 0; i < inputBSize; i++) {
+      inputBData[i] = i + 1; // Fill with sequential values 1,2,3,4,5,6,7,8,9,10,11,12
+    }
+    
+    // For matmul of A[m,k] and B[k,n], output shape is [m,n]
+    // Here: A[2,3] × B[3,4] = C[2,4]
+    const outputShape = [inputAShape[0], inputBShape[1]];
+    
+    const inputA = createInputTensor(builder, inputAShape, 'inputA');
+    const inputB = createInputTensor(builder, inputBShape, 'inputB');
+    
+    const outputData = await runMatmul(context, builder, inputA, inputB, inputAData, inputBData, outputShape);
+    
+    // Format input and output for display
+    const formattedInputA = formatTensor(inputAData, inputAShape);
+    const formattedInputB = formatTensor(inputBData, inputBShape);
+    const formattedOutput = formatTensor(new Float32Array(outputData), outputShape);
+    
+    console.log('Input A Shape:', inputAShape);
+    console.log('Input A Data:', Array.from(inputAData));
+    console.log('Input B Shape:', inputBShape);
+    console.log('Input B Data:', Array.from(inputBData));
+    console.log('Output Shape:', outputShape);
+    console.log('Output Data:', Array.from(new Float32Array(outputData)));
+    
+    return {
+      inputA: { 
+        shape: inputAShape, 
+        data: Array.from(inputAData),
+        formatted: formattedInputA
+      },
+      inputB: { 
+        shape: inputBShape, 
+        data: Array.from(inputBData),
+        formatted: formattedInputB
+      },
+      output: { 
+        shape: outputShape, 
+        data: Array.from(new Float32Array(outputData)),
+        formatted: formattedOutput
+      }
+    };
+    
+  } catch (error) {
+    console.error('WebNN error:', error);
+    throw error;
+  }
+}
+
+// Helper function to format tensor data for display
+function formatTensor(data, shape) {
+  if (shape.length === 1) {
+    return Array.from(data);
+  }
+  
+  const result = [];
+  const size = shape.slice(1).reduce((a, b) => a * b, 1);
+  
+  for (let i = 0; i < shape[0]; i++) {
+    const slice = data.subarray(i * size, (i + 1) * size);
+    result.push(formatTensor(slice, shape.slice(1)));
+  }
+  
+  return result;
+}
+
+run()
+  .then(result => {
+    console.log('Result: ', JSON.stringify(result, null, 2));
+  })
+  .catch(error => {
+    console.error('Error: ', error);
+  });` },
+       '/ui.js': {
+        code: `// ui.js for matrix multiplication
+
+/**
+ * Create an HTML table representation of a multi-dimensional array
+ * @param {Array} arr - The array to display
+ * @returns {HTMLElement} Table element 
+ */
+function createArrayTable(arr) {
+  if (!Array.isArray(arr)) {
+    const span = document.createElement('span');
+    span.textContent = String(arr);
+    return span;
+  }
+  
+  // Determine if this is the deepest level (contains no more arrays)
+  const isDeepestLevel = arr.every(item => !Array.isArray(item));
+  
+  if (isDeepestLevel) {
+    // Create a row for a 1D array
+    const table = document.createElement('table');
+    table.className = 'deep-table';
+    
+    const tr = document.createElement('tr');
+    arr.forEach(item => {
+      const td = document.createElement('td');
+      td.textContent = String(item);
+      tr.appendChild(td);
+    });
+    
+    table.appendChild(tr);
+    return table;
+  } else {
+    // Create a container for nested arrays
+    const div = document.createElement('div');
+    div.className = 'nested-arrays';
+    div.style.flexDirection = arr[0] && Array.isArray(arr[0][0]) ? 'column' : 'row';
+
+    arr.forEach((item, index) => {
+      const itemContainer = document.createElement('div');
+      itemContainer.appendChild(createArrayTable(item));
+      div.appendChild(itemContainer);
+    });
+    
+    return div;
+  }
+}
+
+// Helper function to create a visual representation of tensor data
+function createTensorVisual(tensorInfo, maxDimensions = 2) {
+  const { shape, data, formatted } = tensorInfo;
+  const container = document.createElement('div');
+  container.classList.add('tensor-container');
+  
+  // Create heading showing the shape
+  const heading = document.createElement('h4');
+  heading.textContent = 'Tensor [' + shape.join(' × ') +']';
+  container.appendChild(heading);
+  
+  const infoDiv = document.createElement('div');
+  infoDiv.classList.add('tensor-info');
+  
+  infoDiv.innerHTML = '<p>Dimensions: ' + shape.length + 'D</p>'
+    + '<p>Total elements: ' + data.length + '</p>';
+
+  container.appendChild(infoDiv);
+  container.appendChild(createArrayTable(formatted));
+  return container;
+}
+
+function displayMatmulResults(results) {
+  const resultDiv = document.getElementById('result');
+  if (!resultDiv) return;
+  
+  const container = document.createElement('div');
+  container.classList.add('grid-container');
+  
+  // Input A visualization
+  const inputAContainer = document.createElement('div');
+  inputAContainer.classList.add('grid-item');
+  const inputATitle = document.createElement('h4');
+  inputATitle.textContent = 'Matrix A';
+  inputAContainer.appendChild(inputATitle);
+  inputAContainer.appendChild(createTensorVisual(results.inputA));
+  
+  // Input B visualization
+  const inputBContainer = document.createElement('div');
+  inputBContainer.classList.add('grid-item');
+  const inputBTitle = document.createElement('h4');
+  inputBTitle.textContent = 'Matrix B';
+  inputBContainer.appendChild(inputBTitle);
+  inputBContainer.appendChild(createTensorVisual(results.inputB));
+
+  // Matrix multiplication information
+  const matmulContainer = document.createElement('div');
+  matmulContainer.classList.add('grid-item');
+  const matmulInfo = document.createElement('div');
+  matmulInfo.innerHTML = ''
+    + '<h4>Matrix Multiplication</h4>'
+    + '<div class="matmul-info">'
+    + '<div class="matmul-arrow">[' + results.inputA.shape.join(', ') + '] × [' + results.inputB.shape.join(', ') + '] → [' + results.output.shape.join(', ') + ']</div>'
+    + '<div class="matmul-description">'
+      + '<p>A: [' + results.inputA.shape.join(' × ') + ']</p>'
+      + '<p>B: [' + results.inputB.shape.join(' × ') + ']</p>'
+      + '<p>Output: [' + results.output.shape.join(' × ') + ']</p>'
+    + '</div>'
+    + '</div>';
+  matmulContainer.appendChild(matmulInfo);
+  
+  // Output visualization
+  const outputContainer = document.createElement('div');
+  outputContainer.classList.add('grid-item');
+  const outputTitle = document.createElement('h4');
+  outputTitle.textContent = 'Result Matrix';
+  outputContainer.appendChild(outputTitle);
+  outputContainer.appendChild(createTensorVisual(results.output));
+  
+  container.appendChild(inputAContainer);
+  container.appendChild(inputBContainer);
+  container.appendChild(matmulContainer);
+  container.appendChild(outputContainer);
+  
+  resultDiv.innerHTML = '';
+  resultDiv.appendChild(container);
+}
+
+async function initialize() {
+  const statusDiv = document.getElementById('status');
+  if (statusDiv) {
+    statusDiv.textContent = 'Running matrix multiplication with WebNN...';
+  }
+
+  try {
+    const results = await run();
+    if (results) {
+      if (statusDiv) {
+        statusDiv.textContent = '';
+      }
+      displayMatmulResults(results);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    if (statusDiv) {
+      statusDiv.textContent = 'Error: ' + error.message;
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initialize, false);` },
+      '/index.html': {
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebNN Matrix Multiplication (matmul)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <h1>WebNN Matrix Multiplication (matmul)</h1>
+  <div id="status"></div>
+  <div id="result"></div>
+  <script src="./webnn.js"></script>
+  <script src="./ui.js"></script>
+</body>
+</html>` },
+      '/styles.css': {
+        code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  font-size: 0.8rem;
+  margin: 20px;
+}
+
+h1 {
+  margin: 0 0 0.5rem 0;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+
+.deep-table {
+  border-collapse: collapse;
+  margin: 2px;
+}
+
+.deep-table td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+  min-width: 40px;
+}
+
+.nested-arrays {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+th,
+td {
+  border: 1px solid #eee;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+}
+
+th {
+  background-color: #fafafa;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  gap: 20px;
+}
+
+.grid-item {
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.grid-item h4 {
+  margin: 0 0 10px 0;
+}
+
+.tensor-info, .matmul-info {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  margin-bottom: 10px;
+}
+
+.tensor-info p, .matmul-info p {
+  margin: 2px;
+}
+
+.matmul-arrow {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#status {
+  margin: 10px 0;
+  color: #666;
+}`}
+    },
+  },
   "pooling": {
     "title": "pooling",
     "description": "Compute a pooling operation (average, l2, max) across all the elements within the moving window over the input tensor",
@@ -1991,9 +2402,14 @@ async function initialize() {
   await runPoolingOperation('maxPool2d');
 }
 
-document.getElementById('runPooling').addEventListener('click', async () => {
-  const poolingType = document.getElementById('poolingType').value;
-  await runPoolingOperation(poolingType);
+document.querySelector('#runPooling').addEventListener('click', async () => {
+  const selectedRadio = document.querySelector('input[name="model"]:checked');
+  if (selectedRadio) {
+    const poolingType = selectedRadio.value;
+    await runPoolingOperation(poolingType);
+  } else {
+    console.error('No pooling type selected');
+  }
 });
 
 document.addEventListener('DOMContentLoaded', initialize, false);` },
