@@ -713,10 +713,9 @@ h1 { margin: 10px 0; }
     <h1>WebNN / Transformers.js - Translation</h1>
     <div id="content"> 
       <div id="src" contenteditable="true">
-	生活就像一盒巧克力。
+	      Space: the final frontier. These are the voyages of the starship Enterprise. Its five-year mission: to explore strange new worlds; to seek out new life and new civilizations; to boldly go where no man has gone before!
       </div>
-      <div id="tgt">
-      </div>
+      <div id="tgt"></div>
     </div> 
     <div class="controls">
       <button id="start">Translate</button>
@@ -746,8 +745,8 @@ async function translate() {
   const srcContent = document.querySelector('#src').textContent;
 
   const output = await translator(srcContent, {
-    src_lang: 'zh', // Chinese
-    tgt_lang: 'en', // English
+    src_lang: 'en', // English
+    tgt_lang: 'zh', // Chinese
   });
   console.log(output);
   document.querySelector('#tgt').textContent = output[0].translation_text;
@@ -767,11 +766,12 @@ h1 { margin: 10px 0; }
 
 #content {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-template-rows: 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 0px;
+  grid-column-gap: 0px;
+  grid-row-gap: 10px;
   margin-bottom: 10px;
+  font-size: 1.2rem;
 }
 
 #content div {
