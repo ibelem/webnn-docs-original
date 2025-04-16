@@ -6,7 +6,7 @@ export const webnnEditorFiles = {
     "static": {
       '/webnn.js': {
         active: true,
-        code: `''use strict';
+        code: `'use strict';
 
 /**
  * Checks if the WebNN API is supported in the current browser
