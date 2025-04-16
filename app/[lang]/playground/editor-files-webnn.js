@@ -1893,9 +1893,7 @@ run()
     console.error('Error: ', error);
   });` },
        '/ui.js': {
-        code: `// ui.js for matrix multiplication
-
-/**
+        code: `/**
  * Create an HTML table representation of a multi-dimensional array
  * @param {Array} arr - The array to display
  * @returns {HTMLElement} Table element 
@@ -1946,15 +1944,10 @@ function createTensorVisual(tensorInfo, maxDimensions = 2) {
   const container = document.createElement('div');
   container.classList.add('tensor-container');
   
-  // Create heading showing the shape
-  const heading = document.createElement('h4');
-  heading.textContent = 'Tensor [' + shape.join(' × ') +']';
-  container.appendChild(heading);
-  
   const infoDiv = document.createElement('div');
   infoDiv.classList.add('tensor-info');
   
-  infoDiv.innerHTML = '<p>' + shape.length + 'D · ' + data.length + ' elements</p>';
+  infoDiv.innerHTML = '<p>Tensor [' + shape.join(' × ') + '] · ' + + shape.length + 'D · ' + data.length + ' elements</p>';
 
   container.appendChild(infoDiv);
   container.appendChild(createArrayTable(formatted));
@@ -2081,9 +2074,9 @@ table {
 
 .deep-table td {
   border: 1px solid #ccc;
-  padding: 4px;
+  padding: 2px 2px;
   text-align: center;
-  min-width: 40px;
+  min-width: 24px
 }
 
 .nested-arrays {
@@ -2095,13 +2088,6 @@ table {
 }
 
 .nested-arrays div {
-  text-align: center;
-}
-
-th,
-td {
-  border: 1px solid #eee;
-  padding: 0.1rem 0.2rem;
   text-align: center;
 }
 
@@ -2127,11 +2113,11 @@ th {
 }
 
 .grid-item h4 {
-  margin: 0;
+  margin: 0 0 8px 0;
 }
 
-.tensor-container h4, .matmul-info .matmul-arrow {
-  margin: 0;
+.matmul-info .matmul-arrow {
+  margin: 0 0 8px 0;
   font-weight: normal;
 }
 
