@@ -735,24 +735,39 @@ env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to 
 
 async function translate() {
   const options = {
-    dtype: 'fp16',
+    dtype: 'fp32',
     device: 'webgpu', // 'webnn-gpu' and 'webnn-npu'
     session_options: {
       freeDimensionOverrides: {},
+      // https://ibelem.github.io/netron/?url=https://huggingface.co/Xenova/opus-mt-mul-en/resolve/main/onnx/decoder_model_merged_fp16.onnx
+      // freeDimensionOverrides: {
+      //   batch_size:
+      //   encoder_sequence_length:
+      //   decoder_sequence_length:
+      //   past_decoder_sequence_length:
+      //   encoder_sequence_length_out: 
+      // },
+      logSeverityLevel: 0
    }
   }
-  const translator = await pipeline('translation', 'Xenova/opus-mt-mul-en', options);
-  const srcContent = document.querySelector('#src').textContent;
 
-  const output = await translator(srcContent, {
-    src_lang: 'zh', // Chinese
-    tgt_lang: 'en', // English
-  });
-  console.log(output);
-  document.querySelector('#tgt').textContent = output[0].translation_text;
+  try {
+    const translator = await pipeline('translation', 'Xenova/opus-mt-mul-en', options);
+    const srcContent = document.querySelector('#src').textContent;
+
+    const output = await translator(srcContent, {
+      src_lang: 'zh', // Chinese
+      tgt_lang: 'en', // English
+    });
+    console.log(output);
+    document.querySelector('#tgt').textContent = output[0].translation_text;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
-document.querySelector('#start').addEventListener('click', translate, false);`},
+document.querySelector('#start').addEventListener('click', translate, false);
+`},
       '/styles.css': {
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
