@@ -10,12 +10,12 @@ export const transformersjsEditorFiles = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js in Static HTML5</title>
+    <title>WebNN / Transformers.js</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main>
-      <h2>Image Classification - WebNN / Transformers.js in HTML5</h2>     
+      <h2>Image Classification - WebNN / Transformers.js</h2>     
       <select id="imageSelector" onchange="updateImage()">
         <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
         <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>

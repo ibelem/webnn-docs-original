@@ -10,7 +10,7 @@ export const onnxruntimeEditorFiles = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / ONNX Runtime in Static HTML5</title>
+    <title>WebNN / ONNX Runtime</title>
     <link rel="stylesheet" href="/styles.css" />
     <script src="./webnn.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0-dev.20250306-e0b66cad28/dist/ort.all.min.js"></script>
@@ -20,7 +20,7 @@ export const onnxruntimeEditorFiles = {
   </head>
   <body>
     <main>
-      <h2>Image Classification - WebNN / ONNX Runtime in HTML5</h2>     
+      <h2>Image Classification - WebNN / ONNX Runtime</h2>     
       <select id="imageSelector" onchange="updateImage()">
         <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
         <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>

@@ -126,7 +126,7 @@ export default function Page() {
                 >
                   <Html5Icon className="static" />
                   <span className={`ml-[4px] text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 ${js === 'static' ? 'text-gray-800 dark:text-gray-200' : ''}`}>
-                    HTML5
+                    Static
                   </span>
                 </button>
               )}

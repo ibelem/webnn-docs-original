@@ -93,7 +93,7 @@ initialize();`},
  * Checks if the WebNN API is supported in the current browser
  * @returns {Promise<void>}
  */
-async function checkWebNNSupport() {
+async function checkWebNNSupport() {  
   const titleElement = '<h1>Hello WebNN</h1>';
   const appElement = document.getElementById("app");
   const messages = {
@@ -136,15 +136,7 @@ async function checkWebNNSupport() {
   }
 }
 
-/**
- * Initializes the WebNN support check on DOM content load.
- */
-function initialize() {
-  document.addEventListener('DOMContentLoaded', checkWebNNSupport, { once: true });
-}
-
-// Run initialization
-initialize();`},
+checkWebNNSupport();`},
       '/styles.css': {
         code: `body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

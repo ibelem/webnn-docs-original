@@ -9,7 +9,7 @@ export const liteRTEditorFiles = {
 <html>
 
 <head>
-  <title>WebNN / Lite RT in Static HTML5</title>
+  <title>WebNN / Lite RT</title>
   <meta charset="UTF-8" />
 </head>
 
@@ -21,7 +21,7 @@ export const liteRTEditorFiles = {
 </html>`},
       '/webnn.js': {
         active: true,
-        code: `document.getElementById("app").innerHTML = '// Lite RT + Static HTML5';
+        code: `document.getElementById("app").innerHTML = '// Lite RT';
 `},  '/styles.css': {
         code: `body {
 }
