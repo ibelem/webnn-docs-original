@@ -2064,19 +2064,14 @@ h1 {
 
 table {
   border-collapse: collapse;
-  margin: 0.5rem 0;
 }
 
-.deep-table {
-  border-collapse: collapse;
-  margin: -1px 0 0 0;
-}
-
-.deep-table td {
-  border: 1px solid #ccc;
-  padding: 2px 2px;
+table td {
+  padding: 4px 2px;
   text-align: center;
-  min-width: 24px
+  min-width: 24px;
+  border: 1px solid #eee;
+  border-collapse: collapse;
 }
 
 .nested-arrays {
@@ -2085,6 +2080,7 @@ table {
   justify-content: center;
   padding: 0;
   align-items: center;
+
 }
 
 .nested-arrays div {
