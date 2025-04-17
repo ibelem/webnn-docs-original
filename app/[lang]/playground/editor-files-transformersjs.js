@@ -848,7 +848,10 @@ button:hover {
 </html>`},
       '/webnn.js': {
         active: true,
-        code: `import {
+        code: `// Original source code https://huggingface.co/spaces/webml-community/mobileclip-webnn-gpu/tree/main 
+
+import {
+  env,
   AutoTokenizer,
   CLIPTextModelWithProjection,
   AutoProcessor,
@@ -1025,7 +1028,15 @@ navigator.mediaDevices
   });
 `},
       '/styles.css': {
-        code: `body {
+        code: `* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+html,
+body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
   margin: 0;
@@ -1033,7 +1044,78 @@ navigator.mediaDevices
   font-size: 0.8rem;
 }
 
-h1 { margin: 10px 0; }`},
+body,
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#controls {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+#controls > div {
+  text-align: center;
+}
+
+h1,
+h3 {
+  margin: 10px 0;
+}
+
+h3 {
+  margin-top: 0.5rem;
+}
+
+#container {
+  position: relative;
+  width: 420px;
+  height: 236px;
+  border: 1px solid #eee;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#status {
+  min-height: 16px;
+  margin: 8px 0;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+}
+
+input[type="text"] {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  margin-top: 2px;
+}
+
+input[type="range"] {
+  margin-top: 6px;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  border-radius: 2px;
+}
+
+#overlay:not(:empty) {
+  padding: 0.5rem;
+}`},
     },
   }
 }
