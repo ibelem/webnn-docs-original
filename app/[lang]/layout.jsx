@@ -2,6 +2,7 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import { getPageMap } from 'nextra/page-map'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import 'nextra-theme-docs/style.css'
 import '../style.css'
 
@@ -261,6 +262,7 @@ export default async function RootLayout({ children, params }) {
           {children}
         </Layout>
       </body>
+      <GoogleAnalytics gaId="G-0MBRQQNHVC" />
     </html>
   )
 }

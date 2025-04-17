@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ibelem/webnn-docs#readme",
   "dependencies": {
+    "@next/third-parties": "^15.3.0",
     "@tailwindcss/postcss": "^4.0.6",
     "@xyflow/react": "^12.4.3",
     "framer-motion": "^12.4.3",
