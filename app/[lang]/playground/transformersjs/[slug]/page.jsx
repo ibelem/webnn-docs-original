@@ -181,7 +181,7 @@ export default function Page() {
           template={js}
           theme={editorTheme}
           options={{
-            editorHeight: 538,
+            editorHeight: 558,
             showLineNumbers: true,
             showConsole: true,
             showConsoleButton: true

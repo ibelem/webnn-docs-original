@@ -849,7 +849,6 @@ button:hover {
       '/webnn.js': {
         active: true,
         code: `// Original source code https://huggingface.co/spaces/webml-community/mobileclip-webnn-gpu/tree/main 
-
 import {
   env,
   AutoTokenizer,
@@ -1016,7 +1015,7 @@ navigator.mediaDevices
 
     // Set container width and height depending on the image aspect ratio
     const ar = width / height;
-    const [cw, ch] = ar > 720 / 405 ? [720, 720 / ar] : [405 * ar, 405];
+    const [cw, ch] = ar > 720 / 260 ? [720, 720 / ar] : [260 * ar, 260];
     container.style.width = cw + 'px';
     container.style.height = ch + 'px';
 
@@ -1054,8 +1053,8 @@ body,
 
 #controls {
   display: flex;
-  padding: 1rem;
-  gap: 1rem;
+  padding: 0.5rem 0 0 0;
+  gap: 0.5rem;
 }
 
 #controls > div {
@@ -1086,6 +1085,7 @@ h3 {
 #status {
   min-height: 16px;
   margin: 8px 0;
+  font-size: 1rem;
 }
 
 video {
@@ -1095,7 +1095,7 @@ video {
 
 input[type="text"] {
   padding: 0.25rem 0.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #eee;
   border-radius: 0.25rem;
   margin-top: 2px;
 }
@@ -1109,7 +1109,6 @@ input[type="range"] {
   top: 0;
   left: 0;
   background-color: rgba(255, 255, 255, 0.9);
-  font-size: 1.25rem;
   border-radius: 2px;
 }
 
