@@ -809,5 +809,124 @@ button:hover {
   background-color: #eee;
 }`},
     },
+  },
+  "zero-shot-image-classification": {
+    "title": "Zero-Shot Image Classification (MobileCLIP S0)",
+    "description": "An Zero-Shot Image Classification demo using WebNN and Transformers.js based on ONNX Runtime Web",
+    "static": {
+      '/index.html': {
+        code: `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebNN / Transformers.js - Translation</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <h1>Zero-Shot Image Classification (MobileCLIP S0)</h1>
+    <div class="controls">
+      <button id="start">Classification</button>
+    </div>
+    <div id="log"></div>
+    <script type="module" src="./webnn.js"></script>
+  </body>
+</html>
+`},
+      '/webnn.js': {
+        active: true,
+        code: `import { env, 
+  AutoTokenizer, 
+  CLIPTextModelWithProjection,
+  AutoProcessor,
+  CLIPVisionModelWithProjection,
+  RawImage,
+  dot,
+  SoftMax
+} from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
+
+// Default remoteHost is https://huggingface.co
+// Comment the following line if you are not in China
+env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
+
+async function classification () {
+const model_id = 'Xenova/mobileclip_s0';
+
+// Load tokenizer and text model
+const tokenizer = await AutoTokenizer.from_pretrained(model_id);
+const text_model = await CLIPTextModelWithProjection.from_pretrained(model_id);
+
+// Load processor and vision model
+const processor = await AutoProcessor.from_pretrained(model_id);
+const vision_model = await CLIPVisionModelWithProjection.from_pretrained(model_id);
+
+// Run tokenization
+const texts = ['cats', 'dogs', 'birds'];
+const text_inputs = tokenizer(texts, { padding: 'max_length', truncation: true });
+
+// Compute text embeddings
+const { text_embeds } = await text_model(text_inputs);
+const normalized_text_embeds = text_embeds.normalize().tolist();
+
+// Read image and run processor
+const url = 'https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/cats.jpg';
+const image = await RawImage.read(url);
+const image_inputs = await processor(image);
+
+// Compute vision embeddings
+const { image_embeds } = await vision_model(image_inputs);
+const normalized_image_embeds = image_embeds.normalize().tolist();
+
+// Compute probabilities
+const probabilities = normalized_image_embeds.map(
+  x => softmax(normalized_text_embeds.map(y => 100 * dot(x, y)))
+);
+console.log(probabilities); // [[ 0.9989384093386391, 0.001060433633052551, 0.000001157028308360134 ]]
+}
+
+document.querySelector('#start').addEventListener('click', translate, false);
+`},
+      '/styles.css': {
+        code: `body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0 10px;
+  font-size: 0.8rem;
+}
+
+h1 { margin: 10px 0; }
+
+#content {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+#content div {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  min-height: 60px;
+  outline: none;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  background-color: #f3f3f3;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #eee;
+}`},
+    },
   }
 }
