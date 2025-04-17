@@ -879,16 +879,24 @@ let tokenizer, text_model, processor, vision_model;
 try {
   // Load tokenizer and text model
   tokenizer = await AutoTokenizer.from_pretrained(model_id);
-  text_model = await CLIPTextModelWithProjection.from_pretrained(model_id, {
+   text_model = await CLIPTextModelWithProjection.from_pretrained(model_id, {
     device: "wasm",
     dtype: "q8",
+    // device: "webnn-gpu",
+    // dtype: "fp16",
+    // session_options: {
+    //  "free_dimension_overrides": {
+    //    "batch_size": 1,
+    //    "sequence_length": 2
+    //  }
+    // }
   });
 
   // Load processor and vision model
   processor = await AutoProcessor.from_pretrained(model_id);
   vision_model = await CLIPVisionModelWithProjection.from_pretrained(model_id, {
     device: "webnn-gpu",
-    dtype: "fp32",
+    dtype: "fp16",
   });
 } catch (err) {
   console.error(err);
@@ -929,7 +937,7 @@ function onFrameUpdate() {
         textEmbeddings = null;
         prevTextInputs = labelsInput.value;
         prevTemplate = templateInput.value;
-        labels = prevTextInputs.split(/\s*,\s*/).filter((x) => x);
+        labels = prevTextInputs.split(/s*,s*/).filter((x) => x);
 
         if (labels.length > 0) {
           const texts = labels.map((x) =>
