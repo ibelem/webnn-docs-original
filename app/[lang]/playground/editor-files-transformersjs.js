@@ -880,16 +880,16 @@ try {
   // Load tokenizer and text model
   tokenizer = await AutoTokenizer.from_pretrained(model_id);
    text_model = await CLIPTextModelWithProjection.from_pretrained(model_id, {
-    device: "wasm",
-    dtype: "q8",
-    // device: "webnn-gpu",
-    // dtype: "fp16",
-    // session_options: {
-    //  "free_dimension_overrides": {
-    //    "batch_size": 1,
-    //    "sequence_length": 2
-    //  }
-    // }
+    // device: "wasm",
+    // dtype: "q8",
+    device: "webnn-gpu",
+    dtype: "fp32",
+    session_options: {
+     "freeDimensionOverrides": {
+       "batch_size": 2,
+       "sequence_length": 77
+     }
+    }
   });
 
   // Load processor and vision model
