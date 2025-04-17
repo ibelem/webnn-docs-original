@@ -820,12 +820,12 @@ button:hover {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-time zero-shot image classification (MobileCLIP S0)</title>
+    <title>Zero-shot image classification (MobileCLIP S0)</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
-    <h1>Real-time zero-shot image classification (MobileCLIP S0)</h1>
+    <h1>Zero-shot image classification (MobileCLIP S0)</h1>
     <div id="container">
       <video id="video" autoplay muted playsinline></video>
       <div id="overlay"></div>
