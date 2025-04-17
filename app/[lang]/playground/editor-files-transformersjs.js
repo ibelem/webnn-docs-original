@@ -886,7 +886,7 @@ try {
     dtype: "fp32",
     session_options: {
      "freeDimensionOverrides": {
-       "batch_size": 2,
+       // "batch_size": 2,
        "sequence_length": 77
      }
     }
