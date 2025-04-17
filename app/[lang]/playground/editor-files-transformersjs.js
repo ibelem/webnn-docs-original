@@ -820,72 +820,209 @@ button:hover {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js - Translation</title>
+    <title>Real-time zero-shot image classification (MobileCLIP S0)</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
-    <h1>Zero-Shot Image Classification (MobileCLIP S0)</h1>
-    <div class="controls">
-      <button id="start">Classification</button>
+    <h1>Real-time zero-shot image classification (MobileCLIP S0)</h1>
+    <div id="container">
+      <video id="video" autoplay muted playsinline></video>
+      <div id="overlay"></div>
     </div>
-    <div id="log"></div>
+    <div id="controls">
+      <div title="Labels used to perform zero-shot image classification">
+        <label>Labels (comma-separated)</label>
+        <br />
+        <input id="labels" type="text" disabled />
+      </div>
+      <div title="Template used to perform zero-shot image classification">
+        <label>Hypothesis template</label>
+        <br />
+        <input id="template" type="text" value="A photo of a {}" disabled />
+      </div>
+    </div>
+    <label id="status"></label>
     <script type="module" src="./webnn.js"></script>
   </body>
-</html>
-`},
+</html>`},
       '/webnn.js': {
         active: true,
-        code: `import { env, 
-  AutoTokenizer, 
+        code: `import {
+  AutoTokenizer,
   CLIPTextModelWithProjection,
   AutoProcessor,
   CLIPVisionModelWithProjection,
   RawImage,
   dot,
-  SoftMax
-} from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
+  softmax,
+} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0";
 
 // Default remoteHost is https://huggingface.co
 // Comment the following line if you are not in China
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
 
-async function classification () {
-const model_id = 'Xenova/mobileclip_s0';
+// Reference the elements that we will need
+const status = document.getElementById("status");
+const container = document.getElementById("container");
+const video = document.getElementById("video");
+const labelsInput = document.getElementById("labels");
+const templateInput = document.getElementById("template");
+const overlay = document.getElementById("overlay");
 
-// Load tokenizer and text model
-const tokenizer = await AutoTokenizer.from_pretrained(model_id);
-const text_model = await CLIPTextModelWithProjection.from_pretrained(model_id);
+status.textContent = "Loading model (88MB)...";
 
-// Load processor and vision model
-const processor = await AutoProcessor.from_pretrained(model_id);
-const vision_model = await CLIPVisionModelWithProjection.from_pretrained(model_id);
+const model_id = "Xenova/mobileclip_s0";
+let tokenizer, text_model, processor, vision_model;
+try {
+  // Load tokenizer and text model
+  tokenizer = await AutoTokenizer.from_pretrained(model_id);
+  text_model = await CLIPTextModelWithProjection.from_pretrained(model_id, {
+    device: "wasm",
+    dtype: "q8",
+  });
 
-// Run tokenization
-const texts = ['cats', 'dogs', 'birds'];
-const text_inputs = tokenizer(texts, { padding: 'max_length', truncation: true });
-
-// Compute text embeddings
-const { text_embeds } = await text_model(text_inputs);
-const normalized_text_embeds = text_embeds.normalize().tolist();
-
-// Read image and run processor
-const url = 'https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/cats.jpg';
-const image = await RawImage.read(url);
-const image_inputs = await processor(image);
-
-// Compute vision embeddings
-const { image_embeds } = await vision_model(image_inputs);
-const normalized_image_embeds = image_embeds.normalize().tolist();
-
-// Compute probabilities
-const probabilities = normalized_image_embeds.map(
-  x => softmax(normalized_text_embeds.map(y => 100 * dot(x, y)))
-);
-console.log(probabilities); // [[ 0.9989384093386391, 0.001060433633052551, 0.000001157028308360134 ]]
+  // Load processor and vision model
+  processor = await AutoProcessor.from_pretrained(model_id);
+  vision_model = await CLIPVisionModelWithProjection.from_pretrained(model_id, {
+    device: "webnn-gpu",
+    dtype: "fp32",
+  });
+} catch (err) {
+  console.error(err);
+  status.textContent = err.message;
+  alert(err.message);
+  throw err;
 }
 
-document.querySelector('#start').addEventListener('click', translate, false);
+labelsInput.disabled = false;
+templateInput.disabled = false;
+
+status.textContent = "Ready";
+
+// See model.logit_scale parameter of original model
+const exp_logit_scale = Math.exp(4.6052);
+
+const IMAGE_SIZE = 224;
+const canvas = document.createElement("canvas");
+canvas.width = canvas.height = IMAGE_SIZE;
+const context = canvas.getContext("2d", { willReadFrequently: true });
+
+let isProcessing = false;
+let previousTime;
+let textEmbeddings;
+let prevTextInputs;
+let prevTemplate;
+let labels;
+
+function onFrameUpdate() {
+  if (!isProcessing) {
+    isProcessing = true;
+    (async function () {
+      // If text inputs have changed, update the embeddings
+      if (
+        prevTextInputs !== labelsInput.value ||
+        prevTemplate !== templateInput.value
+      ) {
+        textEmbeddings = null;
+        prevTextInputs = labelsInput.value;
+        prevTemplate = templateInput.value;
+        labels = prevTextInputs.split(/\s*,\s*/).filter((x) => x);
+
+        if (labels.length > 0) {
+          const texts = labels.map((x) =>
+            templateInput.value.replaceAll("{}", x),
+          );
+
+          const text_inputs = tokenizer(texts, {
+            padding: "max_length", // NB: the model requires max_length padding
+            truncation: true,
+          });
+
+          // Compute embeddings
+          const { text_embeds } = await text_model(text_inputs);
+          textEmbeddings = text_embeds.normalize().tolist();
+        } else {
+          overlay.innerHTML = "";
+        }
+      }
+
+      if (textEmbeddings) {
+        // Read the current frame from the video
+        context.drawImage(video, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
+        const pixelData = context.getImageData(
+          0,
+          0,
+          IMAGE_SIZE,
+          IMAGE_SIZE,
+        ).data;
+        const image = new RawImage(pixelData, IMAGE_SIZE, IMAGE_SIZE, 4);
+
+        const image_inputs = await processor(image);
+
+        // Compute embeddings
+        const { image_embeds } = await vision_model(image_inputs);
+        const imageEmbedding = image_embeds.normalize().tolist()[0];
+
+        // Compute similarity
+        const similarities = textEmbeddings.map(
+          (x) => dot(x, imageEmbedding) * exp_logit_scale,
+        );
+
+        const sortedIndices = softmax(similarities)
+          .map((x, i) => [x, i])
+          .sort((a, b) => b[0] - a[0]);
+
+        // Update UI
+        overlay.innerHTML = "";
+        for (const [score, index] of sortedIndices) {
+          overlay.appendChild(
+            document.createTextNode(labels[index] +' : '+ score.toFixed(2)),
+          );
+          overlay.appendChild(document.createElement("br"));
+        }
+      }
+
+      if (previousTime !== undefined) {
+        const fps = 1000 / (performance.now() - previousTime);
+        status.textContent = 'FPS: ' + fps.toFixed(2);
+      }
+      previousTime = performance.now();
+      isProcessing = false;
+    })();
+  }
+
+  window.requestAnimationFrame(onFrameUpdate);
+}
+
+// Start the video stream
+navigator.mediaDevices
+  .getUserMedia(
+    { video: true }, // Ask for video
+  )
+  .then((stream) => {
+    // Set up the video and canvas elements.
+    video.srcObject = stream;
+    video.play();
+
+    const videoTrack = stream.getVideoTracks()[0];
+    const { width, height } = videoTrack.getSettings();
+
+    video.width = width;
+    video.height = height;
+
+    // Set container width and height depending on the image aspect ratio
+    const ar = width / height;
+    const [cw, ch] = ar > 720 / 405 ? [720, 720 / ar] : [405 * ar, 405];
+    container.style.width = cw + 'px';
+    container.style.height = ch + 'px';
+
+    // Start the animation loop
+    window.requestAnimationFrame(onFrameUpdate);
+  })
+  .catch((error) => {
+    alert(error);
+  });
 `},
       '/styles.css': {
         code: `body {
@@ -896,37 +1033,7 @@ document.querySelector('#start').addEventListener('click', translate, false);
   font-size: 0.8rem;
 }
 
-h1 { margin: 10px 0; }
-
-#content {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 10px;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-}
-
-#content div {
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  min-height: 60px;
-  outline: none;
-}
-
-button {
-  padding: 0.6rem 1.2rem;
-  border-radius: 3px;
-  border: 1px solid #eee;
-  background-color: #f3f3f3;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #eee;
-}`},
+h1 { margin: 10px 0; }`},
     },
   }
 }
