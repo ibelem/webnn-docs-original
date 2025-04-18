@@ -885,10 +885,10 @@ try {
     device: "webnn-gpu",
     dtype: "fp32",
     session_options: {
-     "freeDimensionOverrides": {
-       // "batch_size": 2,
-       "sequence_length": 77
-     }
+      freeDimensionOverrides: {
+        // batch_size: 2,
+        sequence_length: 77
+      }
     }
   });
 

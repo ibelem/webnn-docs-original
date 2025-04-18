@@ -36,7 +36,7 @@ const classifier = await transformers.pipeline('image-classification', path, opt
 let [err, output] = await asyncErrorHandling(classifier(imageUrl, { topk: 3 }));
 ```
 
-> <InfoIcon /> WebNN does not currently support dynamic shapes and requires [`free_dimension_overrides`](../onnx-runtime/free-dimension-overrides) to be set.
+> <InfoIcon /> WebNN does not currently support dynamic shapes and requires [`free_dimension_overrides`](../transformers-js/free-dimension-overrides) to be set.
 
-> <InfoIcon /> [`free_dimension_overrides`](../onnx-runtime/free-dimension-overrides) can be set in sample code above or just in config.json of your models as a field within "transformers.js_config". 
+> <InfoIcon /> [`free_dimension_overrides`](../transformers-js/free-dimension-overrides) can be set in sample code above or just in config.json of your models as a field within "transformers.js_config". 
 > When `free_dimension_overrides` is not set, you may experience significant performance degradation.

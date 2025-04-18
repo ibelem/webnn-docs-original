@@ -8,10 +8,10 @@ import '../style.css'
 
 export const metadata = {
   description:
-    'WebNN doc, WebNN documentation, WebNN Neural Network API documentation site.',
+    'WebNN, WebNN Neural Network API',
   title: {
     absolute: 'WebNN',
-    template: '%s | WebNN Docs - Web Neural Network API'
+    template: '%s | WebNN · Web Neural Network API'
   },
   metadataBase: new URL('https://webnn.io'),
   openGraph: {
@@ -22,7 +22,7 @@ export const metadata = {
     site: '@ibelem'
   },
   appleWebApp: {
-    title: 'WebNN Documentation'
+    title: 'WebNN'
   },
   other: {
     'msapplication-TileColor': '#fff'
