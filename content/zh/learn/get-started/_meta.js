@@ -5,4 +5,7 @@ export default {
   'quickstart': {
     title: "🚀 Quickstart"
   },
+  'using-typescript': {
+    title: "Using TypeScript"
+  },
 };
