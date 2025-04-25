@@ -260,7 +260,8 @@ export async function checkWebNNSupport() {
   }
 }`
       },
-      '/App.js': { code: `import React, { useEffect, useState } from 'react';
+      '/App.js': {
+        code: `import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { checkWebNNSupport } from './webnn.js';
 
@@ -288,8 +289,10 @@ export default function App() {
   );
 };
 ` }
-    }, "vue": {
-      '/src/webnn.js': { code: `'use strict';
+    },
+    "vue": {
+      '/src/webnn.js': {
+        code: `'use strict';
 
 /**
  * Checks if the WebNN API is supported in the current browser.
@@ -329,7 +332,8 @@ export async function checkWebNNSupport() {
     return { isSupported: false, message: errorMessage };
   }
 }` },
-      '/src/App.vue': { code: `<template>
+      '/src/App.vue': {
+        code: `<template>
   <div id="app">
     <h1>WebNN API Support Check</h1>
     <div :class="statusClass" id="status">{{ status }}</div>
@@ -387,81 +391,6 @@ export default {
 }`
       }
     }
-  },
-  "hello-webnn-typescript": {
-    "title": "Hello WebNN (TypeScript)",
-    "description": "Hello WebNN in TypeScript",
-    "react": {
-      '/webnn.ts': {
-        active: true,
-        code: `/**
- * Checks if the WebNN API is supported in the current browser.
- * @returns {Promise<string>} The status message indicating support or error.
- */
-export async function checkWebNNSupport() {
-  'use strict';
-
-  const messages = {
-    checking: 'Checking WebNN API support...',
-    supported: 'WebNN API is supported in this browser.',
-    unsupported: 'WebNN API is not supported in this browser.',
-    missingNavigatorML: 'WebNN is not available in this browser. Try using a compatible browser like Chrome with WebNN enabled.',
-    error: 'An error occurred while checking WebNN support: ',
-  };
-
-  try {
-    // Check if navigator.ml exists
-    if (!('ml' in navigator)) {
-      throw new Error(messages.missingNavigatorML);
-    }
-
-    // Attempt to create WebNN context and builder
-    const context = await navigator.ml.createContext();
-    if (!window.MLGraphBuilder) {
-      throw new Error('MLGraphBuilder is not available.');
-    }
-    new MLGraphBuilder(context);
-
-    // Success case
-    console.log(messages.supported);
-    return messages.supported;
-  } catch (error) {
-    // Handle errors with specific messaging
-    const errorMessage = messages.error + ' ' + error.message;
-    console.error(errorMessage, error.stack);
-    return error.message.includes('not available') ? messages.unsupported : errorMessage;
-  }
-}`
-      },
-      '/App.tsx': { code: `import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { checkWebNNSupport } from './webnn.js';
-
-export default function App() {
-  const [status, setStatus] = useState('Checking WebNN API support...');
-
-  useEffect(() => {
-    async function initialize() {
-      const result = await checkWebNNSupport();
-      setStatus(result);
-    }
-    initialize();
-  }, []);
-
-  return (
-    <div className="container">
-      <h1 className="title">Hello WebNN</h1>
-      <p
-        className={status.includes('supported') ? 'status-supported' : 'status-error'}
-        aria-live="polite"
-      >
-        {status}
-      </p>
-    </div>
-  );
-};
-` }
-    },
   },
   "add-mul": {
     "title": "C = 0.2 * A + B",
@@ -1965,7 +1894,7 @@ run()
   .catch(error => {
     console.error('Error: ', error);
   });` },
-       '/ui.js': {
+      '/ui.js': {
         code: `/**
  * Create an HTML table representation of a multi-dimensional array
  * @param {Array} arr - The array to display
