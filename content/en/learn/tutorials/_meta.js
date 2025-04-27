@@ -12,6 +12,6 @@ export default {
     title: "Lite RT"
   },
   'webnn': {
-    title: "Native WebNN"
+    title: "Vanilla JavaScript"
   },
 };

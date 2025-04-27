@@ -1,5 +1,5 @@
 export default {
   'webnn': {
-    title: "Native WebNN"
+    title: "Vanilla JavaScript"
   },
 };

@@ -71,7 +71,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/nnotepad/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nnotepad",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "8",
@@ -81,7 +81,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/code/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/code",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "9",
@@ -91,7 +91,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/image_classification/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/image_classification",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "10",
@@ -101,7 +101,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/lenet/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/lenet",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "11",
@@ -111,7 +111,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/style_transfer/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/style_transfer",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },  {
     id: "12",
     title: "Object Detection",
@@ -120,7 +120,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/object_detection/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/object_detection/",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "13",
@@ -130,7 +130,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/nsnet2/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nsnet2/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },  {
     id: "14",
     title: "Noise Suppression",
@@ -139,7 +139,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/rnnoise/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/rnnoise/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "15",
@@ -149,7 +149,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/semantic_segmentation/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },  {
     id: "16",
     title: "Facial Landmark Detection",
@@ -158,7 +158,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/facial_landmark_detection/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "17",
@@ -168,7 +168,7 @@ const demosEn = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/face_recognition/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/face_recognition/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
 ]
 
@@ -241,7 +241,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/nnotepad/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nnotepad",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "8",
@@ -251,7 +251,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/code/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/code",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "9",
@@ -261,7 +261,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/image_classification/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/image_classification",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "10",
@@ -271,7 +271,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/lenet/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/lenet",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "11",
@@ -281,7 +281,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/style_transfer/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/style_transfer",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "12",
@@ -291,7 +291,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/object_detection/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/object_detection/",
     tags: ["CPU", "GPU", "NPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "13",
@@ -301,7 +301,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/nsnet2/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/nsnet2/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "14",
@@ -311,7 +311,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/rnnoise/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/rnnoise/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "15",
@@ -321,7 +321,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/semantic_segmentation/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "16",
@@ -331,7 +331,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/facial_landmark_detection/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
   {
     id: "17",
@@ -341,7 +341,7 @@ const demosCh = [
     demoUrl: "https://webmachinelearning.github.io/webnn-samples/face_recognition/",
     codeUrl: "https://github.com/webmachinelearning/webnn-samples/tree/master/face_recognition/",
     tags: ["CPU", "GPU"],
-    framework: ["Native WebNN"],
+    framework: ["Vanilla JS"],
   },
 ]
 
