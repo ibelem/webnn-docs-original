@@ -1,6 +1,6 @@
 export default {
   index: {
-    title: "Framework vs Native"
+    title: "Framework vs Vanilla"
   },
   'transformers-js': {
     title: "Transformers.js"
