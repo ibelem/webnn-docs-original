@@ -40,7 +40,7 @@ export const transformersjsEditorFiles = {
 </html>`},
       '/webnn.js': {
         active: true,
-        code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
+        code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
 
 // Default remoteHost is https://huggingface.co
 // Comment the following line if you are not in China
@@ -201,7 +201,7 @@ const msg = ref('// Transformers.js + Vue');
 `},
       '/webnn.js': {
         active: true,
-        code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
+        code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
 
 // Default remoteHost is https://huggingface.co
 // Comment the following line if you are not in China
@@ -727,7 +727,7 @@ h1 { margin: 10px 0; }
 `},
       '/webnn.js': {
         active: true,
-        code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.1';
+        code: `import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
 
 // Default remoteHost is https://huggingface.co
 // Comment the following line if you are not in China
