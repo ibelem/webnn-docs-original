@@ -52,6 +52,11 @@ export default withNextra({
         destination: '/playground',
         permanent: true, 
       },
+      {
+        source: '/netron/:slug',
+        destination: '/netron/:slug.html',
+        permanent: true,
+      },
     ]
   },
   eslint: {
