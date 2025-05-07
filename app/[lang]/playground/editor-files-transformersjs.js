@@ -16,6 +16,9 @@ export const transformersjsEditorFiles = {
   <body>
     <main>
       <h2>Image Classification - WebNN / Transformers.js</h2>
+      <div>
+        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+      </div>
       <div class="select-group">
         <div class="input-group">
           <span>Sample Images</span>
@@ -30,14 +33,12 @@ export const transformersjsEditorFiles = {
           <span>Local Image</span>
           <input type="file" id="localImageInput" class="file-input" accept="image/*">
         </div>
-      </div>
-      <div>
-        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+        <div class="input-group">
+          <button id="classify" type="button">Click to Classify Image</button>
+        </div>
       </div>
       
-      <button id="classify" type="button">Click to Classify Image</button>
       <span id="loading" class="loading">Loading model and classifying...</span>
-      
       <div id="outputText">Classification results will appear here</div>
     </main>
     
@@ -319,6 +320,9 @@ const msg = ref('// Transformers.js + Vue');
   <body>
     <main>
       <h2>Image Classification - WebNN / Transformers.js</h2>
+      <div>
+        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+      </div>
       <div class="select-group">
         <div class="input-group">
           <span>Sample Images</span>
@@ -333,14 +337,12 @@ const msg = ref('// Transformers.js + Vue');
           <span>Local Image</span>
           <input type="file" id="localImageInput" class="file-input" accept="image/*">
         </div>
-      </div>
-      <div>
-        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+        <div class="input-group">
+          <button id="classify" type="button">Click to Classify Image</button>
+        </div>
       </div>
       
-      <button id="classify" type="button">Click to Classify Image</button>
       <span id="loading" class="loading">Loading model and classifying...</span>
-      
       <div id="outputText">Classification results will appear here</div>
     </main>
     
