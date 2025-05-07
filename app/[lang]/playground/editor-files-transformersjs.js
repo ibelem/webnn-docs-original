@@ -15,27 +15,34 @@ export const transformersjsEditorFiles = {
   </head>
   <body>
     <main>
-      <h2>Image Classification - WebNN / Transformers.js</h2>     
-      <select id="imageSelector" onchange="updateImage()">
-        <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
-        <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
-        <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
-        <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
-      </select>
+      <h2>Image Classification - WebNN / Transformers.js</h2>
+      
+      <div class="input-group">
+        <h3>Sample Images</h3>
+        <select id="imageSelector">
+          <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+          <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+          <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+          <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+        </select>
+      </div>
+      
+      <div class="input-group">
+        <h3>Upload Local Image</h3>
+        <input type="file" id="localImageInput" class="file-input" accept="image/*">
+      </div>
+      
       <div>
         <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
       </div>
-      <button id="classify" type="button">Click Me to Classify Image!</button>
-      <div id="outputText">This image displayed is: </div>
+      
+      <button id="classify" type="button">Click to Classify Image</button>
+      <span id="loading" class="loading">Loading model and classifying...</span>
+      
+      <div id="outputText">Classification results will appear here</div>
     </main>
+    
     <script type="module" src="./webnn.js"></script>
-    <script>
-      function updateImage() {
-        const selector = document.querySelector('#imageSelector');
-        const image = document.querySelector('#selectedImage');
-        image.src = selector.value;
-      }
-    </script>
   </body>
 </html>`},
       '/webnn.js': {
@@ -46,36 +53,113 @@ export const transformersjsEditorFiles = {
 // Comment the following line if you are not in China
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
 
-async function classifyImage() {
-  const options = {
-      dtype: 'fp16',
-      device: 'webnn-gpu', // 'webnn-cpu' and 'webnn-npu'
-      session_options: {
-        freeDimensionOverrides: {
-          batch_size: 1,
-        }
-      },
-    };
-  const url = document.querySelector('#selectedImage').src;
-  const classifier = await pipeline('image-classification', 'webnn/mobilenet-v2', options);
-  const output = await classifier(url, { top_k: 3 });
-  console.log(output); // Print predictions to console
+let classifier;
 
-  const outputElement = document.querySelector("#outputText");
-  outputElement.innerHTML = ""; // Clear previous content
-  // Display prediction in HTML
-  output.forEach(item => {
-      const div = document.createElement("div");
-      div.innerHTML = item.label + ": " + (item.score * 100).toFixed(2) + "%";
-      outputElement.appendChild(div);
-  });
+// Load model immediately to reduce classification delay
+async function loadModel() {
+  const options = {
+    dtype: 'fp16',
+    device: 'webnn-gpu', // Options: 'webnn-cpu', 'webnn-gpu', and 'webnn-npu'
+    session_options: {
+      freeDimensionOverrides: {
+        batch_size: 1,
+      }
+    },
+  };
+  
+  try {
+    console.log("Loading model...");
+    classifier = await pipeline('image-classification', 'webnn/mobilenet-v2', options);
+    console.log("Model loaded successfully");
+  } catch (error) {
+    console.error("Error loading model:", error);
+  }
 }
 
-document.querySelector('#classify').addEventListener('click', classifyImage, false);`},
+async function classifyImage() {
+  const loadingElement = document.getElementById('loading');
+  const outputElement = document.getElementById('outputText');
+  
+  try {
+    loadingElement.style.display = 'inline';
+    
+    // Load model if not already loaded
+    if (!classifier) {
+      await loadModel();
+    }
+    
+    const img = document.getElementById('selectedImage');
+    
+    // Ensure image is loaded
+    if (img.complete) {
+      const output = await classifier(img, { top_k: 3 });
+      console.log(output); // Print predictions to console
+      
+      outputElement.innerHTML = ""; // Clear previous content
+      
+      // Display prediction in HTML
+      output.forEach(item => {
+        const div = document.createElement("div");
+        div.innerHTML = item.label + ": " + (item.score * 100).toFixed(2) + "%";
+        outputElement.appendChild(div);
+      });
+    } else {
+      outputElement.textContent = "Please wait for the image to load completely.";
+    }
+  } catch (error) {
+    console.error("Classification error:", error);
+    outputElement.textContent = "Error classifying image: " + error.message;
+  } finally {
+    loadingElement.style.display = 'none';
+  }
+}
+
+// Handle image source updates
+function updateImage(source) {
+  const image = document.getElementById('selectedImage');
+  const outputElement = document.getElementById('outputText');
+  
+  if (source === 'sample') {
+    const selector = document.getElementById('imageSelector');
+    image.src = selector.value;
+  } else if (source === 'local') {
+    const fileInput = document.getElementById('localImageInput');
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        image.src = e.target.result;
+      };
+      
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  }
+  
+  // Reset the output text
+  outputElement.textContent = "Classification results will appear here";
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Add event listeners
+  document.getElementById('classify').addEventListener('click', classifyImage);
+  document.getElementById('imageSelector').addEventListener('change', () => updateImage('sample'));
+  document.getElementById('localImageInput').addEventListener('change', () => updateImage('local'));
+  
+  // Start loading the model in the background
+  loadModel();
+});
+
+// Export functions for global use
+window.classifyImage = classifyImage;
+window.updateImage = updateImage;`},
       '/styles.css': {
         code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 h1, h2 {
@@ -86,6 +170,7 @@ select {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   padding: 0.2rem 0.5rem;
+  max-width: 100%;
 }
 
 select option {
@@ -95,17 +180,66 @@ select option {
 img {
   width: 40%;
   height: auto;
+  margin-top: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #outputText {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
+  line-height: 1.5;
+}
+
+#outputText div {
+  padding: 0.2rem 0;
 }
 
 button {
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 1rem;
   margin: 0.5rem 0;
   font-size: 1rem;
+  background-color: #eb6424;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #d25620;
+}
+
+.input-group {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.input-group h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.file-input {
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.loading {
+  display: none;
+  margin-left: 0.5rem;
+  color: #eb6424;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  img {
+    width: 80%;
+  }
 }`},
     },
     "vanilla": {
