@@ -16,22 +16,21 @@ export const transformersjsEditorFiles = {
   <body>
     <main>
       <h2>Image Classification - WebNN / Transformers.js</h2>
-      
-      <div class="input-group">
-        <h3>Sample Images</h3>
-        <select id="imageSelector">
-          <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
-          <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
-          <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
-          <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
-        </select>
+      <div class="select-group">
+        <div class="input-group">
+          <span>Sample Images</span>
+          <select id="imageSelector">
+            <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+            <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span>Local Image</span>
+          <input type="file" id="localImageInput" class="file-input" accept="image/*">
+        </div>
       </div>
-      
-      <div class="input-group">
-        <h3>Upload Local Image</h3>
-        <input type="file" id="localImageInput" class="file-input" accept="image/*">
-      </div>
-      
       <div>
         <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
       </div>
@@ -158,37 +157,25 @@ window.updateImage = updateImage;`},
         code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
-  max-width: 900px;
   margin: 0 auto;
 }
 
 h1, h2 {
-  color: #eb6424; 
-}
-
-select {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  padding: 0.2rem 0.5rem;
-  max-width: 100%;
-}
-
-select option {
-  padding: 0.2rem 0.5rem;
+  color: #eb6424;
+  margin: 1rem 0 0.5rem 0;
 }
 
 img {
-  width: 40%;
+  margin-top: 0.5rem;
+  width: 30%;
+  max-width: 260px;
   height: auto;
-  margin-top: 1rem;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #outputText {
   margin: 0.5rem 0;
-  padding: 0.5rem 0;
-  line-height: 1.5;
 }
 
 #outputText div {
@@ -198,7 +185,6 @@ img {
 button {
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
-  font-size: 1rem;
   background-color: #eb6424;
   color: white;
   border: none;
@@ -211,16 +197,28 @@ button:hover {
   background-color: #d25620;
 }
 
+.select-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0px;
+}
+
 .input-group {
-  margin: 1rem 0;
-  padding: 1rem;
+  margin: 0;
+  padding: 0.2rem 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  gap: 0px 1rem;
+  align-items: center;
 }
 
-.input-group h3 {
-  margin-top: 0;
+.input-group span {
+  min-width: 120px;
   color: #333;
 }
 
