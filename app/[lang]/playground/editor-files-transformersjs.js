@@ -318,27 +318,33 @@ const msg = ref('// Transformers.js + Vue');
   </head>
   <body>
     <main>
-      <h2>Image Classification - WebNN / Transformers.js</h2>     
-      <select id="imageSelector" onchange="updateImage()">
-        <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
-        <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
-        <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
-        <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
-      </select>
+      <h2>Image Classification - WebNN / Transformers.js</h2>
+      <div class="select-group">
+        <div class="input-group">
+          <span>Sample Images</span>
+          <select id="imageSelector">
+            <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+            <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span>Local Image</span>
+          <input type="file" id="localImageInput" class="file-input" accept="image/*">
+        </div>
+      </div>
       <div>
         <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
       </div>
-      <button id="classify" type="button">Click Me to Classify Image!</button>
-      <div id="outputText">This image displayed is: </div>
+      
+      <button id="classify" type="button">Click to Classify Image</button>
+      <span id="loading" class="loading">Loading model and classifying...</span>
+      
+      <div id="outputText">Classification results will appear here</div>
     </main>
+    
     <script type="module" src="./webnn.js"></script>
-    <script>
-      function updateImage() {
-        const selector = document.querySelector('#imageSelector');
-        const image = document.querySelector('#selectedImage');
-        image.src = selector.value;
-      }
-    </script>
   </body>
 </html>`},
       '/webnn.js': {
