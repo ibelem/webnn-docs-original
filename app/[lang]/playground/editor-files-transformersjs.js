@@ -201,7 +201,7 @@ env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to 
 async function classifyImage() {
   const options = {
       dtype: 'int8',
-      device: 'webnn-cpu', // 'webnn-cpu' and 'webnn-npu'
+      device: 'webnn-cpu', // 'webnn-gpu' and 'webnn-npu'
     };
   const url = document.querySelector('#selectedImage').src;
   const classifier = await pipeline('image-classification', 'webnn/mobilenet-v2-12', options);
