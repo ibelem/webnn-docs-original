@@ -608,42 +608,44 @@ const msg = ref('// Transformers.js + Vue');
     "description": "An Object Detection demo using WebNN and Transformers.js based on ONNX Runtime Web",
     "static": {
       '/index.html': {
-        code: `<!DOCTYPE html>
-<html>
+        code: `<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js</title>
+    <title>WebNN / Transformers.js - Object Detection</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
+
   <body>
-    <main>
-      <h2>Image Classification - WebNN / Transformers.js</h2>
-      <div class="select-group">
-        <div class="input-group">
-          <span>Sample Images</span>
-          <select id="imageSelector">
-            <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
-            <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
-            <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
-            <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <span>Local Image</span>
-          <input type="file" id="localImageInput" class="file-input" accept="image/*">
-        </div>
+    <h1>WebNN / Transformers.js - Object Detection</h1>
+    <div class="container">
+      <video id="video" playsinline></video>
+      <canvas id="canvas"></canvas>
+      <div id="overlay"></div>
+    </div>
+    <div id="status"></div>
+    <div class="controls">
+      <div>
+        <label for="confidence">Confidence Threshold: <span id="confidence-value">0.25</span></label>
+        <input type="range" min="0.1" max="0.9" step="0.05" value="0.25" id="confidence">
       </div>
       <div>
-        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
+        <input type="radio" id="yolo12n" name="model" value="webnn/yolo12n">
+        <label for="yolo12n">YOLO12n</label>
+        <input type="radio" id="yolo11n" name="model" value="webnn/yolo11n">
+        <label for="yolo11n">YOLO11n</label>
+        <input type="radio" id="yolov8n" name="model" value="webnn/yolov8n" checked>
+        <label for="yolov8n">YOLOv8n</label>
+        <input type="radio" id="yolov8m" name="model" value="webnn/yolov8m">
+        <label for="yolov8m">YOLOv8m</label>
       </div>
-      
-      <button id="classify" type="button">Click to Classify Image</button>
-      <span id="loading" class="loading">Loading model and classifying...</span>
-      
-      <div id="outputText">Classification results will appear here</div>
-    </main>
-    
+      <div>
+        <button id="start-button">Start Detection</button>
+        <button id="stop-button" disabled>Stop Detection</button>
+      </div>
+    </div>
+    <div id="log"></div>
     <script type="module" src="./webnn.js"></script>
   </body>
 </html>`},
