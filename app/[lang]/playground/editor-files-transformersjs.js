@@ -88,10 +88,30 @@ async function classifyImage() {
     }
     
     const img = document.getElementById('selectedImage');
+    const imgSrc = img.src;
     
     // Ensure image is loaded
     if (img.complete) {
-      const output = await classifier(img, { top_k: 3 });
+      let output;
+      
+      // Check if the image is a local file (data URL) or a remote URL
+      if (imgSrc.startsWith('data:')) {
+        // For local images (data URLs), we need to create a Blob and use its URL
+        // First convert data URL to blob
+        const response = await fetch(imgSrc);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Use the blob URL with the classifier
+        output = await classifier(blobUrl, { top_k: 3 });
+        
+        // Clean up the blob URL when done
+        URL.revokeObjectURL(blobUrl);
+      } else {
+        // For remote URLs, use the URL directly
+        output = await classifier(imgSrc, { top_k: 3 });
+      }
+      
       console.log(output); // Print predictions to console
       
       outputElement.innerHTML = ""; // Clear previous content
@@ -167,9 +187,7 @@ h1, h2 {
 
 img {
   margin-top: 0.5rem;
-  width: 30%;
   max-width: 260px;
-  height: auto;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -199,22 +217,23 @@ button:hover {
 
 .select-group {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 0.5rem;
   grid-row-gap: 0px;
+  margin: 0.5rem 0;
 }
 
 .input-group {
   margin: 0;
   padding: 0.2rem 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #f9f9f9;
   border-radius: 4px;
-  background-color: #f9f9f9;
   display: flex;
   flex-direction: row;
-  gap: 0px 1rem;
   align-items: center;
+  justify-self: stretch;
+  justify-content: space-evenly;
 }
 
 .input-group span {
@@ -330,61 +349,206 @@ const msg = ref('// Transformers.js + Vue');
 // Comment the following line if you are not in China
 env.remoteHost = 'https://hf-mirror.com'; // PRC users only, set remote host to mirror site of huggingface for model loading 
 
-async function classifyImage() {
-  const options = {
-      dtype: 'int8',
-      device: 'webnn-cpu', // 'webnn-gpu' and 'webnn-npu'
-    };
-  const url = document.querySelector('#selectedImage').src;
-  const classifier = await pipeline('image-classification', 'webnn/mobilenet-v2-12', options);
-  const output = await classifier(url, { top_k: 3 });
-  console.log(output); // Print predictions to console
+let classifier;
 
-  const outputElement = document.querySelector("#outputText");
-  outputElement.innerHTML = ""; // Clear previous content
-  // Display prediction in HTML
-  output.forEach(item => {
-      const div = document.createElement("div");
-      div.innerHTML = item.label + ": " + (item.score * 100).toFixed(2) + "%";
-      outputElement.appendChild(div);
-  });
+// Load model immediately to reduce classification delay
+async function loadModel() {
+  const options = {
+    dtype: 'int8',
+    device: 'webnn-cpu', // 'webnn-gpu' and 'webnn-npu'
+  };
+  
+  try {
+    console.log("Loading model...");
+    classifier = await pipeline('image-classification', 'webnn/mobilenet-v2-12', options);
+    console.log("Model loaded successfully");
+  } catch (error) {
+    console.error("Error loading model:", error);
+  }
 }
 
-document.querySelector('#classify').addEventListener('click', classifyImage, false);`},
+async function classifyImage() {
+  const loadingElement = document.getElementById('loading');
+  const outputElement = document.getElementById('outputText');
+  
+  try {
+    loadingElement.style.display = 'inline';
+    
+    // Load model if not already loaded
+    if (!classifier) {
+      await loadModel();
+    }
+    
+    const img = document.getElementById('selectedImage');
+    const imgSrc = img.src;
+    
+    // Ensure image is loaded
+    if (img.complete) {
+      let output;
+      
+      // Check if the image is a local file (data URL) or a remote URL
+      if (imgSrc.startsWith('data:')) {
+        // For local images (data URLs), we need to create a Blob and use its URL
+        // First convert data URL to blob
+        const response = await fetch(imgSrc);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Use the blob URL with the classifier
+        output = await classifier(blobUrl, { top_k: 3 });
+        
+        // Clean up the blob URL when done
+        URL.revokeObjectURL(blobUrl);
+      } else {
+        // For remote URLs, use the URL directly
+        output = await classifier(imgSrc, { top_k: 3 });
+      }
+      
+      console.log(output); // Print predictions to console
+      
+      outputElement.innerHTML = ""; // Clear previous content
+      
+      // Display prediction in HTML
+      output.forEach(item => {
+        const div = document.createElement("div");
+        div.innerHTML = item.label + ": " + (item.score * 100).toFixed(2) + "%";
+        outputElement.appendChild(div);
+      });
+    } else {
+      outputElement.textContent = "Please wait for the image to load completely.";
+    }
+  } catch (error) {
+    console.error("Classification error:", error);
+    outputElement.textContent = "Error classifying image: " + error.message;
+  } finally {
+    loadingElement.style.display = 'none';
+  }
+}
+
+// Handle image source updates
+function updateImage(source) {
+  const image = document.getElementById('selectedImage');
+  const outputElement = document.getElementById('outputText');
+  
+  if (source === 'sample') {
+    const selector = document.getElementById('imageSelector');
+    image.src = selector.value;
+  } else if (source === 'local') {
+    const fileInput = document.getElementById('localImageInput');
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        image.src = e.target.result;
+      };
+      
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  }
+  
+  // Reset the output text
+  outputElement.textContent = "Classification results will appear here";
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Add event listeners
+  document.getElementById('classify').addEventListener('click', classifyImage);
+  document.getElementById('imageSelector').addEventListener('change', () => updateImage('sample'));
+  document.getElementById('localImageInput').addEventListener('change', () => updateImage('local'));
+  
+  // Start loading the model in the background
+  loadModel();
+});
+
+// Export functions for global use
+window.classifyImage = classifyImage;
+window.updateImage = updateImage;`},
       '/styles.css': {
         code: `body {
   font-family: 'Intel One Mono', 'Trebuchet MS', sans-serif;
   padding: 0 1rem;
+  margin: 0 auto;
 }
 
 h1, h2 {
-  color: #eb6424; 
-}
-
-select {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  padding: 0.2rem 0.5rem;
-}
-
-select option {
-  padding: 0.2rem 0.5rem;
+  color: #eb6424;
+  margin: 1rem 0 0.5rem 0;
 }
 
 img {
-  width: 40%;
-  height: auto;
+  margin-top: 0.5rem;
+  max-width: 260px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #outputText {
   margin: 0.5rem 0;
-  padding: 0.5rem 0;
+}
+
+#outputText div {
+  padding: 0.2rem 0;
 }
 
 button {
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 1rem;
   margin: 0.5rem 0;
-  font-size: 1rem;
+  background-color: #eb6424;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #d25620;
+}
+
+.select-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0px;
+  margin: 0.5rem 0;
+}
+
+.input-group {
+  margin: 0;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #f9f9f9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: stretch;
+  justify-content: space-evenly;
+}
+
+.input-group span {
+  min-width: 120px;
+  color: #333;
+}
+
+.file-input {
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.loading {
+  display: none;
+  margin-left: 0.5rem;
+  color: #eb6424;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  img {
+    width: 80%;
+  }
 }`},
     },
     "vanilla": {
@@ -436,48 +600,45 @@ const msg = ref('// Transformers.js + Vue');
     "description": "An Object Detection demo using WebNN and Transformers.js based on ONNX Runtime Web",
     "static": {
       '/index.html': {
-        code: `<!doctype html>
-<html lang="en">
+        code: `<!DOCTYPE html>
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebNN / Transformers.js - Object Detection</title>
+    <title>WebNN / Transformers.js</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-
   <body>
-    <h1>WebNN / Transformers.js - Object Detection</h1>
-    <div class="container">
-      <video id="video" playsinline></video>
-      <canvas id="canvas"></canvas>
-      <div id="overlay"></div>
-    </div>
-    <div id="status"></div>
-    <div class="controls">
-      <div>
-        <label for="confidence">Confidence Threshold: <span id="confidence-value">0.25</span></label>
-        <input type="range" min="0.1" max="0.9" step="0.05" value="0.25" id="confidence">
+    <main>
+      <h2>Image Classification - WebNN / Transformers.js</h2>
+      <div class="select-group">
+        <div class="input-group">
+          <span>Sample Images</span>
+          <select id="imageSelector">
+            <option value="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg">Image 1</option>
+            <option value="https://microsoft.github.io/webnn-developer-preview/Get%20Started/WebNN%20Tutorial/images/chameleon.jpg">Image 2</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/selfie_segmentation/images/test.jpg">Image 3</option>
+            <option value="https://webmachinelearning.github.io/webnn-samples/object_detection/images/test.jpg">Image 4</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <span>Local Image</span>
+          <input type="file" id="localImageInput" class="file-input" accept="image/*">
+        </div>
       </div>
       <div>
-        <input type="radio" id="yolo12n" name="model" value="webnn/yolo12n">
-        <label for="yolo12n">YOLO12n</label>
-        <input type="radio" id="yolo11n" name="model" value="webnn/yolo11n">
-        <label for="yolo11n">YOLO11n</label>
-        <input type="radio" id="yolov8n" name="model" value="webnn/yolov8n" checked>
-        <label for="yolov8n">YOLOv8n</label>
-        <input type="radio" id="yolov8m" name="model" value="webnn/yolov8m">
-        <label for="yolov8m">YOLOv8m</label>
+        <img id="selectedImage" src="https://webmachinelearning.github.io/webnn-samples/image_classification/images/test.jpg" alt="Selected Image" />
       </div>
-      <div>
-        <button id="start-button">Start Detection</button>
-        <button id="stop-button" disabled>Stop Detection</button>
-      </div>
-    </div>
-    <div id="log"></div>
+      
+      <button id="classify" type="button">Click to Classify Image</button>
+      <span id="loading" class="loading">Loading model and classifying...</span>
+      
+      <div id="outputText">Classification results will appear here</div>
+    </main>
+    
     <script type="module" src="./webnn.js"></script>
   </body>
-</html>
-`},
+</html>`},
       '/webnn.js': {
         active: true,
         code: `import { AutoModel, AutoProcessor, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.0';
