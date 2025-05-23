@@ -1,3 +1,5 @@
+import InfoIcon from '../../../../../app/_components/icons/info.jsx'
+
 # ONNX2WebNN
 
 [ONNX2WebNN](https://github.com/huningxin/onnx2webnn) is a command-line tool that converts ONNX models to WebNN JavaScript files, enabling machine learning inference in web browsers using the WebNN API.
@@ -7,6 +9,17 @@
 The tool generates two primary outputs:
 - A JavaScript file (`.js`) containing the WebNN model definition
 - A binary file (`.bin`) containing the model weights
+
+## Privacy and Security
+
+**🔒 Client-Side Processing Only**
+
+All model conversion and WebNN JavaScript files generation operations run exclusively in your local environment. No model data, weights, or intellectual property is transmitted to or stored on any external servers. This makes the tool safe for:
+
+- Proprietary models
+- Sensitive intellectual property
+- Enterprise environments with strict data governance
+- Any scenario requiring complete data privacy
 
 ## Installation
 
@@ -44,7 +57,7 @@ python onnx2webnn.py -if INPUT_ONNX_FILE_PATH -oj OUTPUT_JS_PATH [OPTIONS]
 
 ### Step 1: Prepare the ONNX Model
 
-Before conversion, override any free dimensions in your ONNX model using the [onnxruntime_perf_test](https://github.com/microsoft/onnxruntime/blob/main/onnxruntime/test/perftest/README.md) tool:
+> <InfoIcon /> Before conversion, override any free dimensions in your ONNX model using the [onnxruntime_perf_test](https://github.com/microsoft/onnxruntime/blob/main/onnxruntime/test/perftest/README.md) tool:
 
 ```bash
 onnxruntime_perf_test -I -r 1 -u mobilenetv2-12-static.onnx -f batch_size:1 -o 1 mobilenetv2-12.onnx
