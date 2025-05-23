@@ -96,7 +96,7 @@ function CompatibilityIcon() {
 const api3 = [
   ['WebNN Interfaces', 'browser-compatibility/api'],
   ['LiteRT Backend', 'browser-compatibility/litert'],
-  ['DirectML Backend', 'browser-compatibility/directml'],
+  ['Windows ML Backend', 'browser-compatibility/windowsml'],
   ['Core ML Backend', 'browser-compatibility/coreml'],
 ]
 

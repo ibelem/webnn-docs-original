@@ -1,0 +1,45 @@
+import Image from "next/image";
+import WebNn from "../../../../../app/_components/icons/webnn.jsx";
+import VIcon from "../../../../../app/_components/icons/v.jsx";
+import { Cards } from 'nextra/components'
+
+<div className="mt-6 grid grid-cols-1 items-center justify-items-center tutorials-title">
+  <WebNn className="webnn-logo"/>
+</div>
+
+# Tools for Generating WebNN Vanilla JavaScript
+
+Package-size sensitive applications require minimal binary footprints to reduce download overhead. 
+
+Vanilla JavaScript provides the smallest bundle size for building WebNN graphs and performing computations, but requires more development effort than higher-level libraries like Transformers.js and ONNX Runtime. 
+
+To address this trade-off, the WebNN community is developing tools that generate optimized WebNN JavaScript code from existing models, balancing performance with bundle size requirements.
+
+## From Model to Code
+
+<Cards className="quick-start-card">
+  <Cards.Card
+    icon={<VIcon />}
+    title="ONNX2WebNN"
+    href="./onnx2webnn"
+  />
+  <Cards.Card
+    icon={<VIcon />}
+    title="WebNN Code Generator"
+    href="./webnn-code-generator"
+  />
+</Cards>
+
+| Tool | ONNX2WebNN | WebNN Code Generator |
+|---|:---:|:---:|
+| CLI (Command-line) | ✅ | ❌ |
+| Web app | ❌ | ✅ |
+| Language | Python | TypeScript |
+| .onnx | ✅ | ✅ |
+| .tflite, and other model formats | ❌ | 🚀 bug fix needed |
+
+## From Code to Code
+
+### Python to JavaScript
+
+> 🚀 TorchScript to WebNN JavaScript

@@ -1,15 +1,33 @@
 import { AndroidIcon, WindowsIcon, ChromeosIcon, MacosIcon, LinuxIcon, IosIcon } from '../../../../app/_components/icons/os.jsx'
+import InfoIcon from '../../../../app/_components/icons/info.jsx'
 
 <div className="mdx-table">
 
 # Browser Compatibility
 
-## DirectML Backend / Windows
+## Windows ML Backend / Windows
 
 <div className="table">
 | WebNN | CPU | GPU | NPU |
 | --- | --- | --- | --- |
-|<WindowsIcon /> Windows| ✅ LiteRT/XNNPACK<br />🚀ℹ️ WCR/MLAS (deprecated) | ✅ DirectML | ✅ DirectML | 
+|<WindowsIcon /> Windows| ✅ LiteRT/XNNPACK<br />ℹ️ WCR/MLAS (deprecated) | 🚀ℹ️ Windows ML | 🚀ℹ️ Windows ML | 
+</div>
+
+### OpenVINO EP
+
+### Additional Resources
+
+[ONNX Layers supported using OpenVINO](https://onnxruntime.ai/docs/execution-providers/OpenVINO-ExecutionProvider.html#support-coverage)
+
+
+## DirectML Backend / Windows (Deprecated)
+
+> <InfoIcon /> May 20, 2025: DirectML was officially deprecated during Microsoft Build 2025. WebNN will leverage Windows ML to access OpenVINO and other EPs to get hardware acceleration.
+
+<div className="table">
+| WebNN | CPU | GPU | NPU |
+| --- | --- | --- | --- |
+|<WindowsIcon /> Windows| ✅ LiteRT/XNNPACK<br />ℹ️ WCR/MLAS (deprecated) | ✅ DirectML (deprecated) | ✅ DirectML (deprecated) | 
 </div>
 
 The WebNN DirectML backend mainly supported on Windows.
@@ -110,9 +128,4 @@ The WebNN DirectML backend mainly supported on Windows.
 | [triangular](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-triangular) | ✅ Supported by combined operations | M126 | 
 | [where](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-where) | ✅ ELEMENT\_WISE\_IF | M122 |
 </div>
-
-### Additional Resources
-
-[ONNX Layers supported using OpenVINO](https://onnxruntime.ai/docs/execution-providers/OpenVINO-ExecutionProvider.html#support-coverage)
-
 </div>

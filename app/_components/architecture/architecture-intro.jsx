@@ -170,7 +170,7 @@ const initialNodes = [
     type: "netronNode0",
     position: { x: 290, y: 150 },
     data: {
-      label: "DirectML",
+      label: "Windows ML",
       nodeClassName:
         "architecture",
       labelClassName: "bg-[#4361ee] text-white l0 text-center",

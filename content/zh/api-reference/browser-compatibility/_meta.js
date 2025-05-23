@@ -5,8 +5,8 @@ export default {
   litert: {
     title: "Lite RT Backend"
   },
-  directml: {
-    title: "DirectML Backend"
+  windowsml: {
+    title: "Windows ML Backend"
   },
   coreml: {
     title: "Core ML Backend"
