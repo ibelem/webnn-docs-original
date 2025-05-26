@@ -49,7 +49,6 @@ The conversion process involves two complementary tools:
 2. Upload the extracted files:
    - Click **"Choose Graph"** → Select `graph.json`
    - Click **"Choose Weights"** → Select `weights.json`
-   - Click **"Choose Bin"** → Select `weights.bin`
 
 ![WebNN Code Generator - Choose Graph, Weights and Bin buttons](/learn/tutorials/webnn/code-generator-2.png)
 
@@ -66,9 +65,10 @@ If your model contains symbolic dimensions, you'll see a **"Set free dimension o
 ### Step 4: Generate and Download
 
 1. Click **"Generate WebNN Code"**
-2. Click **"Download WebNN JS"** to receive:
+2. Click **"Download Code Files"** to receive:
    - Generated JavaScript file with WebNN implementation
    - `webnn.html` test file for validation
+3. Put the `weights.bin` downloaded from [WebNN Netron](https://ibelem.github.io/netron/) together with `.js` and `webnn.html` in the same folder
 
 ## Testing Your Generated Code
 
