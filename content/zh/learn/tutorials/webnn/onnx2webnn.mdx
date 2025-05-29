@@ -125,6 +125,67 @@ if (layout === 'nhwc') {
 await webnnModel.build({deviceType});
 ```
 
+## Generate QDQ WebNN Models
+
+This tool converts [QDQ (Quantize-Dequantize)](https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html#onnx-quantization-representation-format) ONNX models to WebNN models.
+
+### Prerequisites
+
+QDQ model conversion requires proper tensor shape information to handle scale and zero-point tensor reshaping according to the [WebNN quantizeLinear and dequantizeLinear specification](https://www.w3.org/TR/webnn/#api-mlgraphbuilder-dequantizelinear). The WebNN spec may require reshaping these tensors based on the input tensor's rank and axis parameters.
+
+#### Prepare Your ONNX Model
+
+Before conversion, ensure your ONNX model contains shape information for each output tensor by using [onnx-simplifier](https://github.com/daquexian/onnx-simplifier):
+
+1. Install onnx-simplifier:
+   ```shell
+   pip3 install onnxsim
+   ```
+
+2. Simplify your model:
+   ```shell
+   onnxsim input_model.onnx output_model_simplified.onnx
+   ```
+
+   **Example:**
+   ```shell
+   onnxsim ../sample_models/mobilenetv2-12-qdq-static.onnx ../sample_models/mobilenetv2-12-qdq-static-simplified.onnx
+   ```
+
+### Convert to WebNN
+
+#### Basic Conversion (NCHW Layout)
+
+```shell
+python onnx2webnn.py -if input_model.onnx -oj output_directory/output_model.js
+```
+
+**Example:**
+```shell
+python onnx2webnn.py -if ../sample_models/mobilenetv2-12-qdq-static-simplified.onnx -oj mobilenet_qdq/mobilenet_qdq.js
+```
+
+#### NHWC Layout Conversion
+
+For models requiring NHWC data layout, add the `-nhwc` flag:
+
+```shell
+python onnx2webnn.py -if input_model.onnx -oj output_directory/output_model.js -nhwc
+```
+
+**Example:**
+```shell
+python onnx2webnn.py -if ../sample_models/mobilenetv2-12-qdq-static-simplified.onnx -oj mobilenet_qdq_nhwc/mobilenet_qdq_nhwc.js -nhwc
+```
+
+### Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `-if` | Input ONNX model file path |
+| `-oj` | Output JavaScript file path for the WebNN model |
+| `-nhwc` | (Optional) Use NHWC data layout instead of default NCHW |
+
 ## Debugging with JSON Export
 
 Export the model structure as JSON for debugging and analysis:
