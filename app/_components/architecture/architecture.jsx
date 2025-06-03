@@ -60,7 +60,7 @@ const initialNodes = [
     type: "netronNode0",
     position: { x: 466, y: 0 },
     data: {
-      label: ".npy",
+      label: "bin, npy, json",
       nodeClassName:
         "architecture",
       labelClassName: "bg-[#f72585] model text-white l0 text-center",
