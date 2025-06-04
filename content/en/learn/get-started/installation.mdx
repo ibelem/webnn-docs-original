@@ -32,7 +32,7 @@ import InfoIcon from '../../../../app/_components/icons/info.jsx'
 ## Running WebNN on NPU
 
 - Window 11, version 24H2 or newer
-- It's recommended to install the latest [Intel® Core™ Ultra NPU Driver on Windows](https://www.intel.com/content/www/us/en/download/794734/intel-npu-driver-windows.html) for improved WebNN compatibility and performance
+- It's recommended to install the [Intel® Core™ Ultra NPU Driver 32.0.100.3717 on Windows](https://www.intel.com/content/www/us/en/download/794734/848729/intel-npu-driver-windows.html) for improved WebNN compatibility and performance
 - Prepare the `DirectML.dll`. Download the latest redistributable [Microsoft.AI.DirectML](https://www.nuget.org/packages/Microsoft.AI.DirectML/1.15.2), rename `microsoft.ai.directml.[version].nupkg` to `microsoft.ai.directml.[version].nupkg.zip` and extract it
 
 ### Chrome Canary 
@@ -51,6 +51,7 @@ Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Google\Chrome SxS\Applicatio
 ### Edge Canary 
 
 #### Put the `DirectML.dll` into correct path
+
 Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Microsoft\Edge SxS\Application\[version]\`
   - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
   - Note that Edge Canary frequently updates automatically. When this occurs, recopy the `DirectML.dll` to the new version's directory.
