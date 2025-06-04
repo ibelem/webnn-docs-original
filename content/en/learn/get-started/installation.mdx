@@ -19,7 +19,6 @@ import InfoIcon from '../../../../app/_components/icons/info.jsx'
 
 ## Running WebNN on CPU or GPU
 
-<Steps>
 ### Launch Chrome Canary or Edge Canary
 
 ```bash copy showLineNumbers filename="launch-chrome-canary"
@@ -30,53 +29,36 @@ import InfoIcon from '../../../../app/_components/icons/info.jsx'
   "%LOCALAPPDATA%\Microsoft\Edge SxS\Application\msedge.exe"
 ```
 
-
-</Steps>
-
 ## Running WebNN on NPU
 
 - Window 11, version 24H2 or newer
 - It's recommended to install the latest [Intel® Core™ Ultra NPU Driver on Windows](https://www.intel.com/content/www/us/en/download/794734/intel-npu-driver-windows.html) for improved WebNN compatibility and performance
+- Prepare the `DirectML.dll`. Download the latest redistributable [Microsoft.AI.DirectML](https://www.nuget.org/packages/Microsoft.AI.DirectML/1.15.2), rename `microsoft.ai.directml.[version].nupkg` to `microsoft.ai.directml.[version].nupkg.zip` and extract it
 
-<details open>
-  {/* prettier-ignore */}
-  <summary>Chrome Canary</summary>
-  <div className="mx-2 my-2">
-  <Steps>
-    ### Prepare the `DirectML.dll`
-    
-    Download the latest redistributable [Microsoft.AI.DirectML](https://www.nuget.org/packages/Microsoft.AI.DirectML/1.15.2), rename `microsoft.ai.directml.[version].nupkg` to `microsoft.ai.directml.[version].nupkg.zip` and extract it
+### Chrome Canary 
 
-    ### Put the `DirectML.dll` into correct path
+#### Put the `DirectML.dll` into correct path
+  
+Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Google\Chrome SxS\Application\[version]\`
+  - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
+  - Note that Chrome Canary frequently updates automatically. When this occurs, recopy the `DirectML.dll` to the new version's directory.
+#### Launch Chrome Canary in Windows Command Line
     
-    Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Google\Chrome SxS\Application\[version]\`
-        - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
-        - Note that Chrome Canary frequently updates automatically. When this occurs, recopy the `DirectML.dll` to the new version's directory.
-    ### Launch Chrome Canary in Windows Command Line
-    
-    ```bash copy showLineNumbers filename="enable-webnn-npu-chrome-canary"
-      "%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --use-redist-dml --disable_webnn_for_npu=0
-    ```
-  </Steps>
-  </div>
-</details>
-<details open>
-  {/* prettier-ignore */}
-  <summary>Edge Canary</summary>
-  <div className="mx-2 my-2">
-    <Steps>
-      ### Ensure the `DirectML.dll` was downloaded automatically
-          - Launch Edge Canary
-          - Go to `%LOCALAPPDATA%\Microsoft\Edge SxS\User Data`, check the `EdgeOnnxRuntimeDirectML\[version]\DirectML.dll` exists
-          - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
-          - Exit Edge Canary
-      ### Launch Edge Canary in Windows Command Line
+```bash copy showLineNumbers filename="enable-webnn-npu-chrome-canary"
+  "%LOCALAPPDATA%\Google\Chrome SxS\Application\chrome.exe" --use-redist-dml --disable_webnn_for_npu=0
+```
 
-      ```bash copy showLineNumbers filename="enable-webnn-npu-edge-canary"
-        "%LOCALAPPDATA%\Microsoft\Edge SxS\Application\msedge.exe" --disable_webnn_for_npu=0
-      ```
-    </Steps>
-  </div>
-</details>
+### Edge Canary 
+
+#### Put the `DirectML.dll` into correct path
+Copy `\bin\x64-win\DirectML.dll` to `%LOCALAPPDATA%\Microsoft\Edge SxS\Application\[version]\`
+  - `%LOCALAPPDATA%` means `C:\Users\<username>\AppData\Local\`
+  - Note that Edge Canary frequently updates automatically. When this occurs, recopy the `DirectML.dll` to the new version's directory.
+
+#### Launch Edge Canary in Windows Command Line
+
+```bash copy showLineNumbers filename="enable-webnn-npu-edge-canary"
+  "%LOCALAPPDATA%\Microsoft\Edge SxS\Application\msedge.exe" --disable_webnn_for_npu=0
+```
 
 Test your WebNN API installation at [Playground - Hello WebNN](../../playground/webnn/hello-webnn).
